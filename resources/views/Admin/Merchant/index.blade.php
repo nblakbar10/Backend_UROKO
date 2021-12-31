@@ -56,21 +56,17 @@
                 orderable: false,
                 searchable: false
             }, {
-                className: 'dt-body-nowrap',
                 data: 'name',
             }, {
                 data: 'merchant_name',
                 searchable: false
             }, {
-                className: 'dt-body-nowrap',
                 data: 'created_at',
                 searchable: false
             }, {
-                className: 'dt-body-nowrap',
                 data: 'updated_at',
                 searchable: false
             }, {
-                className: 'dt-body-nowrap',
                 data: 'action',
                 searchable: false
             }],
