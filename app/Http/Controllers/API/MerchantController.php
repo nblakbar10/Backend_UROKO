@@ -4,6 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
+use Response;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Merchant;
 
 class MerchantController extends Controller
 {
@@ -14,7 +18,17 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        //
+        $merchant = Merchant::where('id_user', Auth::user()->id)->first();
+        if (!$merchant) {
+            $merchant = "Belum ada Merchant!";
+        }
+
+        $data = [
+            'message' => 'Success',
+            'data' => $merchant
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -35,7 +49,43 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'merchant_name' => 'required'
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+
+        $merchant = Merchant::where('id_user', Auth::user()->id)->first();
+        if (!$merchant) {
+            $merchant = Merchant::create([
+                'id_user' => Auth::user()->id,
+                'merchant_name' => $request->merchant_name,
+                'merchant_image' => '',
+            ]);
+    
+            $data = [
+                'message' => 'Success',
+                'data' =>$merchant
+            ];
+    
+            if ($merchant) {
+                return response()->json($data, 200);
+            }
+        } else {
+            $data = [
+                'message' => 'Failed',
+                'data' => 'Anda sudah memiliki Merchant'
+            ];
+    
+            if ($merchant) {
+                return response()->json($data, 400);
+            }
+        }
+        
+
     }
 
     /**

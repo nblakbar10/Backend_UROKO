@@ -17,7 +17,7 @@ class CreateMerchantTable extends Migration
             $table->id();
             $table->string('id_user');
             $table->string('merchant_name');
-            $table->string('merchant_image');
+            $table->string('merchant_image')->nullable();
             $table->timestamps();
         });
     }

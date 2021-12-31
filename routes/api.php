@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\MerchantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::group(['middleware' => ['auth:api']], function(){
+    //User
+    Route::resource('merchant-user', MerchantController::class);
+});
 
 
 require __DIR__.'/auth-api.php';
