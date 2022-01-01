@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\DaftarLelangController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth','verified'])->name('dashboard');
 
 Route::group(['middleware' => ['auth','verified']], function(){
-    //User
+    Route::resource('lelang', DaftarLelangController::class);
+
     Route::resource('merchant', MerchantController::class);
     Route::get('/get-merchant', [MerchantController::class, 'get_merchant'])->name('merchant.get-merchant');
 });

@@ -1,4 +1,4 @@
-<x-app-layout title="Merchant">
+<x-app-layout title="Daftar Lelang">
     <div class="main-panel">
         <div class="content-wrapper">
             @if (session('error'))
@@ -18,7 +18,7 @@
                 </div>
             @endif
             <div class="page-header">
-                <h3 class="page-title"> Daftar Merchant </h3>
+                <h3 class="page-title"> Daftar Lelang </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         {{-- <li class="breadcrumb-item"><a href="#">Merchant</a></li> --}}
@@ -44,7 +44,7 @@
                                     <thead>
                                         <tr>
                                             <th> # </th>
-                                            <th> Username </th>
+                                            <th> Nama </th>
                                             <th> Merchant Name </th>
                                             <th> Created At </th>
                                             <th> Updated At </th>
@@ -120,14 +120,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
-                            <div class="form-group">
-                                <select class="form-select select2 " name="username" required id="filter-status">
-                                    <option value="">--Pilih--</option>
-                                    @foreach ($user as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            d
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Nama Merchant<sup class="text-danger">*</sup></label>
