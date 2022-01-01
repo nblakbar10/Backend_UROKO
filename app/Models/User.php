@@ -25,7 +25,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'merchant_status',
         'picture',
         'birthdate',
-        'profile_img'
+        'profile_img',
+        'role'
     ];
 
     /**
