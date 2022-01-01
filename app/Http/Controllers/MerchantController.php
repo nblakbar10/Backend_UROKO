@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Yajra\Datatables\Datatables;
 use App\Models\Merchant;
+use App\Models\User;
 
 class MerchantController extends Controller
 {
@@ -16,7 +17,8 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        return view('Admin.Merchant.index');
+        $user = User::all();
+        return view('Admin.Merchant.index', compact('user'));
     }
 
     /**
@@ -37,7 +39,33 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $merchant = Merchant::where('id_user', $request->username)->first();
+
+        if ($merchant == NULL) {
+            if ($request->merchant_image == NULL) {
+                $merchant = Merchant::create([
+                    'id_user' => $request->username,
+                    'merchant_name' => $request->merchant_name
+                ]);
+    
+                return redirect()->back()->with('success', 'Berhasil menambah merchant');
+            } else {
+                $file_merchant_image = $request->merchant_image;
+                $fileName_merchantImage = time().'_'.$file_merchant_image->getClientOriginalName();
+                $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
+    
+                $merchant = Merchant::create([
+                    'id_user' => $request->username,
+                    'merchant_name' => $request->merchant_name,
+                    'merchant_image' => $fileName_merchantImage
+                ]);
+    
+                return redirect()->back()->with('success', 'Berhasil menambah merchant');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Akun ini sudah memiliki merchant!');
+        }
+        
     }
 
     /**
@@ -57,9 +85,9 @@ class MerchantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -71,7 +99,26 @@ class MerchantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $merchant = Merchant::where('id', $id)->first();
+        // dd($request->merchant_image);
+        if ($request->merchant_image == NULL) {
+            $merchant->update([
+                'merchant_name' => $request->merchant_name
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil melakukan update merchant');
+        } else {
+            $file_merchant_image = $request->merchant_image;
+            $fileName_merchantImage = time().'_'.$file_merchant_image->getClientOriginalName();
+            $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
+
+            $merchant->update([
+                'merchant_name' => $request->merchant_name,
+                'merchant_image' => $fileName_merchantImage
+            ]);
+
+            return redirect()->back()->with('success', 'Berhasil melakukan update merchant');
+        }
     }
 
     /**
@@ -82,14 +129,17 @@ class MerchantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $merchant = Merchant::where('id', $id)->first();
+        $merchant->delete();
+
+        return redirect()->back()->with('success', 'Berhasil melakukan hapus merchant');
     }
 
     public function get_merchant(Request $request)
     {
         $merchant = Merchant::leftJoin('users', function ($join) {
             $join->on('users.id', '=', 'merchant.id_user');
-        })->select('merchant.*', 'users.name')->get();
+        })->select('merchant.*', 'users.name');
 
         $datatables = Datatables::of($merchant);
 
@@ -99,8 +149,12 @@ class MerchantController extends Controller
                     $query->where('merchant_name', 'like', "%" . $keyword . "%");
 
         });}
+
+        $datatables->orderColumn('updated_at', function ($query, $order) {
+            $query->orderBy('merchant.updated_at', $order);
+        });
         return $datatables->addIndexColumn()
-        ->addColumn('action','action')
+        ->addColumn('action','Admin.Merchant.action')
         ->toJson();
     }
 }
