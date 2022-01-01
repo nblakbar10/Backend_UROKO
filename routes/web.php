@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/verified', function () {
+    return view('verifysuccess');
+});
+
+
 Route::get('/dashboard', function () {
     return view('index');
 })->middleware(['auth','verified'])->name('dashboard');
@@ -27,4 +32,5 @@ Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('merchant', MerchantController::class);
     Route::get('/get-merchant', [MerchantController::class, 'get_merchant'])->name('merchant.get-merchant');
 });
+
 require __DIR__.'/auth.php';
