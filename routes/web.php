@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\DaftarLelangController;
+use App\Http\Controllers\ManajemenUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,9 @@ Route::get('/dashboard', function () {
 
 Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('lelang', DaftarLelangController::class);
+
+    Route::resource('user', ManajemenUserController::class);
+    Route::get('/get-user', [ManajemenUserController::class, 'get_user'])->name('user.get-user');
 
     Route::resource('merchant', MerchantController::class);
     Route::get('/get-merchant', [MerchantController::class, 'get_merchant'])->name('merchant.get-merchant');

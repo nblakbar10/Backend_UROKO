@@ -35,12 +35,12 @@ Route::post('/reset-password', [NewPasswordController::class, 'store'])
 
 
 Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
-                ->middleware('auth')
+                ->middleware('auth:api')
                 ->name('password.confirm-api');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
-                ->middleware('auth');
+                ->middleware('auth:api');
 
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->middleware('auth')
+                ->middleware('auth:api')
                 ->name('api-logout');
