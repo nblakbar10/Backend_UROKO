@@ -15,7 +15,7 @@
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.css" />
-    <script src="//code.jquery.com/jquery.js"></script>
+    {{-- <script src="//code.jquery.com/jquery.js"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.3/datatables.min.js"></script>
@@ -36,6 +36,7 @@
     <!-- endinject -->
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/style.css">
+    {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('template') }}/assets/images/favicon.png" />
 

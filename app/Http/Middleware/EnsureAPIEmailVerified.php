@@ -28,6 +28,7 @@ class EnsureAPIEmailVerified
         if (Auth::user()->email_verified_at == NULL) {
 
             Auth::user()->sendEmailVerificationNotification();
+            
             return response()->json(['message' => 'Your email address is not verified.'], 409);
         }
 

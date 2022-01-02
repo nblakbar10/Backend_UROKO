@@ -145,6 +145,7 @@ sup {
 3. Remove gaps between table borders by default.
 */
 
+
 table {
   text-indent: 0; /* 1 */
   border-color: inherit; /* 2 */
