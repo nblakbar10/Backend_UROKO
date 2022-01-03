@@ -28,19 +28,30 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        $validate = $request->only('email', 'password');
 
-        $request->session()->regenerate();
+        if (Auth::attempt($validate)) {
+            $request->authenticate();
 
-        $token = Auth::user()->createToken('authToken')->accessToken;
-        // return redirect()->intended(RouteServiceProvider::HOME);
-        $data = [
-            'message' => 'Succes',
-            'token' => $token,
-            'data' => Auth::user()
-        ];
-
-        return response()->json($data, 200);
+            $request->session()->regenerate();
+    
+            $token = Auth::user()->createToken('authToken')->accessToken;
+            // return redirect()->intended(RouteServiceProvider::HOME);
+            $data = [
+                'message' => 'Succes',
+                'token' => $token,
+                'data' => Auth::user()
+            ];
+    
+            return response()->json($data, 200);   
+        } else {
+            $data = [
+                'message' => 'Failed',
+                'data' => 'Email atau password salah'
+            ];
+    
+            return response()->json($data, 200);   
+        }
     }
 
     /**

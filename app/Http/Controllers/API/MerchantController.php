@@ -51,7 +51,8 @@ class MerchantController extends Controller
     {
         // dd($request);
         $validator = Validator::make($request->all(), [
-            'merchant_name' => 'required'
+            'merchant_name' => 'required',
+            'merchant_image' => 'mimes:jpeg,jpg,png|required|max:10000'
         ]);
 
         if ($validator->fails()) {    
@@ -60,10 +61,14 @@ class MerchantController extends Controller
 
         $merchant = Merchant::where('id_user', Auth::user()->id)->first();
         if (!$merchant) {
+            $file_merchant_image = $request->merchant_image;
+            $fileName_merchantImage = time().'_'.$file_merchant_image->getClientOriginalName();
+            $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
+
             $merchant = Merchant::create([
                 'id_user' => Auth::user()->id,
                 'merchant_name' => $request->merchant_name,
-                'merchant_image' => '',
+                'merchant_image' => $fileName_merchantImage,
             ]);
     
             $data = [
