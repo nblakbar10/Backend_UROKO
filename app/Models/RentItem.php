@@ -5,13 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Shipping extends Model
+class RentItem extends Model
 {
     use HasFactory;
-    public $table = "shipping";
+    public $table = "rent_item";
     protected $fillable = [
-        'shipping_type',
-        'shipping_fee',
+        'pet_id',
+        'pet_picture',
+        'pet_name',
+        'pet_age',
+        'pet_species',
+        'pet_breed',
+        'qty',
+        'description',
+        'merchant_id',
+        'merchant_name',
+        'merchant_location',
+        'rent_item_price'
     ];
    
     public function getUpdatedAtAttribute($value)

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuctionOrderTable extends Migration
+class CreateAdoptionOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAuctionOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('auction_order', function (Blueprint $table) {
+        Schema::create('adoption_order', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
             $table->string('username');
@@ -21,17 +21,16 @@ class CreateAuctionOrderTable extends Migration
             $table->string('address');
             $table->integer('merchant_id');
             $table->string('merchant_name');
-            $table->integer('auction_item_id');
+            $table->integer('adoption_item_id');
             $table->integer('pet_id');
-            $table->integer('bid_order_set');
-            $table->boolean('bid_status')->default(0)->change();
-            $table->string('bid_comments');
+            $table->integer('adoption_item_price');
+            $table->string('adoption_order_notes');
             $table->integer('shipping_id');
             $table->string('shipping_type');
             $table->string('shipping_fee');
             $table->integer('grand_total_order');
             $table->string('payments_option');
-            $table->string('auction_order_status');
+            $table->string('adoption_order_status');
             $table->timestamps();
         });
     }
@@ -43,6 +42,6 @@ class CreateAuctionOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auction_order');
+        Schema::dropIfExists('adoption_order');
     }
 }

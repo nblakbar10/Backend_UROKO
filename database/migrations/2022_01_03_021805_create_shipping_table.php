@@ -15,6 +15,8 @@ class CreateShippingTable extends Migration
     {
         Schema::create('shipping', function (Blueprint $table) {
             $table->id();
+            $table->string('shipping_type');
+            $table->integer('shipping_fee');
             $table->timestamps();
         });
     }
