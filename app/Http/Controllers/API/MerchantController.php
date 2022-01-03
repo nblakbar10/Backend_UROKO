@@ -18,7 +18,7 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        $merchant = Merchant::where('id_user', Auth::user()->id)->first();
+        $merchant = Merchant::where('user_id', Auth::user()->id)->first();
         if (!$merchant) {
             $merchant = "Belum ada Merchant!";
         }
@@ -58,10 +58,10 @@ class MerchantController extends Controller
             return response()->json($validator->messages(), 400);
         }
 
-        $merchant = Merchant::where('id_user', Auth::user()->id)->first();
+        $merchant = Merchant::where('user_id', Auth::user()->id)->first();
         if (!$merchant) {
             $merchant = Merchant::create([
-                'id_user' => Auth::user()->id,
+                'user_id' => Auth::user()->id,
                 'merchant_name' => $request->merchant_name,
                 'merchant_image' => '',
             ]);

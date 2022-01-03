@@ -87,7 +87,7 @@ class ManajemenUserController extends Controller
     public function get_user(Request $request)
     {
         $user = User::leftJoin('merchant', function ($join) {
-            $join->on('merchant.id_user', '=', 'users.id');
+            $join->on('merchant.user_id', '=', 'users.id');
         })->select('merchant.merchant_name', 'users.*');
 
         $datatables = Datatables::of($user);

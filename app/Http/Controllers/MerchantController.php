@@ -39,12 +39,12 @@ class MerchantController extends Controller
      */
     public function store(Request $request)
     {
-        $merchant = Merchant::where('id_user', $request->username)->first();
+        $merchant = Merchant::where('user_id', $request->username)->first();
 
         if ($merchant == NULL) {
             if ($request->merchant_image == NULL) {
                 $merchant = Merchant::create([
-                    'id_user' => $request->username,
+                    'user_id' => $request->username,
                     'merchant_name' => $request->merchant_name
                 ]);
     
@@ -55,7 +55,7 @@ class MerchantController extends Controller
                 $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
     
                 $merchant = Merchant::create([
-                    'id_user' => $request->username,
+                    'user_id' => $request->username,
                     'merchant_name' => $request->merchant_name,
                     'merchant_image' => $fileName_merchantImage
                 ]);
@@ -138,7 +138,7 @@ class MerchantController extends Controller
     public function get_merchant(Request $request)
     {
         $merchant = Merchant::leftJoin('users', function ($join) {
-            $join->on('users.id', '=', 'merchant.id_user');
+            $join->on('users.id', '=', 'merchant.user_id');
         })->select('merchant.*', 'users.name');
 
         $datatables = Datatables::of($merchant);
