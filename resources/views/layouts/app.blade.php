@@ -35,8 +35,13 @@
     <!-- inject:css -->
     <!-- endinject -->
     <!-- Layout styles -->
+
+    <link rel="stylesheet" href="{{ asset('template') }}/assets/vendors/select2/select2.min.css">
+    <link rel="stylesheet"
+        href="{{ asset('template') }}/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/style.css">
-    {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('template') }}/assets/images/favicon.png" />
 
@@ -74,7 +79,12 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <script src="{{ asset('template') }}/assets/js/dashboard.js"></script>
+
+    <script src="{{ asset('template') }}/assets/vendors/select2/select2.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
     </script>
 </body>
 
