@@ -16,19 +16,23 @@ class CreateAuctionOrderTable extends Migration
         Schema::create('auction_order', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('username');
+            /**$table->string('username');
             $table->string('phone_number');
             $table->string('address');
-            $table->integer('merchant_id');
             $table->string('merchant_name');
+
+            $table->string('shipping_type');
+            $table->string('shipping_fee');
+            */
+            $table->integer('merchant_id');
+            
             $table->integer('auction_item_id');
             $table->integer('pet_id');
             $table->integer('bid_order_set');
             $table->boolean('bid_status')->default(0)->change();
             $table->string('bid_comments');
             $table->integer('shipping_id');
-            $table->string('shipping_type');
-            $table->string('shipping_fee');
+            
             $table->integer('grand_total_order');
             $table->string('payments_option');
             $table->string('auction_order_status');

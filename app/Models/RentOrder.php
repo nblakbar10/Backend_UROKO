@@ -11,23 +11,23 @@ class RentOrder extends Model
     public $table = "rent_order";
     protected $fillable = [
         'user_id',
-        'username',
-        'phone_number',
-        'address',
+        // 'username',
+        // 'phone_number',
+        // 'address',
         'merchant_id',
-        'merchant_name',
+        // 'merchant_name',
         'pet_id',
 
         'rent_item_id',
-        'rent_item_price',
+        // 'rent_item_price',
         'rent_order_start',
         'rent_order_return',
         'rent_order_duration',
         'rent_order_notes',
 
         'shipping_id',
-        'shipping_type',
-        'shipping_fee',
+        // 'shipping_type',
+        // 'shipping_fee',
         'grand_total_order',
         'payments_option',
         'rent_order_status'

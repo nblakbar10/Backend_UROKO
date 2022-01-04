@@ -16,14 +16,19 @@ class CreateRentOrderTable extends Migration
         Schema::create('rent_order', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('username');
+            
+            /**$table->string('username');
             $table->string('phone_number');
             $table->string('address');
-            $table->integer('merchant_id');
             $table->string('merchant_name');
-
-            $table->integer('rent_item_id');
             $table->integer('rent_item_price');
+             $table->string('shipping_type');
+            $table->string('shipping_fee');*/
+
+            $table->integer('merchant_id');
+            
+            $table->integer('rent_item_id');
+            
             $table->integer('pet_id');
 
             $table->string('rent_order_start');
@@ -32,8 +37,7 @@ class CreateRentOrderTable extends Migration
             $table->string('rent_order_notes');
 
             $table->integer('shipping_id');
-            $table->string('shipping_type');
-            $table->string('shipping_fee');
+           
             $table->integer('grand_total_order');
             $table->string('payments_option');
             $table->string('rent_order_status');

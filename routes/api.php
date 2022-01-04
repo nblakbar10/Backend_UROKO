@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     
     Route::resource('pet-group-user', PetGroupController::class);
     Route::get('/pet-group-user/detail/{id}', [PetGroupController::class, 'detail_group'])->name('user.detail-group ');
+
+    Route::resource('adoption-item', AdoptionItemController::class);
+    //Route::get('/adoption-item/{id}', [AdoptionItemController::class, 'detail_pet'])->name('user.detail-pet');
     
 });
 

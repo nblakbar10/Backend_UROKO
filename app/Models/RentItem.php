@@ -10,17 +10,18 @@ class RentItem extends Model
     use HasFactory;
     public $table = "rent_item";
     protected $fillable = [
+        'user_id',
         'pet_id',
-        'pet_picture',
-        'pet_name',
-        'pet_age',
-        'pet_species',
-        'pet_breed',
+        // 'pet_picture',
+        // 'pet_name',
+        // 'pet_age',
+        // 'pet_species',
+        // 'pet_breed',
         'qty',
         'description',
         'merchant_id',
-        'merchant_name',
-        'merchant_location',
+        // 'merchant_name',
+        // 'merchant_location',
         'rent_item_price'
     ];
    
