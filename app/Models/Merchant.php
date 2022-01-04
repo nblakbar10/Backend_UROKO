@@ -10,7 +10,8 @@ class Merchant extends Model
     use HasFactory;
     public $table = "merchant";
     protected $fillable = [
-        'id_user',
+        'user_id',
+        'user_username',
         'merchant_name',
         'merchant_image',
     ];

@@ -27,10 +27,8 @@
                 </nav>
             </div>
             <div>
-                <a 
-                data-toggle="modal" 
-                data-target="#modal-tambah-merchant" 
-                class="btn btn-primary mb-2">Tambah Merchant</a>
+                <a data-toggle="modal" data-target="#modal-tambah-merchant" class="btn btn-primary mb-2">Tambah
+                    Merchant</a>
             </div>
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
@@ -62,7 +60,7 @@
         <!-- partial:../../partials/_footer.html -->
         <!-- partial -->
     </div>
-    
+
     <div id="modal-edit-merchant" class="modal fade bd-example-modal-lg" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- konten modal-->
@@ -77,7 +75,7 @@
                 <!-- body modal -->
 
                 <div class="model-body p-4">
-                    <form  method="POST" id="form-edit-merchant" enctype="multipart/form-data">
+                    <form method="POST" id="form-edit-merchant" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -116,15 +114,16 @@
                 <!-- body modal -->
 
                 <div class="model-body p-4">
-                    <form action="{{route('merchant.store')}}" method="POST" id="form-edit-merchant" enctype="multipart/form-data">
+                    <form action="{{ route('merchant.store') }}" method="POST" id="form-edit-merchant"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
                             <div class="form-group">
-                                <select class="form-select select2 " name="username" required id="filter-status">
+                                <select class="js-example-basic-single" name="username" required style="width:100%">
                                     <option value="">--Pilih--</option>
                                     @foreach ($user as $item)
-                                        <option value="{{$item->id}}">{{$item->name}}</option>
+                                        <option value="{{ $item->id }}">{{ $item->username }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -137,7 +136,7 @@
                         <div class="form-group">
                             <label for="exampleInputPassword1">Foto Merchant</label>
                             <div class="custom-file">
-                                <input accept="image/*" class="form-control-file" name="merchant_image" type="file">
+                                <input required accept="image/*" class="form-control-file" name="merchant_image" type="file">
                             </div>
                         </div>
 
@@ -164,7 +163,7 @@
                 orderable: false,
                 searchable: false
             }, {
-                data: 'name',
+                data: 'username',
             }, {
                 data: 'merchant_name',
                 searchable: false
