@@ -9,6 +9,20 @@
                     </button>
                 </div>
             @endif
+
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            @endif
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>{{ session('success') }}</strong>
@@ -27,7 +41,7 @@
                 </nav>
             </div>
             <div>
-                <a data-toggle="modal" data-target="#modal-tambah-merchant" class="btn btn-primary mb-2">Tambah User</a>
+                <a data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-primary mb-2">Tambah User</a>
             </div>
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
@@ -36,15 +50,17 @@
                             {{-- <h4 class="card-title">Bordered table</h4> --}}
                             </p>
                             <div class="row">
-                                <table class="table nowrap table-bordered" id="tableMerchant"
+                                <table tab class="table nowrap table-bordered" id="tableMerchant"
                                     style="width: 100% !important">
                                     <thead>
                                         <tr>
                                             <th> # </th>
-                                            <th> Nama </th>
+                                            <th> FullName </th>
+                                            <th> Name </th>
                                             <th> Email </th>
                                             <th> Merchant Name </th>
                                             <th> Phone Number </th>
+                                            <th> Address </th>
                                             <th> Birth Date </th>
                                             <th> Role </th>
                                             <th> Profile Image </th>
@@ -65,13 +81,13 @@
         <!-- partial -->
     </div>
 
-    <div id="modal-edit-merchant" class="modal fade bd-example-modal-lg" role="dialog">
+    <div id="modal-tambah-user" class="modal fade bd-example-modal-lg" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- konten modal-->
             <div class="modal-content">
                 <!-- heading modal -->
                 <div class="modal-header">
-                    <h4 class="card-title" style="">Edit merchant</h4>
+                    <h4 class="card-title" style="">Tambah User</h4>
                     <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>
@@ -79,38 +95,40 @@
                 <!-- body modal -->
 
                 <div class="model-body p-4">
-                    <form method="POST" id="form-edit-merchant" enctype="multipart/form-data">
+                    <form action="{{ route('user.store') }}" method="POST" id="form-tambah-user"
+                        enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <div class="form-group">
                             <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" id="username-edit" disabled>
+                            <input id="username" type="text" class="form-control" name="username" required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Nama Merchant<sup class="text-danger">*</sup></label>
-                            <input id="merchant-name-edit" type="text" class="form-control" name="merchant_name"
+                            <label for="exampleInputUsername1">Email<sup class="text-danger">*</sup></label>
+                            <input id="email" type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Password<sup class="text-danger">*</sup></label>
+                            <input id="password" type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Confirm Password<sup
+                                    class="text-danger">*</sup></label>
+                            <input id="password" type="password" class="form-control" name="password_confirmation"
                                 required>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Foto Merchant</label>
-                            <div class="custom-file">
-                                <input accept="image/*" class="form-control-file" name="merchant_image" type="file">
-                            </div>
-                        </div>
-
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <div id="modal-tambah-merchant" class="modal fade bd-example-modal-lg" role="dialog">
+    <div id="modal-edit-user" class="modal fade bd-example-modal-lg" role="dialog">
         <div class="modal-dialog modal-lg">
             <!-- konten modal-->
             <div class="modal-content">
                 <!-- heading modal -->
                 <div class="modal-header">
-                    <h4 class="card-title" style="">Tambah merchant</h4>
+                    <h4 class="card-title" style="">Edit User</h4>
                     <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>
@@ -118,27 +136,61 @@
                 <!-- body modal -->
 
                 <div class="model-body p-4">
-                    <form action="{{ route('merchant.store') }}" method="POST" id="form-edit-merchant"
-                        enctype="multipart/form-data">
+                    <form method="POST" id="form-edit-user" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
-                            d
+                            <label for="exampleInputUsername1">Full Name<sup class="text-danger">*</sup></label>
+                            <input id="fullname-edit" type="text" class="form-control" name="fullname" required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Nama Merchant<sup class="text-danger">*</sup></label>
-                            <input id="merchant-name-edit" type="text" class="form-control" name="merchant_name"
+                            <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
+                            <input id="username-edit" type="text" class="form-control" name="username" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Email<sup class="text-danger">*</sup></label>
+                            <input id="email-edit" type="email" class="form-control" name="email" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Phone Number<sup class="text-danger">*</sup></label>
+                            <input id="phonenumber-edit" type="number" class="form-control" name="phone_number"
                                 required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Foto Merchant</label>
+                            <label for="exampleInputUsername1">Picture</label>
                             <div class="custom-file">
-                                <input accept="image/*" class="form-control-file" name="merchant_image" type="file">
+                                <input accept="image/*" class="form-control-file" name="picture" type="file">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Birthdate<sup class="text-danger">*</sup></label>
+                            <input id="birthdate-edit" type="date" class="form-control" name="birthdate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Address<sup class="text-danger">*</sup></label>
+                            <input id="address-edit" type="text" class="form-control" name="address" required>
+                        </div>
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-show-picture" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="" id="username-picture"></h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <img style="width: 100%; overflow: hidden !important" id="img-modal" alt="">
                 </div>
             </div>
         </div>
@@ -146,7 +198,7 @@
     <script>
         let table = $('#tableMerchant').DataTable({
             order: [
-                [4, "desc"]
+                [11, "desc"]
             ],
             scrollX: "100%",
             processing: true,
@@ -161,7 +213,9 @@
                 orderable: false,
                 searchable: false
             }, {
-                data: 'name',
+                data: 'fullname',
+            }, {
+                data: 'username',
             }, {
                 data: 'email',
             }, {
@@ -170,11 +224,13 @@
             }, {
                 data: 'phone_number',
             }, {
+                data: 'address',
+            }, {
                 data: 'birthdate',
             }, {
                 data: 'role',
             }, {
-                data: 'profile_img',
+                data: 'picture',
             }, {
                 data: 'created_at',
                 searchable: false
@@ -187,22 +243,35 @@
             }],
         });
 
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            $($.fn.dataTable.tables(true)).DataTable()
-                .columns.adjust();
-        });
-        table.columns.adjust();
 
-        $(document).on('click', '.btn-edit-merchant', function(event) {
+        $(document).on('click', '.btn-edit-user', function(event) {
             // return confirm($(this).data('tanggalSP2D'));
+            var fullname = $(this).data('fullname');
             var username = $(this).data('username');
-            var name = $(this).data('name');
+            var email = $(this).data('email');
+            var phonenumber = $(this).data('phonenumber');
+            var birthdate = $(this).data('birthdate');
+            var address = $(this).data('address');
             var link = $(this).data('link');
 
-            console.log(username, name, link)
+            $('#fullname-edit').val(fullname);
             $('#username-edit').val(username);
-            $('#form-edit-merchant').attr('action', link);
-            $('#merchant-name-edit').val(name);
+            $('#email-edit').val(email);
+            $('#phonenumber-edit').val(phonenumber);
+            $('#birthdate-edit').val(birthdate);
+            $('#address-edit').val(address);
+            $('#form-edit-user').attr('action', link);
+            console.log(username, name, $('#form-edit-user'))
+        });
+
+        $(document).on('click', '.btn-show-picture', function(event) {
+            
+            var username = $(this).data('username');
+            var link = $(this).data('link');
+
+            $('#username-picture').html(username);
+            $('#img-modal').attr('src', link);
+            console.log(username, name, $('#form-edit-user'))
         });
     </script>
 </x-app-layout>

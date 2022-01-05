@@ -17,7 +17,7 @@ class MerchantController extends Controller
      */
     public function index()
     {
-        $user = User::all();
+        $user = User::where('role','User')->get();
         return view('Admin.Merchant.index', compact('user'));
     }
 
@@ -54,8 +54,10 @@ class MerchantController extends Controller
                 $fileName_merchantImage = time().'_'.$file_merchant_image->getClientOriginalName();
                 $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
     
+                $user = User::where('id', $request->username)->first();
                 $merchant = Merchant::create([
                     'user_id' => $request->username,
+                    'user_username' => $user->username,
                     'merchant_name' => $request->merchant_name,
                     'merchant_image' => $fileName_merchantImage
                 ]);
@@ -139,7 +141,7 @@ class MerchantController extends Controller
     {
         $merchant = Merchant::leftJoin('users', function ($join) {
             $join->on('users.id', '=', 'merchant.user_id');
-        })->select('merchant.*', 'users.name');
+        })->select('merchant.*', 'users.username');
 
         $datatables = Datatables::of($merchant);
 
