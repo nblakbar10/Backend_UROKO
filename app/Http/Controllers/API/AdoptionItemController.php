@@ -9,6 +9,7 @@ use Response;
 use App\Models\User;
 use App\Models\AdoptionItem;
 use App\Models\PetProfile;
+use App\Models\Merchant;
 use Illuminate\Support\Facades\Validator;
 
 class AdoptionItemController extends Controller
@@ -18,7 +19,7 @@ class AdoptionItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function adoptionitem_index()
     {
         $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->get();
 
@@ -58,8 +59,26 @@ class AdoptionItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function adoptionitem_post(Request $request, $id)
     {
+        $merchant = Merchant::where('user_id', Auth::user()->id)->first();
+        if (!$merchant) {
+            $merchant = "Belum ada Merchant! silahkan bikin merchant terlebih dahulu";
+            $data = [
+                'message' => 'failed',
+                'data' => $merchant
+            ];
+            return response()->json($data, 404);
+        }
+
+        // $data = [
+        //     'message' => 'Success',
+        //     'data' => $merchant
+        // ];
+
+        // return response()->json($data, 200);
+
+
         $pet = PetProfile::where('user_id', Auth::user()->id)->where('id', $id)->first();
 
         if ($pet == NULL) {
@@ -75,7 +94,7 @@ class AdoptionItemController extends Controller
             //'pet_id' => 'required',
             'qty' => 'required',
             'description' => 'required',
-            'merchant_id' => 'required',
+            //'merchant_id' => 'required',
             'adoption_item_price' => 'required',
         ]);
 
@@ -94,7 +113,7 @@ class AdoptionItemController extends Controller
             'qty' => $request->qty,
             'description' => $request->description,
             'merchant_id' => $request->merchant_id,
-            'adoption_item_price' => $adoption_item_price,
+            'adoption_item_price' => $request->adoption_item_price,
 
         ]);
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\API\MerchantController;
 use App\Http\Controllers\API\PetProfileController;
 use App\Http\Controllers\API\PetActivityController;
 use App\Http\Controllers\API\PetGroupController;
+use App\Http\Controllers\API\AdoptionItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +39,12 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::resource('pet-group-user', PetGroupController::class);
     Route::get('/pet-group-user/detail/{id}', [PetGroupController::class, 'detail_group'])->name('user.detail-group ');
 
-    Route::resource('adoption-item', AdoptionItemController::class);
-    //Route::get('/adoption-item/{id}', [AdoptionItemController::class, 'detail_pet'])->name('user.detail-pet');
+    // Route::resource('adoption-item', AdoptionItemController::class);
+    // //Route::get('/adoption-item/{id}', [AdoptionItemController::class, 'detail_pet'])->name('user.detail-pet');
     
+
+    Route::get('adoptionitem_index', 'AdoptionItemController@adoptionitem_index');
+    Route::post('adoptionitem_post/{id}', [AdoptionItemController::class, 'adoptionitem_post']);
 });
 
 
