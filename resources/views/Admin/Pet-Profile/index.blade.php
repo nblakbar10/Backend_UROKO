@@ -115,6 +115,25 @@
         <!-- partial:../../partials/_footer.html -->
         <!-- partial -->
     </div>
+    <div id="modal-show-picture" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="" id="username-picture"></h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <img style="width: 100%; overflow: hidden !important" id="img-modal" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         let username = $('#filter-username').val();
         let group = $('#filter-group').val();
@@ -195,13 +214,13 @@
                 },
                 success: function(response) {
                     if (response) {
-                        console.log(response.data);
                         response.data.forEach(function(item, index) {
                             $('#filter-group').append($('<option>', {
 
                                 value: item['id'],
                                 text: item['pet_group_name']
                             }));
+                            console.log(item['pet_group_name']);
                         });
                     }
                 },
@@ -241,7 +260,7 @@
 
             $('#username-picture').html(username);
             $('#img-modal').attr('src', link);
-            console.log(username, name, $('#form-edit-user'))
+            console.log(username, $('#img-modal'))
         });
     </script>
 </x-app-layout>

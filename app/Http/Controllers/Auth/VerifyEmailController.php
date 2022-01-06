@@ -24,9 +24,12 @@ class VerifyEmailController extends Controller
         $user = User::where('id', $request->route('id'))->first();
 
         if ($user->email_verified_at != NULL) {
-            return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+            // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+            return view('verified-email');
         } else {
             $user->markEmailAsVerified();
+            
+            return view('verified-email');
         }
 
         // // Auth::user()->markEmailAsVerified();
@@ -35,6 +38,8 @@ class VerifyEmailController extends Controller
         //     event(new Verified($request->user()));
         // }
 
-        return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        
+        // echo "Email sudah di verifikasi";
+        // return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
     }
 }
