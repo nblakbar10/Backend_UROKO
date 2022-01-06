@@ -41,7 +41,7 @@
                 </nav>
             </div>
             <div>
-                <a data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-primary mb-2">Tambah User</a>
+                <a data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-primary mb-2">Add User</a>
             </div>
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
@@ -87,7 +87,7 @@
             <div class="modal-content">
                 <!-- heading modal -->
                 <div class="modal-header">
-                    <h4 class="card-title" style="">Tambah User</h4>
+                    <h4 class="card-title" style="">Add User</h4>
                     <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>

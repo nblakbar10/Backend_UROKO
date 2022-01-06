@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\DaftarLelangController;
 use App\Http\Controllers\ManajemenUserController;
+use App\Http\Controllers\PetProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,10 @@ Route::group(['middleware' => ['auth','verified']], function(){
 
     Route::resource('merchant', MerchantController::class);
     Route::get('/get-merchant', [MerchantController::class, 'get_merchant'])->name('merchant.get-merchant');
+
+    Route::resource('pet-profile', PetProfileController::class);
+    Route::get('/get-pet', [PetProfileController::class, 'get_pet'])->name('pet-profile.get-pet');
+    Route::get('/get-group', [PetProfileController::class, 'get_group'])->name('pet-profile.get-group');
 });
 
 require __DIR__.'/auth.php';
