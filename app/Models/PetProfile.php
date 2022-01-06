@@ -21,7 +21,6 @@ class PetProfile extends Model
         'pet_description',
         'pet_picture',
         'pet_status',
-        'pet_activity_id'
     ];
    
     public function getUpdatedAtAttribute($value)
