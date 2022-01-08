@@ -1,4 +1,4 @@
-<x-app-layout title="Manajemen User">
+<x-app-layout title="Manajemen Admin">
     <div class="main-panel">
         <div class="content-wrapper">
             @if (session('error'))
@@ -32,7 +32,7 @@
                 </div>
             @endif
             <div class="page-header">
-                <h3 class="page-title"> Daftar User </h3>
+                <h3 class="page-title"> Daftar Admin </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         {{-- <li class="breadcrumb-item"><a href="#">Merchant</a></li> --}}
@@ -41,7 +41,7 @@
                 </nav>
             </div>
             <div>
-                <a data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-primary mb-2">Add User</a>
+                <a data-toggle="modal" data-target="#modal-tambah-user" class="btn btn-primary mb-2">Add Admin</a>
             </div>
             <div class="row">
                 <div class="col-lg-12 grid-margin stretch-card">
@@ -50,7 +50,7 @@
                             {{-- <h4 class="card-title">Bordered table</h4> --}}
                             </p>
                             <div class="row">
-                                <table tab class="table nowrap table-bordered" id="tableUser"
+                                <table tab class="table nowrap table-bordered" id="tableAdmin"
                                     style="width: 100% !important">
                                     <thead>
                                         <tr>
@@ -87,7 +87,7 @@
             <div class="modal-content">
                 <!-- heading modal -->
                 <div class="modal-header">
-                    <h4 class="card-title" style="">Add User</h4>
+                    <h4 class="card-title" style="">Add Admin</h4>
                     <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>
@@ -128,7 +128,7 @@
             <div class="modal-content">
                 <!-- heading modal -->
                 <div class="modal-header">
-                    <h4 class="card-title" style="">Edit User</h4>
+                    <h4 class="card-title" style="">Edit Admin</h4>
                     <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fas fa-times"></i></span>
                     </button>
@@ -196,7 +196,7 @@
         </div>
     </div>
     <script>
-        let table = $('#tableUser').DataTable({
+        let table = $('#tableAdmin').DataTable({
             order: [
                 [11, "desc"]
             ],
@@ -205,7 +205,7 @@
             serverSide: true,
             width: "100%",
             ajax: {
-                url: "{{ route('user.get-user') }}",
+                url: "{{ route('admin.get-admin') }}",
             },
             columns: [{
                 data: 'DT_RowIndex',
@@ -244,7 +244,7 @@
         });
 
 
-        $(document).on('click', '.btn-edit-user', function(event) {
+        $(document).on('click', '.btn-edit-admin', function(event) {
             // return confirm($(this).data('tanggalSP2D'));
             var fullname = $(this).data('fullname');
             var username = $(this).data('username');

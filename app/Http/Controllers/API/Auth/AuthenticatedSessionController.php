@@ -30,11 +30,9 @@ class AuthenticatedSessionController extends Controller
     {
         $validate = $request->only('email', 'password');
 
-        if (Auth::attempt($validate)) {
-            $request->authenticate();
+        $validate = $request->only('email', 'password');
 
-            $request->session()->regenerate();
-    
+        if (Auth::attempt($validate)) {
             $token = Auth::user()->createToken('authToken')->accessToken;
             // return redirect()->intended(RouteServiceProvider::HOME);
             $data = [
@@ -42,9 +40,24 @@ class AuthenticatedSessionController extends Controller
                 'token' => $token,
                 'data' => Auth::user()
             ];
-    
+            
             return response()->json($data, 200);   
-        } else {
+        }
+        // if (Auth::attempt($validate)) {
+        //     $request->authenticate();
+
+        //     $request->session()->regenerate();
+    
+        //     $token = Auth::user()->createToken('authToken')->accessToken;
+        //     // return redirect()->intended(RouteServiceProvider::HOME);
+        //     $data = [
+        //         'message' => 'Succes',
+        //         'token' => $token,
+        //         'data' => Auth::user()
+        //     ];
+    
+        //     return response()->json($data, 200);   
+        else {
             $data = [
                 'message' => 'Failed',
                 'data' => 'Email atau password salah'
