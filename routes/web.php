@@ -5,6 +5,7 @@ use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\DaftarLelangController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\PetProfileController;
+use App\Http\Controllers\PetActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,10 @@ Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('pet-profile', PetProfileController::class);
     Route::get('/get-pet', [PetProfileController::class, 'get_pet'])->name('pet-profile.get-pet');
     Route::get('/get-group', [PetProfileController::class, 'get_group'])->name('pet-profile.get-group');
+    
+    Route::resource('pet-activity', PetActivityController::class);
+    Route::get('/get-activity', [PetActivityController::class, 'get_activity'])->name('pet-activity.get-pet');
+    Route::get('/get-group-activity', [PetActivityController::class, 'get_group_activity'])->name('pet-activity.get-group');
 });
 
 require __DIR__.'/auth.php';
