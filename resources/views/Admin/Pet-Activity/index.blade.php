@@ -9,7 +9,6 @@
                     </button>
                 </div>
             @endif
-
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul>
@@ -69,7 +68,7 @@
                 </div>
             </div>
             <div class="page-header">
-                <h3 class="page-title"> List Pet </h3>
+                <h3 class="page-title"> List Activity Pet </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         {{-- <li class="breadcrumb-item"><a href="#">Merchant</a></li> --}}
@@ -92,14 +91,8 @@
                                             <th> Owner </th>
                                             <th> Pet Name </th>
                                             <th> Pet Group </th>
-                                            <th> Pet Species </th>
-                                            <th> Pet Breed </th>
-                                            <th> Pet Morph </th>
-                                            <th> Pet Birthdate </th>
-                                            <th> Pet Age </th>
-                                            <th> Pet Description </th>
-                                            <th> Pet Picture </th>
-                                            <th> Pet Status </th>
+                                            <th> Pet Activity </th>
+                                            <th> Activity Date </th>
                                             <th> Created At </th>
                                             <th> Updated At </th>
                                         </tr>
@@ -111,9 +104,6 @@
                 </div>
             </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
-        <!-- partial -->
     </div>
     <script>
         let username = $('#filter-username').val();
@@ -122,14 +112,14 @@
 
         let table = $('#tableMerchant').DataTable({
             order: [
-                [11, "desc"]
+                [7, "desc"]
             ],
             scrollX: "100%",
             processing: true,
             serverSide: true,
             width: "100%",
             ajax: {
-                url: "{{ route('pet-profile.get-pet') }}",
+                url: "{{ route('pet-activity.get-pet') }}",
                 data: function(d) {
                     d.username = username;
                     d.group = group;
@@ -150,28 +140,10 @@
                 data: 'pet_group_name',
                 searchable: false
             }, {
-                data: 'pet_species',
+                data: 'pet_activity_detail',
                 searchable: false
             }, {
-                data: 'pet_breed',
-                searchable: false
-            }, {
-                data: 'pet_morph',
-                searchable: false
-            }, {
-                data: 'pet_birthdate',
-                searchable: false
-            }, {
-                data: 'pet_age',
-                searchable: false
-            }, {
-                data: 'pet_description',
-                searchable: false
-            }, {
-                data: 'pet_picture',
-                searchable: false
-            }, {
-                data: 'pet_status',
+                data: 'pet_activity_date',
                 searchable: false
             }, {
                 data: 'created_at',
