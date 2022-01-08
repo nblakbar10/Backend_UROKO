@@ -120,7 +120,7 @@ class ManajemenAdminController extends Controller
         }
         
 
-        return redirect()->back()->with('success', 'Berhasil melakukan update user');
+        return redirect()->back()->with('success', 'Berhasil melakukan update admin');
     }
 
     /**

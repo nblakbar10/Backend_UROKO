@@ -68,23 +68,68 @@
       <li class="nav-item menu-items">
         <a class="nav-link" href="{{route('merchant.index')}}">
           <span class="menu-icon">
-            <i class="mdi mdi-speedometer"></i>
+            <i class="mdi mdi-home-variant"></i>
           </span>
           <span class="menu-title">Merchant</span>
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <a class="nav-link" data-toggle="collapse" href="#pet-drop" aria-expanded="false" aria-controls="pet-drop">
           <span class="menu-icon">
-            <i class="mdi mdi-laptop"></i>
+            <i class="mdi mdi-cat"></i>
           </span>
           <span class="menu-title">Pet</span>
           <i class="menu-arrow"></i>
         </a>
-        <div class="collapse" id="ui-basic">
+        <div class="collapse" id="pet-drop">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{route('pet-profile.index')}}">Pet Profile</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('pet-activity.index')}}">Pet Activies</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#adoption-drop" aria-expanded="false" aria-controls="adoption-drop">
+          <span class="menu-icon">
+            <i class="mdi mdi-format-list-bulleted-type"></i>
+          </span>
+          <span class="menu-title">Adoption</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="adoption-drop">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="">Adoption Item</a></li>
+            <li class="nav-item"> <a class="nav-link" href="">Adoption Order</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#auction-drop" aria-expanded="false" aria-controls="auction-drop">
+          <span class="menu-icon">
+            <i class="mdi mdi-format-list-bulleted-type"></i>
+          </span>
+          <span class="menu-title">Auction</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="auction-drop">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="">Auction Item</a></li>
+            <li class="nav-item"> <a class="nav-link" href="">Auction Order</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-toggle="collapse" href="#rent-drop" aria-expanded="false" aria-controls="rent-drop">
+          <span class="menu-icon">
+            <i class="mdi mdi-format-list-bulleted-type"></i>
+          </span>
+          <span class="menu-title">Rent</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="rent-drop">
+          <ul class="nav flex-column sub-menu">
+            <li class="nav-item"> <a class="nav-link" href="">Rent Item</a></li>
+            <li class="nav-item"> <a class="nav-link" href="">Rent Order</a></li>
           </ul>
         </div>
       </li>
@@ -97,19 +142,11 @@
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="{{route('lelang.index')}}">
-          <span class="menu-icon">
-            <i class="mdi mdi-speedometer"></i>
-          </span>
-          <span class="menu-title">Daftar Lelang</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
         <a class="nav-link" href="{{route('user.index')}}">
           <span class="menu-icon">
             <i class="mdi mdi-speedometer"></i>
           </span>
-          <span class="menu-title">Daftar Pengguna</span>
+          <span class="menu-title">User</span>
         </a>
       </li>
       <li class="nav-item menu-items">
@@ -117,7 +154,7 @@
           <span class="menu-icon">
             <i class="mdi mdi-speedometer"></i>
           </span>
-          <span class="menu-title">Daftar Admin</span>
+          <span class="menu-title">Admin</span>
         </a>
       </li>
       {{-- <li class="nav-item menu-items">
