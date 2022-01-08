@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Validator;
 
-class ManajemenUserController extends Controller
+class ManajemenAdminController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class ManajemenUserController extends Controller
      */
     public function index()
     {
-        return view('Admin.User.index');
+        return view('Admin.Admin.index');
     }
 
     /**
@@ -59,10 +59,10 @@ class ManajemenUserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'User'
+            'role' => 'Admin'
         ]);
 
-        return redirect()->back()->with('success', 'Berhasil menambah user');
+        return redirect()->back()->with('success', 'Berhasil menambah admin');
     }
 
     /**
@@ -106,14 +106,14 @@ class ManajemenUserController extends Controller
                 'address' => $request->address,
             ]);
         } else {
-            $file_user_image = $request->picture;
-            $fileName_userImage = time().'_'.$file_user_image->getClientOriginalName();
-            $file_user_image->move(public_path('storage/gambar-user'), $fileName_userImage);
+            $file_admin_image = $request->picture;
+            $fileName_adminImage = time().'_'.$file_admin_image->getClientOriginalName();
+            $file_admin_image->move(public_path('storage/gambar-user'), $fileName_adminImage);
 
             $user->update([
                 'fullname' => $request->fullname,
                 'phone_number' => $request->phone_number,
-                'picture' => $fileName_userImage,
+                'picture' => $fileName_adminImage,
                 'birthdate' => $request->birthdate,
                 'address' => $request->address,
             ]);
@@ -143,9 +143,9 @@ class ManajemenUserController extends Controller
 
     }
 
-    public function get_user(Request $request)
+    public function get_admin(Request $request)
     {
-        $user = User::where('role','User')->leftJoin('merchant', function ($join) {
+        $user = User::where('role','Admin')->leftJoin('merchant', function ($join) {
             $join->on('merchant.user_id', '=', 'users.id');
         })->select('merchant.merchant_name', 'users.*');
 
@@ -164,8 +164,8 @@ class ManajemenUserController extends Controller
 
         return $datatables->addIndexColumn()
         ->escapeColumns([])
-        ->addColumn('action','Admin.User.action')
-        ->addColumn('picture','Admin.User.picture')
+        ->addColumn('action','Admin.Admin.action')
+        ->addColumn('picture','Admin.Admin.picture')
         ->toJson();
     }
 }
