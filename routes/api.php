@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
 
     Route::get('adoptionitem_index', [AdoptionItemController::class, 'adoptionitem_index']);
     Route::post('adoptionitem_post/{id}', [AdoptionItemController::class, 'adoptionitem_post']);
-    Route::put('adoptionitem_put/{id}', [AdoptionItemController::class, 'adoptionitem_put']);
+    Route::put('adoptionitem_edit/{id}', [AdoptionItemController::class, 'adoptionitem_edit']);
     Route::delete('adoptionitem_delete/{id}', [AdoptionItemController::class, 'adoptionitem_delete']);
 });
 

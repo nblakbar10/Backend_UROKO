@@ -151,19 +151,30 @@ class AdoptionItemController extends Controller
      */
     public function adoptionitem_edit(Request $request, $id)
     {
-        $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->where('id', $id)->first();
 
-        $dataInput = $request->all();
+        $adoptionitem = AdoptionItem::find($id);
+        $adoptionitem->update($request->all());
+        return response()->json([
+            'status' => 200,
+            "message" => "edit adoptionitem sukses",
+            "data" => $adoptionitem
+        ]);
 
-        // dd($request);
-        $adoptionitem->fill($dataInput)->save();
 
-        $data = [
-            'message' => 'Success',
-            'data' => $adoptionitem
-        ];
 
-        return response()->json($data, 200);
+        // $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->where('id', $id)->first();
+
+        // $dataInput = $request->all();
+
+        // // dd($request);
+        // $adoptionitem->fill($dataInput)->save();
+
+        // $data = [
+        //     'message' => 'Success',
+        //     'data' => $adoptionitem
+        // ];
+
+        // return response()->json($data, 200);
     }
 
     /**
