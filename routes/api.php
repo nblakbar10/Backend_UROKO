@@ -7,6 +7,9 @@ use App\Http\Controllers\API\PetProfileController;
 use App\Http\Controllers\API\PetActivityController;
 use App\Http\Controllers\API\PetGroupController;
 use App\Http\Controllers\API\AdoptionItemController;
+use App\Http\Controllers\API\AuctionItemController;
+use App\Http\Controllers\API\RentItemController;
+use App\Http\Controllers\API\AdoptionOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,18 +49,23 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
 
     Route::get('adoptionitem_index', [AdoptionItemController::class, 'adoptionitem_index']);
     Route::post('adoptionitem_post/{id}', [AdoptionItemController::class, 'adoptionitem_post']);
-    Route::put('adoptionitem_edit/{id}', [AdoptionItemController::class, 'adoptionitem_edit']);
+    Route::post('adoptionitem_edit/{id}', [AdoptionItemController::class, 'adoptionitem_edit']);
     Route::delete('adoptionitem_delete/{id}', [AdoptionItemController::class, 'adoptionitem_delete']);
 
     Route::get('auctionitem_index', [AuctionItemController::class, 'auctionitem_index']);
     Route::post('auctionitem_post/{id}', [AuctionItemController::class, 'auctionitem_post']);
-    Route::put('auctionitem_edit/{id}', [AuctionItemController::class, 'auctionitem_edit']);
+    Route::post('auctionitem_edit/{id}', [AuctionItemController::class, 'auctionitem_edit']);
     Route::delete('auctionitem_delete/{id}', [AuctionItemController::class, 'auctionitem_delete']);
 
     Route::get('rentitem_index', [RentItemController::class, 'rentitem_index']);
     Route::post('rentitem_post/{id}', [RentItemController::class, 'rentitem_post']);
-    Route::put('rentitem_edit/{id}', [RentItemController::class, 'rentitem_edit']);
+    Route::post('rentitem_edit/{id}', [RentItemController::class, 'rentitem_edit']);
     Route::delete('rentitem_delete/{id}', [RentItemController::class, 'rentitem_delete']);
+
+    Route::get('transaction_index', [TransactionController::class, 'transaction_index']);
+
+
+    Route::post('adoptionorder_post/{id}', [AdoptionOrderController::class, 'adoptionorder_post']);
 });
 
 
