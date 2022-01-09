@@ -141,7 +141,7 @@ class PetGroupController extends Controller
         $allPetGroup = PetGroup::where('user_id', Auth::user()->id)->get();
         $data = [
             'message' => 'Success',
-            'data' => $allPetGroup
+            'pet_group_remaining' => $allPetGroup
         ];
         return response()->json($data, 200);
     }

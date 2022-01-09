@@ -160,8 +160,6 @@ class AdoptionItemController extends Controller
             "data" => $adoptionitem
         ]);
 
-
-
         // $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->where('id', $id)->first();
 
         // $dataInput = $request->all();

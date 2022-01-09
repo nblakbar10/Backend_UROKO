@@ -38,17 +38,26 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     
     Route::resource('pet-group-user', PetGroupController::class);
     Route::get('/pet-group-user/detail/{id}', [PetGroupController::class, 'detail_group'])->name('user.detail-group ');
+    // Route::put('petgroup_edit/{id}', [PetGroupController::class, 'petgroup_edit']);
 
-    // Route::resource('adoption-item', AdoptionItemController::class);
-    // //Route::get('/adoption-item/{id}', [AdoptionItemController::class, 'detail_pet'])->name('user.detail-pet');
-    
     Route::get('merchant_index', [MerchantController::class, 'merchant_index']);
     Route::post('merchant_post', [MerchantController::class, 'merchant_post']);
+
 
     Route::get('adoptionitem_index', [AdoptionItemController::class, 'adoptionitem_index']);
     Route::post('adoptionitem_post/{id}', [AdoptionItemController::class, 'adoptionitem_post']);
     Route::put('adoptionitem_edit/{id}', [AdoptionItemController::class, 'adoptionitem_edit']);
     Route::delete('adoptionitem_delete/{id}', [AdoptionItemController::class, 'adoptionitem_delete']);
+
+    Route::get('auctionitem_index', [AuctionItemController::class, 'auctionitem_index']);
+    Route::post('auctionitem_post/{id}', [AuctionItemController::class, 'auctionitem_post']);
+    Route::put('auctionitem_edit/{id}', [AuctionItemController::class, 'auctionitem_edit']);
+    Route::delete('auctionitem_delete/{id}', [AuctionItemController::class, 'auctionitem_delete']);
+
+    Route::get('rentitem_index', [RentItemController::class, 'rentitem_index']);
+    Route::post('rentitem_post/{id}', [RentItemController::class, 'rentitem_post']);
+    Route::put('rentitem_edit/{id}', [RentItemController::class, 'rentitem_edit']);
+    Route::delete('rentitem_delete/{id}', [RentItemController::class, 'rentitem_delete']);
 });
 
 

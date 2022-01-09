@@ -83,7 +83,7 @@ class PetProfileController extends Controller
 
         $petProfile = PetProfile::create([
             'pet_name' => $request->pet_name,
-            // 'pet_group_id' => $request->pet_group_id,
+            'pet_group_id' => $request->pet_group_id,
             'user_id' => Auth::user()->id,
             'pet_species' => $request->pet_species,
             'pet_breed' => $request->pet_breed,
@@ -165,7 +165,7 @@ class PetProfileController extends Controller
         $allPet = PetProfile::where('user_id', Auth::user()->id)->get();
         $data = [
             'message' => 'Success',
-            'data' => $allPet
+            'pet_remaining' => $allPet
         ];
         return response()->json($data, 200);
     }
