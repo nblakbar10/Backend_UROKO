@@ -8,6 +8,7 @@ use Auth;
 use Response;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Merchant;
+use App\Models\User;
 
 class MerchantController extends Controller
 {
@@ -16,7 +17,7 @@ class MerchantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function merchant_index()
     {
         $merchant = Merchant::where('user_id', Auth::user()->id)->first();
         if (!$merchant) {
@@ -47,7 +48,8 @@ class MerchantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+    public function merchant_post(Request $request)
     {
         // dd($request);
         $validator = Validator::make($request->all(), [
@@ -62,13 +64,13 @@ class MerchantController extends Controller
         $merchant = Merchant::where('user_id', Auth::user()->id)->first();
         if (!$merchant) {
             $file_merchant_image = $request->merchant_image;
-            $fileName_merchantImage = time().'_'.$file_merchant_image->getClientOriginalName();
-            $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
+            $fileName_merchant_image = time().'_'.$file_merchant_image->getClientOriginalName();
+            $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchant_image);
 
             $merchant = Merchant::create([
                 'user_id' => Auth::user()->id,
                 'merchant_name' => $request->merchant_name,
-                'merchant_image' => $fileName_merchantImage,
+                'merchant_image' => $fileName_merchant_image,
             ]);
     
             $data = [
@@ -82,7 +84,8 @@ class MerchantController extends Controller
         } else {
             $data = [
                 'message' => 'Failed',
-                'data' => 'Anda sudah memiliki Merchant'
+                'data' => 'Anda sudah memiliki Merchant',
+                'merchant' => $merchant
             ];
     
             if ($merchant) {

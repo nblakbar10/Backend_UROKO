@@ -42,9 +42,13 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     // Route::resource('adoption-item', AdoptionItemController::class);
     // //Route::get('/adoption-item/{id}', [AdoptionItemController::class, 'detail_pet'])->name('user.detail-pet');
     
+    Route::get('merchant_index', [MerchantController::class, 'merchant_index']);
+    Route::post('merchant_post', [MerchantController::class, 'merchant_post']);
 
-    Route::get('adoptionitem_index', 'AdoptionItemController@adoptionitem_index');
+    Route::get('adoptionitem_index', [AdoptionItemController::class, 'adoptionitem_index']);
     Route::post('adoptionitem_post/{id}', [AdoptionItemController::class, 'adoptionitem_post']);
+    Route::put('adoptionitem_put/{id}', [AdoptionItemController::class, 'adoptionitem_put']);
+    Route::delete('adoptionitem_delete/{id}', [AdoptionItemController::class, 'adoptionitem_delete']);
 });
 
 
