@@ -60,7 +60,7 @@ class PetProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'pet_name' => 'required',
-            'pet_group_id' => 'required',
+            // 'pet_group_id' => 'required',
             'pet_species' => 'required',
             'pet_breed' => 'required',
             'pet_morph' => 'required',
@@ -69,7 +69,7 @@ class PetProfileController extends Controller
             'pet_description' => 'required',
             'pet_picture' => 'mimes:jpeg,jpg,png|required|max:10000',
             'pet_status' => 'required',
-            'pet_activity_id'  => 'required',
+            // 'pet_activity_id'  => 'required',
         ]);
 
         if ($validator->fails()) {    
@@ -83,7 +83,7 @@ class PetProfileController extends Controller
 
         $petProfile = PetProfile::create([
             'pet_name' => $request->pet_name,
-            'pet_group_id' => $request->pet_group_id,
+            // 'pet_group_id' => $request->pet_group_id,
             'user_id' => Auth::user()->id,
             'pet_species' => $request->pet_species,
             'pet_breed' => $request->pet_breed,
@@ -93,7 +93,7 @@ class PetProfileController extends Controller
             'pet_description' => $request->pet_description,
             'pet_picture' => $fileName_petPicture,
             'pet_status' => $request->pet_status,
-            'pet_activity_id'  => $request->pet_activity_id,
+            // 'pet_activity_id'  => $request->pet_activity_id,
         ]);
 
         $data = [

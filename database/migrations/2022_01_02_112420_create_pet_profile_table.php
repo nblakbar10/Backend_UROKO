@@ -17,7 +17,7 @@ class CreatePetProfileTable extends Migration
             $table->id();
             $table->string('pet_name');
             $table->integer('user_id');
-            $table->string('pet_group_id');
+            // $table->string('pet_group_id');
             $table->string('pet_species');
             $table->string('pet_breed');
             $table->string('pet_morph');
@@ -26,7 +26,7 @@ class CreatePetProfileTable extends Migration
             $table->string('pet_description');
             $table->string('pet_picture');
             $table->string('pet_status');
-            $table->string('pet_activity_id');
+            // $table->string('pet_activity_id');
             $table->timestamps();
         });
     }

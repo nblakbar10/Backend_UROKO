@@ -12,7 +12,7 @@ class PetProfile extends Model
     protected $fillable = [
         'pet_name',
         'user_id',
-        'pet_group_id',
+        // 'pet_group_id',
         'pet_species',
         'pet_breed',
         'pet_morph',
