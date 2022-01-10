@@ -8,8 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <script src="https://kit.fontawesome.com/767ff093f8.js" crossorigin="anonymous"></script>
-    {{-- <link rel="icon" type="image/png/x-icon" href=""> --}}
-    <title>PETSOP @isset($title)
+    <title>UROKO @isset($title)
             - {{ $title }}
         @endisset</title>
 
@@ -43,7 +42,7 @@
     <link rel="stylesheet" href="{{ asset('template') }}/assets/css/style.css">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{ asset('template') }}/assets/images/favicon.png" />
+    <link rel="shortcut icon" href="{{ asset('logo') }}/favicon.png" />
 
 </head>
 

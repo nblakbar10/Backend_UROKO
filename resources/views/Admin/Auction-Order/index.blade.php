@@ -48,28 +48,20 @@
                     </div>
                 </div>
                 <div class="form-group col">
-                    <label for="exampleInputUsername1">Pet Group</label>
+                    <label for="">Status</label>
                     <div class="form-group">
-                        <select class="js-example-basic-single" onchange="filter_group()" id="filter-group" name="pet_group" required
-                            style="width:100%">
+                        <select class="js-example-basic-single" onchange="filter_status()" id="filter-status"
+                            name="status" required style="width:100%">
                             <option value="">--Pilih--</option>
-
-                        </select>
-                    </div>
-                </div>
-                <div class="col form-group">
-                    <label for="exampleInputUsername1">Pet Habitats</label>
-                    <div class="form-group">
-                        <select class="js-example-basic-single" id="filter-habitats" name="pet_habitats" required
-                            style="width:100%">
-                            <option value="">--Pilih--</option>
-
+                            <option value="Approved">Approved</option>
+                            <option value="Waiting">Waiting</option>
+                            <option value="Rejected">Rejected</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div class="page-header">
-                <h3 class="page-title"> List Pet </h3>
+                <h3 class="page-title"> Auction Order </h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         {{-- <li class="breadcrumb-item"><a href="#">Merchant</a></li> --}}
@@ -89,17 +81,21 @@
                                     <thead>
                                         <tr>
                                             <th> # </th>
-                                            <th> Owner </th>
+                                            <th> Buyer </th>
                                             <th> Pet Name </th>
-                                            <th> Pet Group </th>
-                                            <th> Pet Species </th>
-                                            <th> Pet Breed </th>
-                                            <th> Pet Morph </th>
-                                            <th> Pet Birthdate </th>
-                                            <th> Pet Age </th>
+                                            <th> Merchant </th>
+                                            <th> Qty </th>
+                                            <th> Description </th>
+                                            <th> Bid Start </th>
+                                            <th> Bid Order </th>
+                                            <th> Bid Comment </th>
                                             <th> Pet Description </th>
                                             <th> Pet Picture </th>
-                                            <th> Pet Status </th>
+                                            <th> Shipping Type </th>
+                                            <th> Shipping Fee </th>
+                                            <th> Payments Options </th>
+                                            <th> Total Order </th>
+                                            <th> Status </th>
                                             <th> Created At </th>
                                             <th> Updated At </th>
                                         </tr>
@@ -134,25 +130,101 @@
             </div>
         </div>
     </div>
+    <div id="modal-detail-pet" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Detail Pet</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <form class="forms-sample">
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Name</label>
+                            <div class="col-sm-9">
+                                <p id="pet-name">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Species</label>
+                            <div class="col-sm-9">
+                                <p id="pet-species">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Group</label>
+                            <div class="col-sm-9">
+                                <p id="pet-group">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Breed</label>
+                            <div class="col-sm-9">
+                                <p id="pet-breed">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Morph</label>
+                            <div class="col-sm-9">
+                                <p id="pet-morph">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Birthdate</label>
+                            <div class="col-sm-9">
+                                <p id="pet-birthdate">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Age</label>
+                            <div class="col-sm-9">
+                                <p id="pet-age">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Description</label>
+                            <div class="col-sm-9">
+                                <p id="pet-description">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Status</label>
+                            <div class="col-sm-9">
+                                <p id="pet-status">Kucing</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         let username = $('#filter-username').val();
-        let group = $('#filter-group').val();
-        let habitats = $('#filter-habitats').val();
+        let status = $('#filter-status').val();
 
         let table = $('#tableMerchant').DataTable({
             order: [
-                [13, "desc"]
+                [10, "desc"]
             ],
             scrollX: "100%",
             processing: true,
             serverSide: true,
             width: "100%",
             ajax: {
-                url: "{{ route('pet-profile.get-pet') }}",
+                url: "{{ route('auction-order.get-auction-order') }}",
                 data: function(d) {
                     d.username = username;
-                    d.group = group;
-                    d.habitats = habitats;
+                    d.status = status;
                 }
             },
             columns: [{
@@ -166,31 +238,43 @@
             }, {
                 data: 'pet_name',
             }, {
-                data: 'pet_group_name',
+                data: 'merchant_name',
                 searchable: false
             }, {
-                data: 'pet_species',
+                data: 'qty',
                 searchable: false
             }, {
-                data: 'pet_breed',
+                data: 'description',
                 searchable: false
             }, {
-                data: 'pet_morph',
+                data: 'auction_bid_start',
                 searchable: false
             }, {
-                data: 'pet_birthdate',
+                data: 'bid_order_set',
                 searchable: false
             }, {
-                data: 'pet_age',
+                data: 'bid_comments',
                 searchable: false
             }, {
-                data: 'pet_description',
+                data: 'pet_detail',
                 searchable: false
             }, {
                 data: 'picture',
                 searchable: false
             }, {
-                data: 'pet_status',
+                data: 'shipping_type',
+                searchable: false
+            }, {
+                data: 'shipping_fee',
+                searchable: false
+            }, {
+                data: 'payments_option',
+                searchable: false
+            }, {
+                data: 'grand_total_order',
+                searchable: false
+            }, {
+                data: 'auction_order_status',
                 searchable: false
             }, {
                 data: 'created_at',
@@ -228,8 +312,8 @@
             table.ajax.reload(null, false);
         }
 
-        function filter_group(params) {
-            group = $('#filter-group').val();
+        function filter_status(params) {
+            status = $('#filter-status').val();
             table.ajax.reload(null, false);
         }
 
@@ -261,6 +345,29 @@
             $('#username-picture').html(username);
             $('#img-modal').attr('src', link);
             console.log(username, $('#img-modal'))
+        });
+
+        $(document).on('click', '.btn-detail-pet', function(event) {
+
+            var petname = $(this).data('petname');
+            var petspecies = $(this).data('petspecies');
+            var petgroup = $(this).data('petgroup');
+            var petbreed = $(this).data('petbreed');
+            var petmorph = $(this).data('petmorph');
+            var petbirthdate = $(this).data('petbirthdate');
+            var petdescription = $(this).data('petdescription');
+            var petage = $(this).data('petage');
+            var petstatus = $(this).data('petstatus');
+
+            $('#pet-name').html(petname);
+            $('#pet-species').html(petspecies);
+            $('#pet-breed').html(petbreed);
+            $('#pet-morph').html(petmorph);
+            $('#pet-birthdate').html(petbirthdate);
+            $('#pet-description').html(petdescription);
+            $('#pet-age').html(petage);
+            $('#pet-status').html(petstatus);
+            $('#pet-group').html(petgroup);
         });
     </script>
 </x-app-layout>
