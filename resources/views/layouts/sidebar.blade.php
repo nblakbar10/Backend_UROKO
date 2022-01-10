@@ -65,8 +65,8 @@
         </a>
         <div class="collapse" id="auction-drop">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="">Auction Item</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Auction Order</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('auction-item.index')}}">Auction Item</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('auction-order.index')}}">Auction Order</a></li>
           </ul>
         </div>
       </li>
@@ -80,8 +80,8 @@
         </a>
         <div class="collapse" id="rent-drop">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="">Rent Item</a></li>
-            <li class="nav-item"> <a class="nav-link" href="">Rent Order</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('rent-item.index')}}">Rent Item</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('rent-order.index')}}">Rent Order</a></li>
           </ul>
         </div>
       </li>

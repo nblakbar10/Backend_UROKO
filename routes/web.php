@@ -10,6 +10,10 @@ use App\Http\Controllers\PetProfileController;
 use App\Http\Controllers\PetActivityController;
 use App\Http\Controllers\AdoptionItemController;
 use App\Http\Controllers\AdoptionOrderController;
+use App\Http\Controllers\AuctionItemController;
+use App\Http\Controllers\AuctionOrderController;
+use App\Http\Controllers\RentItemController;
+use App\Http\Controllers\RentOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,15 +58,21 @@ Route::group(['middleware' => ['auth','verified']], function(){
     
     Route::resource('adoption-item', AdoptionItemController::class);
     Route::get('/get-adoption-item', [AdoptionItemController::class, 'get_adoption_item'])->name('adoption-item.get-adoption-item');
-    Route::get('/get-group-adoption', [AdoptionItemController::class, 'get_group_activity'])->name('adoption-item.get-adoption-grup');
     
     Route::resource('adoption-order', AdoptionOrderController::class);
     Route::get('/get-adoption-order', [AdoptionOrderController::class, 'get_adoption_order'])->name('adoption-order.get-adoption-order');
-    Route::get('/get-status-adoption', [AdoptionOrderController::class, 'get_status_adoption'])->name('adoption-order.get-adoption-status');
     
-    Route::resource('pet-activity', PetActivityController::class);
-    Route::get('/get-activity', [PetActivityController::class, 'get_activity'])->name('pet-activity.get-pet');
-    Route::get('/get-group-activity', [PetActivityController::class, 'get_group_activity'])->name('pet-activity.get-group');
+    Route::resource('auction-item', AuctionItemController::class);
+    Route::get('/get-auction-item', [AuctionItemController::class, 'get_auction_item'])->name('auction-item.get-auction-item');
+    
+    Route::resource('auction-order', AuctionOrderController::class);
+    Route::get('/get-auction-order', [AuctionOrderController::class, 'get_auction_order'])->name('auction-order.get-auction-order');
+    
+    Route::resource('rent-item', RentItemController::class);
+    Route::get('/get-rent-item', [RentItemController::class, 'get_rent_item'])->name('rent-item.get-rent-item');
+    
+    Route::resource('rent-order', RentOrderController::class);
+    Route::get('/get-rent-order', [RentOrderController::class, 'get_rent_order'])->name('rent-order.get-rent-order');
 });
 
 require __DIR__.'/auth.php';

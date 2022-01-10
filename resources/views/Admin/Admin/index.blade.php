@@ -95,7 +95,7 @@
                 <!-- body modal -->
 
                 <div class="model-body p-4">
-                    <form action="{{ route('user.store') }}" method="POST" id="form-tambah-user"
+                    <form action="{{ route('admin.store') }}" method="POST" id="form-tambah-user"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">

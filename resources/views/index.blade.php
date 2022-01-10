@@ -13,7 +13,7 @@
                 <!-- body modal -->
 
                 <div class="model-body p-4">
-                    <form action="{{ route('user.store') }}" method="POST" id="form-tambah-user"
+                    <form action="{{ route('admin.store') }}" method="POST" id="form-tambah-user"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
@@ -42,6 +42,15 @@
     </div>
     <div class="main-panel">
         <div class="content-wrapper">
+            @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{ session('error') }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul>
@@ -54,6 +63,14 @@
                     </button>
                 </div>
 
+            @endif
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{ session('success') }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             @endif
             <div class="row">
                 <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
