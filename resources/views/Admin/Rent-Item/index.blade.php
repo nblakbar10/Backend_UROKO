@@ -141,7 +141,7 @@
 
         let table = $('#tableMerchant').DataTable({
             order: [
-                [13, "desc"]
+                [11, "desc"]
             ],
             scrollX: "100%",
             processing: true,

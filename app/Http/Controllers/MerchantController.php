@@ -55,12 +55,8 @@ class MerchantController extends Controller
                 $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
     
                 $user = User::where('id', $request->username)->first();
-                $merchant = Merchant::create([
-                    'user_id' => $request->username,
-                    'user_username' => $user->username,
-                    'merchant_name' => $request->merchant_name,
-                    'merchant_image' => $fileName_merchantImage
-                ]);
+                $input = $request->all();
+                $merchant = Merchant::create($input);
     
                 return redirect()->back()->with('success', 'Berhasil menambah merchant');
             }

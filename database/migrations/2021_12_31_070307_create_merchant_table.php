@@ -15,8 +15,8 @@ class CreateMerchantTable extends Migration
     {
         Schema::create('merchant', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('user_username');
+            $table->integer('user_id')->nullable();
+            $table->string('user_username')->nullable();
             $table->string('merchant_name');
             $table->string('merchant_image')->nullable();
             $table->string('auction_item_id')->nullable();
