@@ -131,9 +131,9 @@
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
+                            <label for="exampleInputUsername1">Username<sup class="text-dark"> (Optional)</sup></label>
                             <div class="form-group">
-                                <select class="js-example-basic-single" name="username" required style="width:100%">
+                                <select class="js-example-basic-single" name="username" style="width:100%">
                                     <option value="">--Pilih--</option>
                                     @foreach ($user as $item)
                                         <option value="{{ $item->id }}">{{ $item->username }}</option>

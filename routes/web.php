@@ -2,11 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DaftarLelangController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\ManajemenAdminController;
 use App\Http\Controllers\PetProfileController;
 use App\Http\Controllers\PetActivityController;
+use App\Http\Controllers\AdoptionItemController;
+use App\Http\Controllers\AdoptionOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +30,9 @@ Route::get('/verified', function () {
     return view('verifysuccess');
 });
 
-
-Route::get('/dashboard', function () {
-    return view('index');
-})->middleware(['auth','verified'])->name('dashboard');
-
 Route::group(['middleware' => ['auth','verified']], function(){
+    Route::resource('dashboard', DashboardController::class);
+
     Route::resource('lelang', DaftarLelangController::class);
 
     Route::resource('user', ManajemenUserController::class);
@@ -47,6 +47,18 @@ Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('pet-profile', PetProfileController::class);
     Route::get('/get-pet', [PetProfileController::class, 'get_pet'])->name('pet-profile.get-pet');
     Route::get('/get-group', [PetProfileController::class, 'get_group'])->name('pet-profile.get-group');
+    
+    Route::resource('pet-activity', PetActivityController::class);
+    Route::get('/get-activity', [PetActivityController::class, 'get_activity'])->name('pet-activity.get-pet');
+    Route::get('/get-group-activity', [PetActivityController::class, 'get_group_activity'])->name('pet-activity.get-group');
+    
+    Route::resource('adoption-item', AdoptionItemController::class);
+    Route::get('/get-adoption-item', [AdoptionItemController::class, 'get_adoption_item'])->name('adoption-item.get-adoption-item');
+    Route::get('/get-group-adoption', [AdoptionItemController::class, 'get_group_activity'])->name('adoption-item.get-adoption-grup');
+    
+    Route::resource('adoption-order', AdoptionOrderController::class);
+    Route::get('/get-adoption-order', [AdoptionOrderController::class, 'get_adoption_order'])->name('adoption-order.get-adoption-order');
+    Route::get('/get-status-adoption', [AdoptionOrderController::class, 'get_status_adoption'])->name('adoption-order.get-adoption-status');
     
     Route::resource('pet-activity', PetActivityController::class);
     Route::get('/get-activity', [PetActivityController::class, 'get_activity'])->name('pet-activity.get-pet');

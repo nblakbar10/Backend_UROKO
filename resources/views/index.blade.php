@@ -1,7 +1,60 @@
 <x-app-layout title="Dashboard">
+    <div id="modal-tambah-user" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Add Admin</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
 
+                <div class="model-body p-4">
+                    <form action="{{ route('user.store') }}" method="POST" id="form-tambah-user"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Username<sup class="text-danger">*</sup></label>
+                            <input id="username" type="text" class="form-control" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Email<sup class="text-danger">*</sup></label>
+                            <input id="email" type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Password<sup class="text-danger">*</sup></label>
+                            <input id="password" type="password" class="form-control" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputUsername1">Confirm Password<sup
+                                    class="text-danger">*</sup></label>
+                            <input id="password" type="password" class="form-control" name="password_confirmation"
+                                required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="main-panel">
         <div class="content-wrapper">
+            @if ($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+            @endif
             <div class="row">
                 <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
                     <div class="card">
@@ -9,17 +62,16 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">$12.34</h3>
-                                        <p class="text-success ml-2 mb-0 font-weight-medium">+3.5%</p>
+                                        <h3 class="mb-0">{{$user}}</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="icon icon-box-success ">
-                                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                        <span class="mdi mdi-nature-people icon-item"></span>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="text-muted font-weight-normal">Potential growth</h6>
+                            <h6 class="text-muted font-weight-normal">Total Users</h6>
                         </div>
                     </div>
                 </div>
@@ -29,17 +81,16 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">$17.34</h3>
-                                        <p class="text-success ml-2 mb-0 font-weight-medium">+11%</p>
+                                        <h3 class="mb-0">{{$merchant}}</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
-                                    <div class="icon icon-box-success">
-                                        <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                    <div class="icon icon-box-warning">
+                                        <span class="mdi mdi-home-variant icon-item"></span>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="text-muted font-weight-normal">Revenue current</h6>
+                            <h6 class="text-muted font-weight-normal">Total Merchants</h6>
                         </div>
                     </div>
                 </div>
@@ -49,17 +100,16 @@
                             <div class="row">
                                 <div class="col-9">
                                     <div class="d-flex align-items-center align-self-start">
-                                        <h3 class="mb-0">$12.34</h3>
-                                        <p class="text-danger ml-2 mb-0 font-weight-medium">-2.4%</p>
+                                        <h3 class="mb-0">{{$pet_profile}}</h3>
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <div class="icon icon-box-danger">
-                                        <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                                        <span class="mdi mdi-cat icon-item"></span>
                                     </div>
                                 </div>
                             </div>
-                            <h6 class="text-muted font-weight-normal">Daily Income</h6>
+                            <h6 class="text-muted font-weight-normal">Total Pets</h6>
                         </div>
                     </div>
                 </div>
