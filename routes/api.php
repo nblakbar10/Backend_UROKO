@@ -10,6 +10,8 @@ use App\Http\Controllers\API\AdoptionItemController;
 use App\Http\Controllers\API\AuctionItemController;
 use App\Http\Controllers\API\RentItemController;
 use App\Http\Controllers\API\AdoptionOrderController;
+use App\Http\Controllers\API\RentOrderController;
+use App\Http\Controllers\API\AuctionOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +68,11 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
 
 
     Route::post('adoptionorder_post/{id}', [AdoptionOrderController::class, 'adoptionorder_post']);
+    Route::get('adoptionorder_getdetail/{id}', [AdoptionOrderController::class, 'adoptionorder_getdetail']);
+
+    Route::post('auctionorder_post/{id}', [AuctionOrderController::class, 'auctionorder_post']);
+
+    Route::post('rentorder_post/{id}', [RentOrderController::class, 'rentorder_post']);
 });
 
 

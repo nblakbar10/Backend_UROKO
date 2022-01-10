@@ -13,6 +13,7 @@ use App\Models\Merchant;
 use App\Models\AdoptionItem;
 use Illuminate\Support\Facades\Validator;
 
+
 class AdoptionOrderController extends Controller
 {
     public function adoptionorder_post(Request $request, $id)
@@ -26,7 +27,6 @@ class AdoptionOrderController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            //'pet_id' => 'required',
             'qty' => 'required',
             'adoption_order_notes' => 'required',
             'shipping_id' => 'required',
@@ -40,7 +40,9 @@ class AdoptionOrderController extends Controller
         }
 
         ////$namamerchant = Merchant::find($id);
-        $totalorder = '785000';
+        $adoptprice = AdoptionItem::find($id)->adoption_item_price;
+
+        $totalorder = $adoptprice + 4500;
         ////$payms = PaymentsOption::find($id);
         ////$ships = Shipping::find($id);
 
@@ -63,7 +65,7 @@ class AdoptionOrderController extends Controller
             // 'qty' => $request->qty,
             // 'description' => $request->description,
             // 'merchant_id' => $request->merchant_id,
-            'adoption_order_status' => 'ini tester-> nanti bikin sistemnya otomatis update'
+            'adoption_order_status' => "BELUM DIKONFIRMASI"
             // 'user_address' => $alamat->address,
 
             // 'adoption_item_price' => $request->adoption_item_price,
@@ -75,6 +77,35 @@ class AdoptionOrderController extends Controller
             'data' => $adoptionorder
         ];     
 
+        return response()->json($data, 200);
+    }
+
+    public function adoptionorder_getdetail(Request $request, $id)
+    {
+        // $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        $adoptionorder = AdoptionOrder::findOrFail($id);
+        if (!$adoptionorder) {
+            $data = [
+                'message' => 'adoption order not found'
+            ];
+            return response()->json($data, 404);
+        }
+        $data = [
+            'adoption_order_id' => $id,
+            'user_id' => $adoptionorder->user_id,
+            'username' =>$adoptionorder->username,
+            'phone_number' => Auth::user()->phone_number,
+            'address' => Auth::user()->address,
+            'adoption_item_id' => $adoptionorder->adoption_item_id,
+            'merchant_id' => $adoptionitem->merchant_id,    //$namamerchant->merchant_name,
+            'pet_id' => $adoptionitem->pet_id,
+            'shipping_id' =>$request->shipping_id,
+            ////'shipping_type' => $ships->shipping_type,
+            'payments_option_id' => $adoptionorder->payments_option_id,
+            ////'payments_option' => $adoptionorder->payment_type,
+            'adoption_order_notes' =>$adoptionorder->adoption_order_notes,
+            'grand_total_order' => $adoptionorder->totalorder,
+        ];
         return response()->json($data, 200);
     }
 }
