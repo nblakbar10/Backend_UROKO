@@ -81,12 +81,13 @@
                                     <thead>
                                         <tr>
                                             <th> # </th>
-                                            <th> Owner </th>
+                                            <th> Buyer </th>
                                             <th> Pet Name </th>
                                             <th> Merchant </th>
                                             <th> Qty </th>
                                             <th> Description </th>
                                             <th> Price </th>
+                                            <th> Order Note </th>
                                             <th> Pet Description </th>
                                             <th> Pet Picture </th>
                                             <th> Shipping Type </th>
@@ -246,6 +247,9 @@
                 searchable: false
             }, {
                 data: 'adoption_item_price',
+                searchable: false
+            }, {
+                data: 'adoption_order_notes',
                 searchable: false
             }, {
                 data: 'pet_detail',

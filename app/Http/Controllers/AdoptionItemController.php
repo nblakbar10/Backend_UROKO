@@ -121,12 +121,12 @@ class AdoptionItemController extends Controller
 
         $datatables = Datatables::of($adoptionItem);
 
-        // if ($request->get('search')['value']) {
-        //     $datatables->filter(function ($query) {
-        //             $keyword = request()->get('search')['value'];
-        //             $query->where('pet', 'like', "%" . $keyword . "%");
+        if ($request->get('search')['value']) {
+            $datatables->filter(function ($query) {
+                    $keyword = request()->get('search')['value'];
+                    $query->where('pet_profile.pet_name', 'like', "%" . $keyword . "%");
 
-        // });}
+        });}
 
         $datatables->orderColumn('updated_at', function ($query, $order) {
             $query->orderBy('adoption_item.updated_at', $order);
