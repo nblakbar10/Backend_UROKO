@@ -13,6 +13,7 @@ class PetActivity extends Model
         'pet_group_id',
         'user_id',
         'pet_id',
+        'pet_activity_type',
         'pet_activity_detail',
         'pet_activity_date'
     ];

@@ -11,7 +11,6 @@ class Merchant extends Model
     public $table = "merchant";
     protected $fillable = [
         'user_id',
-        'user_username',
         'merchant_name',
         'merchant_image',
     ];

@@ -60,7 +60,7 @@ class PetProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'pet_name' => 'required',
-            'pet_group_id' => 'required',
+            // 'pet_group_id' => 'required',
             'pet_species' => 'required',
             'pet_breed' => 'required',
             'pet_morph' => 'required',
@@ -69,7 +69,7 @@ class PetProfileController extends Controller
             'pet_description' => 'required',
             'pet_picture' => 'mimes:jpeg,jpg,png|required|max:10000',
             'pet_status' => 'required',
-            'pet_activity_id'  => 'required',
+            // 'pet_activity_id'  => 'required',
         ]);
 
         if ($validator->fails()) {    
@@ -93,7 +93,7 @@ class PetProfileController extends Controller
             'pet_description' => $request->pet_description,
             'pet_picture' => $fileName_petPicture,
             'pet_status' => $request->pet_status,
-            'pet_activity_id'  => $request->pet_activity_id,
+            // 'pet_activity_id'  => $request->pet_activity_id,
         ]);
 
         $data = [
@@ -165,7 +165,7 @@ class PetProfileController extends Controller
         $allPet = PetProfile::where('user_id', Auth::user()->id)->get();
         $data = [
             'message' => 'Success',
-            'data' => $allPet
+            'pet_remaining' => $allPet
         ];
         return response()->json($data, 200);
     }

@@ -71,14 +71,14 @@ class AdoptionItemController extends Controller
             return response()->json($data, 404);
         }
 
-        // $data = [
-        //     'message' => 'Success',
-        //     'data' => $merchant
-        // ];
+        // // $data = [
+        // //     'message' => 'Success',
+        // //     'data' => $merchant
+        // // ];
 
-        // return response()->json($data, 200);
+        // // return response()->json($data, 200);
 
-
+        //jika ada merchant, maka langsung arahkan ke input adoptionitem
         $pet = PetProfile::where('user_id', Auth::user()->id)->where('id', $id)->first();
 
         if ($pet == NULL) {
@@ -88,7 +88,6 @@ class AdoptionItemController extends Controller
 
             return response()->json($data, 200);
         }
-
 
         $validator = Validator::make($request->all(), [
             //'pet_id' => 'required',
@@ -102,16 +101,12 @@ class AdoptionItemController extends Controller
             return response()->json($validator->messages(), 400);
         }
 
-        
-        // $file_pet_picture = $request->pet_picture;
-        // $fileName_petPicture = time().'_'.$file_pet_picture->getClientOriginalName();
-        // $file_pet_picture->move(public_path('storage/gambar-pet'), $fileName_petPicture);
-
         $adoptionitem = AdoptionItem::create([
             'user_id' => Auth::user()->id,
             'pet_id' => $id,
             'qty' => $request->qty,
             'description' => $request->description,
+            // 'merchant_id' => $merchant->id,
             'merchant_id' => $request->merchant_id,
             'adoption_item_price' => $request->adoption_item_price,
 
@@ -154,9 +149,30 @@ class AdoptionItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function adoptionitem_edit(Request $request, $id)
     {
-        //
+
+        $adoptionitem = AdoptionItem::find($id);
+        $adoptionitem->update($request->all());
+        return response()->json([
+            'status' => 200,
+            "message" => "edit adoptionitem sukses",
+            "data" => $adoptionitem
+        ]);
+
+        // $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->where('id', $id)->first();
+
+        // $dataInput = $request->all();
+
+        // // dd($request);
+        // $adoptionitem->fill($dataInput)->save();
+
+        // $data = [
+        //     'message' => 'Success',
+        //     'data' => $adoptionitem
+        // ];
+
+        // return response()->json($data, 200);
     }
 
     /**
@@ -165,9 +181,19 @@ class AdoptionItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function adoptionitem_delete($id)
     {
-        //
+        
+        $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        $adoptionitem->delete();
+
+        
+        $alladoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->get();
+        $data = [
+            'message' => 'Success',
+            'data' => $alladoptionitem
+        ];
+        return response()->json($data, 200);
     }
 }
 

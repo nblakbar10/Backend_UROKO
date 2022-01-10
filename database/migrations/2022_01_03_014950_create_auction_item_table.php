@@ -29,7 +29,6 @@ class CreateAuctionItemTable extends Migration
             $table->integer('qty');
             $table->string('description');
             $table->integer('merchant_id');
-            
             $table->integer('auction_bid_start');
             $table->timestamps();
         });
