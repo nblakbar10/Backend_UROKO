@@ -36,6 +36,7 @@ Route::get('/verified', function () {
 
 Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('dashboard', DashboardController::class);
+    Route::get('/all-activity', [DashboardController::class, 'all_activity']);
 
     Route::resource('lelang', DaftarLelangController::class);
 
