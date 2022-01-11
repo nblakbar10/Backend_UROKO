@@ -78,6 +78,8 @@ class AuctionOrderController extends Controller
 
         $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
         ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_order.pet_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('auction_order.id',$auctionorder->id)
         ->get();
         // dd($auctionorderjoin);
@@ -148,7 +150,9 @@ class AuctionOrderController extends Controller
         }
 
         $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
-        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_order.pet_id')
+        //->select('pet_profile.*', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('auction_order.id', $id)
         // ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
@@ -171,6 +175,8 @@ class AuctionOrderController extends Controller
 
         $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
         ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_order.pet_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
 
@@ -189,10 +195,18 @@ class AuctionOrderController extends Controller
 
         $auctionorder->update(['bid_order_status' => 'CANCELLED']);
 
+        $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_order.pet_id')
+        //->select('pet_profile.*', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('auction_order.id', $id)
+        // ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
         return response()->json([
             'status' => 200,
             'message' =>'Cancel auction order success',
-            'data' => $auctionorder
+            'data' => $auctionorderjoin
         ]);
     }
 }

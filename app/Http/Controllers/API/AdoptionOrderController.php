@@ -67,6 +67,8 @@ class AdoptionOrderController extends Controller
 
         $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
         ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_order.pet_id')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('adoption_order.id',$adoptionorder->id)
         ->get();
         // dd($adoptionorderjoin);
@@ -90,7 +92,9 @@ class AdoptionOrderController extends Controller
         }
 
         $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
-        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_order.pet_id')
+        //->select('pet_profile.*', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('adoption_order.id', $id)
         // ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
@@ -113,7 +117,8 @@ class AdoptionOrderController extends Controller
 
         $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
         ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address')
-        // ->where('adoption_order.id', $id)
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_order.pet_id')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
 
@@ -133,10 +138,18 @@ class AdoptionOrderController extends Controller
 
         $adoptionorder->update(['adoption_order_status' => 'CANCELLED']);
 
+        $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_order.pet_id')
+        //->select('pet_profile.*', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('adoption_order.id', $id)
+        // ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
         return response()->json([
             'status' => 200,
             'message' =>'Cancel adoption order success',
-            'data' => $adoptionorder
+            'data' => $adoptionorderjoin
         ]);
     }
 }

@@ -109,13 +109,15 @@ class RentOrderController extends Controller
 
         $rentorderjoin = RentOrder::leftjoin('users','users.id', 'rent_order.user_id')
         ->select('rent_order.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_order.pet_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('rent_order.id',$rentorder->id)
         ->get();
         // dd($rentorderjoin);
-        
+
         $data = [
             'message' => 'Success',
-            'data' => $rentorder
+            'data' => $rentorderjoin
         ];     
         return response()->json($data, 200);
     }
@@ -132,8 +134,10 @@ class RentOrderController extends Controller
             return response()->json($data, 404);
         }
 
-        $rentorderjoin = rentOrder::leftjoin('users','users.id', 'rent_order.user_id')
-        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address')
+        $rentorderjoin = RentOrder::leftjoin('users','users.id', 'rent_order.user_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_order.pet_id')
+        //->select('pet_profile.*', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('rent_order.id', $id)
         // ->where('rent_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
@@ -145,7 +149,7 @@ class RentOrderController extends Controller
     {
 
         $rentorder = rentOrder::where('user_id', Auth::user()->id)->get();
-        
+
         if (!$rentorder) {
             $data = [
                 'message' => 'rent order not found'
@@ -155,7 +159,8 @@ class RentOrderController extends Controller
 
         $rentorderjoin = RentOrder::leftjoin('users','users.id', 'rent_order.user_id')
         ->select('rent_order.*','users.username', 'users.phone_number', 'users.address')
-        // ->where('rent_order.id', $id)
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_order.pet_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
         ->where('rent_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
 
@@ -175,10 +180,18 @@ class RentOrderController extends Controller
 
         $rentorder->update(['rent_order_status' => 'CANCELLED']);
 
+        $rentorderjoin = RentOrder::leftjoin('users','users.id', 'rent_order.user_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_order.pet_id')
+        //->select('pet_profile.*', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('rent_order.id', $id)
+        // ->where('rent_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
         return response()->json([
             'status' => 200,
             'message' =>'Cancel rent order success',
-            'data' => $rentorder
+            'data' => $rentorderjoin
         ]);
     }
 }
