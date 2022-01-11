@@ -6,9 +6,11 @@ use App\Http\Controllers\API\MerchantController;
 use App\Http\Controllers\API\PetProfileController;
 use App\Http\Controllers\API\PetActivityController;
 use App\Http\Controllers\API\PetGroupController;
+
 use App\Http\Controllers\API\AdoptionItemController;
 use App\Http\Controllers\API\AuctionItemController;
 use App\Http\Controllers\API\RentItemController;
+
 use App\Http\Controllers\API\AdoptionOrderController;
 use App\Http\Controllers\API\RentOrderController;
 use App\Http\Controllers\API\AuctionOrderController;
@@ -69,6 +71,7 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
 
     Route::post('adoptionorder_post/{id}', [AdoptionOrderController::class, 'adoptionorder_post']);
     Route::get('adoptionorder_getdetail/{id}', [AdoptionOrderController::class, 'adoptionorder_getdetail']);
+    Route::get('adoptionorder_getall', [AdoptionOrderController::class, 'adoptionorder_getall']);
 
     Route::post('auctionorder_post/{id}', [AuctionOrderController::class, 'auctionorder_post']);
 

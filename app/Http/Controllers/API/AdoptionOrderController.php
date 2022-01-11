@@ -27,7 +27,7 @@ class AdoptionOrderController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'qty' => 'required',
+            // 'qty' => 'required',
             'adoption_order_notes' => 'required',
             'shipping_id' => 'required',
             'payments_option_id' => 'required',
@@ -72,9 +72,15 @@ class AdoptionOrderController extends Controller
 
         ]);
 
+        $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('adoption_order.id',$adoptionorder->id)
+        ->get();
+        // dd($adoptionorderjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $adoptionorder
+            'data' => $adoptionorderjoin
         ];     
 
         return response()->json($data, 200);
@@ -90,22 +96,36 @@ class AdoptionOrderController extends Controller
             ];
             return response()->json($data, 404);
         }
-        $data = [
-            'adoption_order_id' => $id,
-            'user_id' => $adoptionorder->user_id,
-            'username' =>$adoptionorder->username,
-            'phone_number' => Auth::user()->phone_number,
-            'address' => Auth::user()->address,
-            'adoption_item_id' => $adoptionorder->adoption_item_id,
-            'merchant_id' => $adoptionitem->merchant_id,    //$namamerchant->merchant_name,
-            'pet_id' => $adoptionitem->pet_id,
-            'shipping_id' =>$request->shipping_id,
-            ////'shipping_type' => $ships->shipping_type,
-            'payments_option_id' => $adoptionorder->payments_option_id,
-            ////'payments_option' => $adoptionorder->payment_type,
-            'adoption_order_notes' =>$adoptionorder->adoption_order_notes,
-            'grand_total_order' => $adoptionorder->totalorder,
-        ];
-        return response()->json($data, 200);
+
+        $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('adoption_order.id', $id)
+        // ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
+        return response()->json($adoptionorderjoin, 200);
+    }
+
+    public function adoptionorder_getall(Request $request)
+    {
+
+        $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->get();
+        // $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        // $adoptionorder = AdoptionOrder::findOrFail($id);
+        if (!$adoptionorder) {
+            $data = [
+                'message' => 'adoption order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
+        ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address')
+        // ->where('adoption_order.id', $id)
+        ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
+        return response()->json($adoptionorderjoin, 200);
+        
     }
 }
