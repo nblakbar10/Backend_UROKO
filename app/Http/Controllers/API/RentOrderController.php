@@ -92,30 +92,93 @@ class RentOrderController extends Controller
             'rent_order_return' => $request->rent_order_return,
             'rent_order_duration' => count($date_duration),
             'rent_order_notes' => $request->rent_order_notes,
-            
             'shipping_id' =>$request->shipping_id,
             ////'shipping_type' => $ships->shipping_type,
             'payments_option_id' => $request->payments_option_id,
             ////'payments_option' => $payms->payment_type,
             'rent_order_notes' =>$request->rent_order_notes,
             'grand_total_order' => $totalorder,
-
             // 'pet_id' => $id,
             // 'qty' => $request->qty,
             // 'description' => $request->description,
             // 'merchant_id' => $request->merchant_id,
             'rent_order_status' => "BELUM DIKONFIRMASI"
             // 'user_address' => $alamat->address,
-
             // 'adoption_item_price' => $request->adoption_item_price,
-
         ]);
 
+        $rentorderjoin = RentOrder::leftjoin('users','users.id', 'rent_order.user_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('rent_order.id',$rentorder->id)
+        ->get();
+        // dd($rentorderjoin);
+        
         $data = [
             'message' => 'Success',
             'data' => $rentorder
         ];     
-
         return response()->json($data, 200);
+    }
+
+
+    public function rentorder_getdetail(Request $request, $id)
+    {
+        // $rentorder = rentOrder::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        $rentorder = RentOrder::findOrFail($id);
+        if (!$rentorder) {
+            $data = [
+                'message' => 'rent order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $rentorderjoin = rentOrder::leftjoin('users','users.id', 'rent_order.user_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('rent_order.id', $id)
+        // ->where('rent_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
+        return response()->json($rentorderjoin, 200);
+    }
+
+    public function rentorder_getall(Request $request)
+    {
+
+        $rentorder = rentOrder::where('user_id', Auth::user()->id)->get();
+        
+        if (!$rentorder) {
+            $data = [
+                'message' => 'rent order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $rentorderjoin = RentOrder::leftjoin('users','users.id', 'rent_order.user_id')
+        ->select('rent_order.*','users.username', 'users.phone_number', 'users.address')
+        // ->where('rent_order.id', $id)
+        ->where('rent_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
+        return response()->json($rentorderjoin, 200);
+    }
+
+
+    public function rentorder_cancel(Request $request, $id)
+    {
+        $rentorder = rentOrder::findOrFail($id);
+        if (!$rentorder) {
+            $data = [
+                'message' => 'rent order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $rentorder->update(['rent_order_status' => 'CANCELLED']);
+
+        return response()->json([
+            'status' => 200,
+            'message' =>'Cancel rent order success',
+            'data' => $rentorder
+        ]);
     }
 }

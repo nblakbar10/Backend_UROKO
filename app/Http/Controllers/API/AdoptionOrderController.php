@@ -25,23 +25,19 @@ class AdoptionOrderController extends Controller
             ];
             return response()->json($data, 404);
         }
-
         $validator = Validator::make($request->all(), [
             // 'qty' => 'required',
             'adoption_order_notes' => 'required',
             'shipping_id' => 'required',
             'payments_option_id' => 'required',
             // 'grand_total_order' => 
-
         ]);
 
         if ($validator->fails()) {    
             return response()->json($validator->messages(), 400);
         }
-
         ////$namamerchant = Merchant::find($id);
         $adoptprice = AdoptionItem::find($id)->adoption_item_price;
-
         $totalorder = $adoptprice + 4500;
         ////$payms = PaymentsOption::find($id);
         ////$ships = Shipping::find($id);
@@ -60,16 +56,13 @@ class AdoptionOrderController extends Controller
             ////'payments_option' => $payms->payment_type,
             'adoption_order_notes' =>$request->adoption_order_notes,
             'grand_total_order' => $totalorder,
-
             // 'pet_id' => $id,
             // 'qty' => $request->qty,
             // 'description' => $request->description,
             // 'merchant_id' => $request->merchant_id,
             'adoption_order_status' => "BELUM DIKONFIRMASI"
             // 'user_address' => $alamat->address,
-
             // 'adoption_item_price' => $request->adoption_item_price,
-
         ]);
 
         $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
@@ -82,7 +75,6 @@ class AdoptionOrderController extends Controller
             'message' => 'Success',
             'data' => $adoptionorderjoin
         ];     
-
         return response()->json($data, 200);
     }
 
@@ -127,5 +119,24 @@ class AdoptionOrderController extends Controller
 
         return response()->json($adoptionorderjoin, 200);
         
+    }
+
+    public function adoptionorder_cancel(Request $request, $id)
+    {
+        $adoptionorder = AdoptionOrder::findOrFail($id);
+        if (!$adoptionorder) {
+            $data = [
+                'message' => 'adoption order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $adoptionorder->update(['adoption_order_status' => 'CANCELLED']);
+
+        return response()->json([
+            'status' => 200,
+            'message' =>'Cancel adoption order success',
+            'data' => $adoptionorder
+        ]);
     }
 }

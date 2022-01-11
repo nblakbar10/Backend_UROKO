@@ -63,29 +63,29 @@ class AuctionOrderController extends Controller
             'shipping_id' => $request->shipping_id,
             'bid_order_set' => $request->bid_order_set,
             'bid_order_notes' =>$request->bid_order_notes,
-
             ////'shipping_type' => $ships->shipping_type,
             'payments_option_id' => $request->payments_option_id,
             ////'payments_option' => $payms->payment_type,
-            
             'grand_total_order' => $totalorder,
-
             // 'pet_id' => $id,
             // 'qty' => $request->qty,
             // 'description' => $request->description,
             // 'merchant_id' => $request->merchant_id,
             'bid_order_status' => "BELUM DIKONFIRMASI"
             // 'user_address' => $alamat->address,
-
             // 'adoption_item_price' => $request->adoption_item_price,
-
         ]);
+
+        $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('auction_order.id',$auctionorder->id)
+        ->get();
+        // dd($auctionorderjoin);
 
         $data = [
             'message' => 'Success',
-            'data' => $auctionorder
+            'data' => $auctionorderjoin
         ];     
-
         return response()->json($data, 200);
     }
 
@@ -133,5 +133,66 @@ class AuctionOrderController extends Controller
     public function destroy(Auction $auction)
     {
         //
+    }
+
+
+    public function auctionorder_getdetail(Request $request, $id)
+    {
+        // $auctionorder = auctionOrder::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        $auctionorder = AuctionOrder::findOrFail($id);
+        if (!$auctionorder) {
+            $data = [
+                'message' => 'auction order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('auction_order.id', $id)
+        // ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
+        return response()->json($auctionorderjoin, 200);
+    }
+
+    public function auctionorder_getall(Request $request)
+    {
+
+        $auctionorder = AuctionOrder::where('user_id', Auth::user()->id)->get();
+        // $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        // $adoptionorder = AdoptionOrder::findOrFail($id);
+        if (!$auctionorder) {
+            $data = [
+                'message' => 'auction order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
+        ->get();
+
+        return response()->json($auctionorderjoin, 200);
+    }
+
+    public function auctionorder_cancel(Request $request, $id)
+    {
+        $auctionorder = auctionOrder::findOrFail($id);
+        if (!$auctionorder) {
+            $data = [
+                'message' => 'auction order not found'
+            ];
+            return response()->json($data, 404);
+        }
+
+        $auctionorder->update(['bid_order_status' => 'CANCELLED']);
+
+        return response()->json([
+            'status' => 200,
+            'message' =>'Cancel auction order success',
+            'data' => $auctionorder
+        ]);
     }
 }
