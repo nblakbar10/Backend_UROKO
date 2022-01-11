@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 
 class PetGalleryController extends Controller
 {
-    //
+    //nanti disini bikin fungsi2 : petgallery_get, petgaller_get_detail
 }
