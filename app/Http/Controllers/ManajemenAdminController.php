@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Auth;
 use App\Models\Merchant;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
@@ -29,7 +30,8 @@ class ManajemenAdminController extends Controller
      */
     public function create()
     {
-        //
+        $admin = User::find(Auth::user()->id);
+        return view('Admin.Admin.edit-admin', compact('admin'));
     }
 
     /**
