@@ -35,9 +35,18 @@ class RentItemController extends Controller
         foreach ($rentitem as $key => $value) {
             array_push($array, $value);
         }
+
+        $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('rent_item.user_id', Auth::user()->id) //ini buat get semua itemnya
+        ->get();
+        // dd($rentitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $array
+            'data' => $rentitemjoin
         ];     
 
         return response()->json($data, 200);
@@ -105,9 +114,17 @@ class RentItemController extends Controller
 
         ]);
 
+        $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('rent_item.id',$rentitem->id)
+        ->get();
+        // dd($rentitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $rentitem
+            'data' => $rentitemjoin
         ];     
 
         return response()->json($data, 200);
@@ -136,10 +153,18 @@ class RentItemController extends Controller
 
         $rentitem = RentItem::find($id);
         $rentitem->update($request->all());
+
+        $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('rent_item.id',$rentitem->id)
+        ->get();
+
         return response()->json([
             'status' => 200,
             "message" => "edit rentitem sukses",
-            "data" => $rentitem
+            "data" => $rentitemjoin
         ]);
     }
 
@@ -156,9 +181,18 @@ class RentItemController extends Controller
 
         
         $allrentitem = RentItem::where('user_id', Auth::user()->id)->get();
+
+        $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('rent_item.user_id', Auth::user()->id) //ini buat get semua itemnya
+        ->get();
+        // dd($rentitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $allrentitem
+            'data' => $rentitemjoin
         ];
         return response()->json($data, 200);
     }

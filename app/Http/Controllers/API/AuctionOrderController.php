@@ -160,6 +160,7 @@ class AuctionOrderController extends Controller
         return response()->json($auctionorderjoin, 200);
     }
 
+    
     public function auctionorder_getall(Request $request)
     {
 

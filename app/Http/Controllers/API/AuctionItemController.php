@@ -35,9 +35,18 @@ class AuctionItemController extends Controller
         foreach ($auctionitem as $key => $value) {
             array_push($array, $value);
         }
+
+        $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('auction_item.user_id', Auth::user()->id) //ini buat get semua itemnya
+        ->get();
+        // dd($auctionitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $array
+            'data' => $auctionitemjoin
         ];     
 
         return response()->json($data, 200);
@@ -105,9 +114,17 @@ class AuctionItemController extends Controller
 
         ]);
 
+        $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('auction_item.id',$auctionitem->id)
+        ->get();
+        // dd($auctionitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $auctionitem
+            'data' => $auctionitemjoin
         ];     
 
         return response()->json($data, 200);
@@ -136,10 +153,18 @@ class AuctionItemController extends Controller
 
         $auctionitem = AuctionItem::find($id);
         $auctionitem->update($request->all());
+
+        $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('auction_item.id',$auctionitem->id)
+        ->get();
+
         return response()->json([
             'status' => 200,
             "message" => "edit auctionitem sukses",
-            "data" => $auctionitem
+            "data" => $auctionitemjoin
         ]);
     }
 
@@ -156,9 +181,18 @@ class AuctionItemController extends Controller
 
         
         $allauctionitem = AuctionItem::where('user_id', Auth::user()->id)->get();
+
+        $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('auction_item.user_id', Auth::user()->id) //ini buat get semua itemnya
+        ->get();
+        // dd($auctionitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $allauctionitem
+            'data' => $auctionitemjoin
         ];
         return response()->json($data, 200);
     }

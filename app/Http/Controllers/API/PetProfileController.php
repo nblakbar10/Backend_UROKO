@@ -76,10 +76,12 @@ class PetProfileController extends Controller
             return response()->json($validator->messages(), 400);
         }
 
+        $host = $request->getSchemeAndHttpHost();
         
         $file_pet_picture = $request->pet_picture;
-        $fileName_petPicture = time().'_'.$file_pet_picture->getClientOriginalName();
+        $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$file_pet_picture->getClientOriginalName();
         $file_pet_picture->move(public_path('storage/gambar-pet'), $fileName_petPicture);
+
 
         $petProfile = PetProfile::create([
             'pet_name' => $request->pet_name,
@@ -133,21 +135,40 @@ class PetProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
         $pet = PetProfile::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        // dd($request->merchant_image);
+        if ($request->pet_picture  == NULL) {
+            $dataInput = $request->all();
+            $pet->fill($dataInput)->save();
 
-        $dataInput = $request->all();
+            return response()->json($data, 200);
+            // return redirect()->back()->with('success', 'Berhasil melakukan update merchant');
+        } else {
 
-        // dd($request);
-        $pet->fill($dataInput)->save();
+            $host = $request->getSchemeAndHttpHost();
+            $file_pet_picture = $request->pet_picture;
+            $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$file_pet_picture->getClientOriginalName();
+            $file_pet_picture->move(public_path('storage/gambar-pet'), $fileName_petPicture);
 
-        $data = [
-            'message' => 'Success',
-            'data' => $pet
-        ];
+            $pet->update([
+                'pet_name' => $request->pet_name,
+                'pet_group_id' => $request->pet_group_id,
+                'user_id' => Auth::user()->id,
+                'pet_species' => $request->pet_species,
+                'pet_breed' => $request->pet_breed,
+                'pet_morph' => $request->pet_morph,
+                'pet_birthdate' => $request->pet_birthdate,
+                'pet_age' => $request->pet_age,
+                'pet_description' => $request->pet_description,
+                'pet_picture' => $fileName_petPicture,
+                'pet_status' => $request->pet_status,
+            ]);
 
-        return response()->json($data, 200);
+            return response()->json($pet, 200);
+        }
     }
 
     /**
