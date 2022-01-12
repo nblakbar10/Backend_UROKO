@@ -19,14 +19,14 @@ class AuctionOrder extends Model
         'auction_item_id',
         'pet_id',
         'bid_order_set',
-        'bid_status',
-        'bid_comments',
+        // 'bid_status',
+        'bid_order_notes',
         'shipping_id',
         // 'shipping_type',
         // 'shipping_fee',
         'grand_total_order',
-        'payments_option',
-        'auction_order_status'
+        'payments_option_id',
+        'bid_order_status'
     ];
    
     public function getUpdatedAtAttribute($value)

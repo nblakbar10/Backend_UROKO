@@ -6,9 +6,11 @@ use App\Http\Controllers\API\MerchantController;
 use App\Http\Controllers\API\PetProfileController;
 use App\Http\Controllers\API\PetActivityController;
 use App\Http\Controllers\API\PetGroupController;
+
 use App\Http\Controllers\API\AdoptionItemController;
 use App\Http\Controllers\API\AuctionItemController;
 use App\Http\Controllers\API\RentItemController;
+
 use App\Http\Controllers\API\AdoptionOrderController;
 use App\Http\Controllers\API\RentOrderController;
 use App\Http\Controllers\API\AuctionOrderController;
@@ -64,15 +66,22 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::post('rentitem_edit/{id}', [RentItemController::class, 'rentitem_edit']);
     Route::delete('rentitem_delete/{id}', [RentItemController::class, 'rentitem_delete']);
 
-    Route::get('transaction_index', [TransactionController::class, 'transaction_index']);
-
-
     Route::post('adoptionorder_post/{id}', [AdoptionOrderController::class, 'adoptionorder_post']);
     Route::get('adoptionorder_getdetail/{id}', [AdoptionOrderController::class, 'adoptionorder_getdetail']);
+    Route::get('adoptionorder_getall', [AdoptionOrderController::class, 'adoptionorder_getall']);
+    Route::post('adoptionorder_cancel/{id}', [AdoptionOrderController::class, 'adoptionorder_cancel']);
 
     Route::post('auctionorder_post/{id}', [AuctionOrderController::class, 'auctionorder_post']);
+    Route::get('auctionorder_getdetail/{id}', [AuctionOrderController::class, 'auctionorder_getdetail']);
+    Route::get('auctionorder_getall', [AuctionOrderController::class, 'auctionorder_getall']);
+    Route::post('auctionorder_cancel/{id}', [AuctionOrderController::class, 'auctionorder_cancel']);
 
     Route::post('rentorder_post/{id}', [RentOrderController::class, 'rentorder_post']);
+    Route::get('rentorder_getdetail/{id}', [RentOrderController::class, 'rentorder_getdetail']);
+    Route::get('rentorder_getall', [RentOrderController::class, 'rentorder_getall']);
+    Route::post('rentorder_cancel/{id}', [RentOrderController::class, 'rentorder_cancel']);
+
+    Route::get('transaction_index', [TransactionController::class, 'transaction_index']);
 });
 
 

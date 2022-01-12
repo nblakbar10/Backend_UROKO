@@ -29,7 +29,7 @@ class RentOrder extends Model
         // 'shipping_type',
         // 'shipping_fee',
         'grand_total_order',
-        'payments_option',
+        'payments_option_id',
         'rent_order_status'
     ];
    

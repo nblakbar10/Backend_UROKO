@@ -12,6 +12,7 @@
         "laravel/passport": "^10.2",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "nesbot/carbon": "^2.55",
         "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {

@@ -39,7 +39,7 @@ class CreateRentOrderTable extends Migration
             $table->integer('shipping_id');
            
             $table->integer('grand_total_order');
-            $table->string('payments_option');
+            $table->string('payments_option_id');
             $table->string('rent_order_status');
             $table->timestamps();
         });

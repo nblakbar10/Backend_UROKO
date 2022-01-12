@@ -157,4 +157,24 @@ class RentOrderController extends Controller
         ->addColumn('pet_detail','Admin.Rent-Order.detail-pet')
         ->toJson();
     }
+
+
+    // public function rentorder_cancel(Request $request, $id)
+    // {
+    //     $rentorder = rentOrder::findOrFail($id);
+    //     if (!$auctionorder) {
+    //         $data = [
+    //             'message' => 'rent order not found'
+    //         ];
+    //         return response()->json($data, 404);
+    //     }
+
+    //     $rentorder->update(['rent_order_status' => 'CANCELLED']);
+
+    //     return response()->json([
+    //         'status' => 200,
+    //         'message' =>'Cancel rent order success',
+    //         'data' => $rentorder
+    //     ]);
+    // }
 }

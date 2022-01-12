@@ -29,13 +29,13 @@ class CreateAuctionOrderTable extends Migration
             $table->integer('auction_item_id');
             $table->integer('pet_id');
             $table->integer('bid_order_set');
-            $table->boolean('bid_status')->default(0)->change();
-            $table->string('bid_comments');
+            // $table->boolean('bid_status')->default(0)->change();
+            $table->string('bid_order_notes');
             $table->integer('shipping_id');
             
             $table->integer('grand_total_order');
-            $table->string('payments_option');
-            $table->string('auction_order_status');
+            $table->string('payments_option_id');
+            $table->string('bid_order_status');
             $table->timestamps();
         });
     }
