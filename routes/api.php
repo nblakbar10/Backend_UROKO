@@ -7,6 +7,8 @@ use App\Http\Controllers\API\PetProfileController;
 use App\Http\Controllers\API\PetActivityController;
 use App\Http\Controllers\API\PetGroupController;
 
+use App\Http\Controllers\API\ManajemenUserController;
+
 use App\Http\Controllers\API\AdoptionItemController;
 use App\Http\Controllers\API\AuctionItemController;
 use App\Http\Controllers\API\RentItemController;
@@ -32,15 +34,24 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:api','apiverified']], function(){
     //User
+    Route::post('/manajemen-profile-update', [ManajemenUserController::class, 'update_user_profile']);
+    Route::delete('/manajemen-profile-delete', [ManajemenUserController::class, 'delete_user_profile']);
+
     Route::resource('merchant-user', MerchantController::class);
 
     Route::resource('pet-profile-user', PetProfileController::class);
     Route::get('/pet-profile-user/detail/{id}', [PetProfileController::class, 'detail_pet'])->name('user.detail-pet');
 
     
-    Route::resource('pet-activity-user', PetActivityController::class);
-    Route::get('/pet-activity-user/detail/{id}', [PetActivityController::class, 'detail_activity'])->name('user.detail-activity');
-    Route::get('/pet-activity-user/group/{id}', [PetActivityController::class, 'group_activity'])->name('user.group-activity');
+    // Route::resource('pet-activity-user', PetActivityController::class);
+    Route::get('/pet-activity-index', [PetActivityController::class, 'pet_activity_by_user']);
+    Route::get('/pet-activity-index/{group_id}', [PetActivityController::class, 'pet_activity_by_group']);
+    Route::get('/pet-activity-index/{group_id}/{pet_id}/', [PetActivityController::class, 'pet_activity_by_petid']);
+    Route::post('/pet-activity-post/{pet_id}/', [PetActivityController::class, 'post_pet_activity']);
+    Route::post('/pet-activity-update/{id}/', [PetActivityController::class, 'update_pet_activity']);
+    Route::delete('/pet-activity-delete/{id}/', [PetActivityController::class, 'delete_pet_activity']);
+    // Route::get('/pet-activity/detail/{id}', [PetActivityController::class, 'detail_activity']);
+    // Route::get('/pet-activity/group/{id}', [PetActivityController::class, 'group_activity'])->name('user.group-activity');
 
     
     Route::resource('pet-group-user', PetGroupController::class);
@@ -49,6 +60,8 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
 
     Route::get('merchant_index', [MerchantController::class, 'merchant_index']);
     Route::post('merchant_post', [MerchantController::class, 'merchant_post']);
+    Route::post('merchant_update', [MerchantController::class, 'merchant_update']);
+    Route::delete('merchant_delete', [MerchantController::class, 'merchant_delete']);
 
 
     Route::get('adoptionitem_index', [AdoptionItemController::class, 'adoptionitem_index']);
