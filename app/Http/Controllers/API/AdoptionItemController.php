@@ -35,9 +35,18 @@ class AdoptionItemController extends Controller
         foreach ($adoptionitem as $key => $value) {
             array_push($array, $value);
         }
+
+        $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
+        ->get();
+        // dd($adoptionitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $array
+            'data' => $adoptionitemjoin
         ];     
 
         return response()->json($data, 200);
@@ -112,9 +121,17 @@ class AdoptionItemController extends Controller
 
         ]);
 
+        $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('adoption_item.id',$adoptionitem->id)
+        ->get();
+        // dd($adoptionitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $adoptionitem
+            'data' => $adoptionitemjoin
         ];     
 
         return response()->json($data, 200);
@@ -154,10 +171,19 @@ class AdoptionItemController extends Controller
 
         $adoptionitem = AdoptionItem::find($id);
         $adoptionitem->update($request->all());
+
+        $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('adoption_item.id',$adoptionitem->id)
+        ->get();
+        // dd($adoptionitemjoin);
+            
         return response()->json([
             'status' => 200,
-            "message" => "edit adoptionitem sukses",
-            "data" => $adoptionitem
+            'message' => 'Success',
+            'data' => $adoptionitemjoin
         ]);
 
         // $adoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->where('id', $id)->first();
@@ -189,9 +215,21 @@ class AdoptionItemController extends Controller
 
         
         $alladoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->get();
+
+        $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
+        ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
+        ->get();
+        // dd($adoptionitemjoin);
+
         $data = [
             'message' => 'Success',
-            'data' => $alladoptionitem
+            'data' => $adoptionitemjoin
+        // $data = [
+        //     'message' => 'Success',
+        //     'data' => $alladoptionitem
         ];
         return response()->json($data, 200);
     }

@@ -199,6 +199,14 @@ class MerchantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $merchant = 
+        Merchant::where('user_id', Auth::user()->id)->where('id', $id)->first();
+        $merchant->delete();
+
+        $data = [
+            'message' => 'delete merchant Success',
+            'merchant_remaining' => $merchant
+        ];
+        return response()->json($data, 200);
     }
 }
