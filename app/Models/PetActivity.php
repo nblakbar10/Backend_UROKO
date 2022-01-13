@@ -15,6 +15,16 @@ class PetActivity extends Model
         'pet_id',
         'pet_activity_type',
         'pet_activity_detail',
-        'pet_activity_date'
+        'pet_activity_date',
+        'pet_activity_image'
     ];
+
+    public function getUpdatedAtAttribute($value)
+    {
+        return date('d-m-Y H:i:s', strtotime($value));
+    }
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-m-Y H:i:s', strtotime($value));
+    }
 }

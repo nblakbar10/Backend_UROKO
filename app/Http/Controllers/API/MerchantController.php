@@ -96,6 +96,67 @@ class MerchantController extends Controller
 
     }
 
+    public function merchant_update(Request $request)
+    {
+        
+        $merchant = Merchant::where('user_id', Auth::user()->id)->first();
+
+        if ($merchant == NULL) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Anda tidak memiliki merchant'
+            ];  
+            return response()->json($data, 400);
+        }
+
+        $input = $request->all();
+
+        if ($request->merchant_image != NULL) {
+            $file_merchant_image = $request->merchant_image;
+            $fileName_merchant_image = time().'_'.$file_merchant_image->getClientOriginalName();
+            $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchant_image);
+
+            
+            $merchant->fill($input)->save();
+            $merchant->update([
+                'merchant_image' => $fileName_merchant_image
+            ]);
+
+            $data = [
+                'message' => 'Success',
+                'data' => $merchant
+            ];  
+            return response()->json($data, 200);
+        }
+        
+        $merchant->fill($input)->save();
+
+        $data = [
+            'message' => 'Success',
+            'data' => $merchant
+        ];  
+        return response()->json($data, 200);
+    }
+
+    public function merchant_delete(Request $request)
+    {
+        $merchant = Merchant::where('user_id', Auth::user()->id)->first();
+        if ($merchant == NULL) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Anda tidak memiliki merchant'
+            ];  
+            return response()->json($data, 400);
+        }
+        $user->delete();
+
+        $data = [
+            'message' => 'Success',
+            'data' => 'Berhasil menghapus akun'
+        ];  
+        return response()->json($data, 200);
+    }
+
     /**
      * Display the specified resource.
      *

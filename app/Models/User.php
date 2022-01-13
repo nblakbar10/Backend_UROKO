@@ -59,4 +59,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return date('d-m-Y H:i:s', strtotime($value));
     }
+    public function getEmailVerifiedAtAttribute($value)
+    {
+        return date('d-m-Y H:i:s', strtotime($value));
+    }
 }
