@@ -22,6 +22,9 @@ class PetProfile extends Model
         'pet_picture',
         'pet_status',
     ];
+    protected $casts = [
+        'pet_picture' => 'array',
+    ];
    
     public function getUpdatedAtAttribute($value)
     {

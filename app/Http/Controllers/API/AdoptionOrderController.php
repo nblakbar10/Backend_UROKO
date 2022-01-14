@@ -106,8 +106,6 @@ class AdoptionOrderController extends Controller
     {
 
         $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->get();
-        // $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->where('id', $id)->first();
-        // $adoptionorder = AdoptionOrder::findOrFail($id);
         if (!$adoptionorder) {
             $data = [
                 'message' => 'adoption order not found'

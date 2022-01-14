@@ -77,9 +77,10 @@ class AuctionOrderController extends Controller
         ]);
 
         $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
-        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
+        // ->select('auction_order.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'auction_order.pet_id')
-        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'auction_order.merchant_id')
+        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed', 'merchant.merchant_name')
         ->where('auction_order.id',$auctionorder->id)
         ->get();
         // dd($auctionorderjoin);
