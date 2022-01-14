@@ -17,6 +17,7 @@ class CreatePetGroupingTable extends Migration
             $table->id();
             $table->integer("user_id");
             $table->string("pet_group_name");
+            // $table->string("pet_profile_id"); 
             $table->timestamps();
         });
     }

@@ -37,9 +37,12 @@ class RentItemController extends Controller
         }
 
         $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'rent_item.merchant_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('rent_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($rentitemjoin);
@@ -115,9 +118,12 @@ class RentItemController extends Controller
         ]);
 
         $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'rent_item.merchant_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('rent_item.id',$rentitem->id)
         ->get();
         // dd($rentitemjoin);
@@ -155,9 +161,12 @@ class RentItemController extends Controller
         $rentitem->update($request->all());
 
         $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'rent_item.merchant_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('rent_item.id',$rentitem->id)
         ->get();
 
@@ -183,9 +192,12 @@ class RentItemController extends Controller
         $allrentitem = RentItem::where('user_id', Auth::user()->id)->get();
 
         $rentitemjoin = Rentitem::leftjoin('users','users.id', 'rent_item.user_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'rent_item.pet_id')
-        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'rent_item.merchant_id')
+        ->select('rent_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('rent_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($rentitemjoin);

@@ -54,6 +54,9 @@ class RegisteredUserController extends Controller
             'role' => 'User'
         ]);
 
+        $success['token'] =  $user->createToken('nApp')->accessToken;
+        $success['name'] =  $user->name;
+
         // event(new Registered($user));
 
         // Auth::login($user);
@@ -61,6 +64,7 @@ class RegisteredUserController extends Controller
         // return redirect(RouteServiceProvider::HOME);
         $data = [
             'message' => 'Succes',
+            'token' => $success['token'],
             'data' => $user
         ];
         return response()->json($data, 200);

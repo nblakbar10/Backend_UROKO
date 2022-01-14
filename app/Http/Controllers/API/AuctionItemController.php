@@ -37,9 +37,12 @@ class AuctionItemController extends Controller
         }
 
         $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'auction_item.merchant_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('auction_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($auctionitemjoin);
@@ -115,9 +118,12 @@ class AuctionItemController extends Controller
         ]);
 
         $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'auction_item.merchant_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('auction_item.id',$auctionitem->id)
         ->get();
         // dd($auctionitemjoin);
@@ -155,9 +161,12 @@ class AuctionItemController extends Controller
         $auctionitem->update($request->all());
 
         $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'auction_item.merchant_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('auction_item.id',$auctionitem->id)
         ->get();
 
@@ -183,9 +192,12 @@ class AuctionItemController extends Controller
         $allauctionitem = AuctionItem::where('user_id', Auth::user()->id)->get();
 
         $auctionitemjoin = Auctionitem::leftjoin('users','users.id', 'auction_item.user_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'auction_item.pet_id')
-        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'auction_item.merchant_id')
+        ->select('auction_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('auction_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($auctionitemjoin);

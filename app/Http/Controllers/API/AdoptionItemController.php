@@ -37,9 +37,12 @@ class AdoptionItemController extends Controller
         }
 
         $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'adoption_item.merchant_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($adoptionitemjoin);
@@ -122,9 +125,12 @@ class AdoptionItemController extends Controller
         ]);
 
         $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'adoption_item.merchant_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('adoption_item.id',$adoptionitem->id)
         ->get();
         // dd($adoptionitemjoin);
@@ -173,9 +179,12 @@ class AdoptionItemController extends Controller
         $adoptionitem->update($request->all());
 
         $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'adoption_item.merchant_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('adoption_item.id',$adoptionitem->id)
         ->get();
         // dd($adoptionitemjoin);
@@ -217,9 +226,12 @@ class AdoptionItemController extends Controller
         $alladoptionitem = AdoptionItem::where('user_id', Auth::user()->id)->get();
 
         $adoptionitemjoin = Adoptionitem::leftjoin('users','users.id', 'adoption_item.user_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address')
         ->leftjoin('pet_profile','pet_profile.id', 'adoption_item.pet_id')
-        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 'pet_profile.pet_breed')
+        ->leftjoin('merchant','merchant.id', 'adoption_item.merchant_id')
+        ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
+        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
+        'merchant.merchant_name')
         ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($adoptionitemjoin);

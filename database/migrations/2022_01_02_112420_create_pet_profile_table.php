@@ -18,6 +18,9 @@ class CreatePetProfileTable extends Migration
             $table->string('pet_name');
             $table->integer('user_id');
             $table->string('pet_group_id')->nullable();
+            $table->string('pet_gender');
+            $table->string('pet_size');
+            $table->string('pet_weight');
             $table->string('pet_species');
             $table->string('pet_breed');
             $table->string('pet_morph');

@@ -61,6 +61,9 @@ class PetProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'pet_name' => 'required',
             // 'pet_group_id' => 'required',
+            'pet_gender' => 'required',
+            'pet_size' => 'required',
+            'pet_weight' => 'required',
             'pet_species' => 'required',
             'pet_breed' => 'required',
             'pet_morph' => 'required',
@@ -95,6 +98,9 @@ class PetProfileController extends Controller
         $petProfile->pet_name = $request->pet_name;
         $petProfile->pet_group_id = $request->pet_group_id;
         $petProfile->user_id = Auth::user()->id;
+        $petProfile->pet_gender = $request->pet_gender;
+        $petProfile->pet_size = $request->pet_size;
+        $petProfile->pet_weight = $request->pet_weight;
         $petProfile->pet_species = $request->pet_species;
         $petProfile->pet_breed = $request->pet_breed;
         $petProfile->pet_morph = $request->pet_morph;
