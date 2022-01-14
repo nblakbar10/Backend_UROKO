@@ -21,8 +21,10 @@ class ManajemenUserController extends Controller
         $input = $request->all();
 
         if ($request->picture != NULL) {
+            $host = $request->getSchemeAndHttpHost();
+
             $file_picture = $request->picture;
-            $fileName_picture = time().'_'.$file_picture->getClientOriginalName();
+            $fileName_picture = $host.'/storage/gambar-user/'.time().'_'.$file_picture->getClientOriginalName();
             $file_picture->move(public_path('storage/gambar-user'), $fileName_picture);
 
             

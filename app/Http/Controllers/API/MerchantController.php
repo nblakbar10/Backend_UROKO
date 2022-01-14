@@ -63,8 +63,10 @@ class MerchantController extends Controller
 
         $merchant = Merchant::where('user_id', Auth::user()->id)->first();
         if (!$merchant) {
+            $host = $request->getSchemeAndHttpHost();
+
             $file_merchant_image = $request->merchant_image;
-            $fileName_merchant_image = time().'_'.$file_merchant_image->getClientOriginalName();
+            $fileName_merchant_image = $host.'/storage/gambar-merchant/'.time().'_'.$file_merchant_image->getClientOriginalName();
             $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchant_image);
 
             $merchant = Merchant::create([
@@ -112,8 +114,10 @@ class MerchantController extends Controller
         $input = $request->all();
 
         if ($request->merchant_image != NULL) {
+            $host = $request->getSchemeAndHttpHost();
+
             $file_merchant_image = $request->merchant_image;
-            $fileName_merchant_image = time().'_'.$file_merchant_image->getClientOriginalName();
+            $fileName_merchant_image =  $host.'/storage/gambar-merchant/'.time().'_'.$file_merchant_image->getClientOriginalName();
             $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchant_image);
 
             
