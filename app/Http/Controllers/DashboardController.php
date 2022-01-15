@@ -153,7 +153,7 @@ class DashboardController extends Controller
         $smallActivity =  PetActivity::leftjoin('users', 'users.id', 'pet_activity.user_id')
         ->leftjoin('pet_profile', 'pet_profile.id', 'pet_activity.pet_id')
         ->select('pet_activity.*', 'users.username', 'users.picture', 'pet_profile.pet_name')->take(4)->get();
-        $allTransaction = $dataAdoptionOrder->concat($dataAuctionOrder)->concat($dataRentOrder)->take(5);
+        $allTransaction = $dataAdoptionOrder->concat($dataAuctionOrder)->concat($dataRentOrder)->sortBy([['created_at', 'desc']])->take(4);
 
         // foreach ($allTransaction as $key => $value) {
         //     echo($value);
