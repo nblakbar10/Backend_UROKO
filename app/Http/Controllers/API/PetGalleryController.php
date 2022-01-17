@@ -56,10 +56,25 @@ class PetGalleryController extends Controller
         $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
         // $albumID = $searchAlbum->id;
         if ($searchAlbum == NULL) {    
+            $validator = Validator::make($request->all(), [
+                'album_name' => 'required',
+                'album_picture' => 'required',
+                // 'pet_activity_id'  => 'required',
+            ]);
+    
+            if ($validator->fails()) {    
+                return response()->json($validator->messages(), 400);
+            }
+
+            $host = $request->getSchemeAndHttpHost();
+            //    $name=$file->getClientOriginalName();
+            $fileName_petPicture = $host.'/storage/gambar-activity/'.time().'_'.$request->album_picture->getClientOriginalName();
+            //    $file->move(public_path().'/files/', $name);  
+            $request->album_picture->move(public_path('storage/gambar-activity/'), $fileName_petPicture);
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,
-                'album_name' => $request->pet_name,
-                'album_name' => $data[0]
+                'album_name' => $request->album_name,
+                'album_picture' => $fileName_petPicture,
             ]);
 
             return response()->json([
