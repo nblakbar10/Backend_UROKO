@@ -5,27 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PetProfile extends Model
+class PetHotelProviderBookingSlots extends Model
 {
     use HasFactory;
-    public $table = 'pet_profile';
+    public $table = "pethotel_provider_booking_slots"; 
     protected $fillable = [
-        'pet_name',
-        'user_id',
-        'pet_group_id',
-        'pet_species',
-        'pet_breed',
-        'pet_morph',
-        'pet_birthdate',
-        'pet_age',
-        'pet_description',
-        'pet_picture',
-        'pet_status',
-        'album_id',
+        'pet_hotel_provider_id',
+        'user_id', //id si user yg ngebooking
+        'check_in_date',
+        'check_out_date',
+        'total_days',
+        
     ];
-    // protected $casts = [
-    //     'pet_picture' => 'array',
-    // ];
    
     public function getUpdatedAtAttribute($value)
     {

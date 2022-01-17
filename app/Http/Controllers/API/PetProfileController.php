@@ -71,8 +71,9 @@ class PetProfileController extends Controller
             'pet_birthdate' => 'required',
             'pet_age' => 'required',
             'pet_description' => 'required',
-            'pet_picture' => 'required',
-            'pet_picture.*' => 'mimes:jpeg,jpg,png',//'mimes:jpeg,jpg,png|required|max:10000',
+            'pet_picture' => 'required|mimes:jpeg,jpg,png',
+            // 'pet_picture' => 'required',
+            // 'pet_picture.*' => 'mimes:jpeg,jpg,png',//'mimes:jpeg,jpg,png|required|max:10000',
             'pet_status' => 'required',
             // 'pet_activity_id'  => 'required',
         ]);
@@ -81,6 +82,23 @@ class PetProfileController extends Controller
             return response()->json($validator->messages(), 400);
         }
 
+        $host = $request->getSchemeAndHttpHost();
+        $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$petprofile->getClientOriginalName();
+        $petprofile->move(public_path('storage/gambar-pet'), $fileName_petPicture);
+
+        // $data = [];
+        // if($request->hasfile('pet_picture'))
+        // {
+        //     foreach($request->file('pet_picture') as $petprofile)
+        //     {
+        //         $host = $request->getSchemeAndHttpHost();
+        //     //    $name=$file->getClientOriginalName();
+        //         $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$petprofile->getClientOriginalName();
+        //     //    $file->move(public_path().'/files/', $name);  
+        //         $petprofile->move(public_path('storage/gambar-pet'), $fileName_petPicture);
+        //         $data[] = $fileName_petPicture;  
+        //     }
+        // }
         $data = [];
         if($request->hasfile('pet_picture'))
         {
@@ -119,7 +137,7 @@ class PetProfileController extends Controller
         $petProfile->pet_birthdate = $request->pet_birthdate;
         $petProfile->pet_age = $request->pet_age;
         $petProfile->pet_description = $request->pet_description;
-        $petProfile->pet_picture = $data;
+        $petProfile->pet_picture = $fileName_petPicture; //$data;
         $petProfile->pet_status = $request->pet_status;
         $petProfile->album_id = $albumID;
         $petProfile->save();
@@ -145,12 +163,12 @@ class PetProfileController extends Controller
         
         // ]);
 
-        $data = [
+        $dataresponse = [
             'message' => 'Success',
             'data' => $petProfile
         ];     
 
-        return response()->json($data, 200);
+        return response()->json($dataresponse, 200);
     }
 
     /**
