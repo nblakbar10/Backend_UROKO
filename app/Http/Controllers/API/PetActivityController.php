@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PetActivity;
 use App\Models\PetGroup;
 use App\Models\PetProfile;
+use App\Models\PetActivityLikeComment;
 use Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -282,6 +283,132 @@ class PetActivityController extends Controller
     //  * @return \Illuminate\Http\Response
     //  */
     
+
+    public function post_activities_likes($activity_id)
+    {
+        $like = PetActivityLikeComment::create([
+            'pet_activity_id' => $activity_id,
+            'user_id' => Auth::user()->id,
+            'likes' => 'Liked'
+        ]);
+
+        $data=[
+            'message' => 'Success',
+            'data' => 'Berhasil melakukan like',
+        ];
+
+        
+        return response()->json($data, 200);
+    }
+
+    public function post_activities_comments(Request $request,$activity_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required',
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+        
+        $like = PetActivityLikeComment::create([
+            'pet_activity_id' => $activity_id,
+            'user_id' => Auth::user()->id,
+            'comments' => $request->comment
+        ]);
+
+        $data=[
+            'message' => 'Success',
+            'data' => 'Berhasil melakukan comment',
+        ];
+
+        
+        return response()->json($data, 200);
+    }
+
+    public function edit_activities_comments(Request $request,$comment_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'comment' => 'required',
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+        
+        $like = PetActivityLikeComment::where('id', $comment_id)->update([
+            'comments' => $request->comment
+        ]);
+
+        $data=[
+            'message' => 'Success',
+            'data' => 'Berhasil melakukan comment',
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    public function delete_activities_comments(Request $request,$comment_id)
+    {   
+        $like = PetActivityLikeComment::where('id', $comment_id)->delete();
+
+        $data=[
+            'message' => 'Success',
+            'data' => 'Berhasil melakukan delete comment',
+        ];
+
+        
+        return response()->json($data, 200);
+    }
+    
+    public function delete_activities_likes(Request $request,$like_id)
+    {   
+        $like = PetActivityLikeComment::where('id', $like_id)->delete();
+
+        $data=[
+            'message' => 'Success',
+            'data' => 'Berhasil melakukan delete like',
+        ];
+        
+        return response()->json($data, 200);
+    }
+
+    public function get_activities_likes_comments($pet_activity_id)
+    {
+        $likes = PetActivityLikeComment::where('pet_activity_id', $pet_activity_id)->where('likes', '!=', 'NULL')->get();
+        $comments = PetActivityLikeComment::where('pet_activity_id', $pet_activity_id)->where('comments', '!=', 'NULL')->get();
+
+        $likeTotal = 0;
+        $commentTotal = 0;
+
+        foreach ($likes as $key => $value) {
+            $like[] =  $value;
+            $likeTotal++;
+        }
+
+        foreach ($comments as $key => $value) {
+            $comment[] =  $value;
+            $commentTotal++;
+        }
+
+        $dataResponse = [
+            'pet_activity_id' => $pet_activity_id,
+            'likesTotal' => $likeTotal,
+            'like' => $like,
+            'commentsTotal' => $commentTotal,
+            'comments' => $comment
+        ];
+
+        $data = [
+            'message' => 'Success',
+            'data' => $dataResponse
+        ];
+
+        
+        return response()->json($data, 200);
+    }
+
+
 
     // /**
     //  * Display the specified resource.

@@ -21,6 +21,7 @@ class PetProfile extends Model
         'pet_description',
         'pet_picture',
         'pet_status',
+        'album_id',
     ];
     // protected $casts = [
     //     'pet_picture' => 'array',
