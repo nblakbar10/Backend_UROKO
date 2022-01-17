@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePetHotelTable extends Migration
+class CreateUserFollowTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreatePetHotelTable extends Migration
      */
     public function up()
     {
-        Schema::create('pet_hotel', function (Blueprint $table) {
+        Schema::create('user_follow', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
+            $table->string('user_yg_difollow_id');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreatePetHotelTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pet_hotel');
+        Schema::dropIfExists('user_follow');
     }
 }

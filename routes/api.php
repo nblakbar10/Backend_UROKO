@@ -17,6 +17,10 @@ use App\Http\Controllers\API\AdoptionOrderController;
 use App\Http\Controllers\API\RentOrderController;
 use App\Http\Controllers\API\AuctionOrderController;
 
+use App\Http\Controllers\API\UserFollowController;
+
+use App\Http\Controllers\API\ShippingController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -47,7 +51,7 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::get('/pet-activity-index', [PetActivityController::class, 'pet_activity_by_user']);
     Route::get('/pet-activity-index/{group_id}', [PetActivityController::class, 'pet_activity_by_group']);
     Route::get('/pet-activity-index/{group_id}/{pet_id}/', [PetActivityController::class, 'pet_activity_by_petid']);
-    Route::post('/pet-activity-post/{pet_id}/', [PetActivityController::class, 'post_pet_activity']);
+    Route::post('post_pet_activity/{pet_id}', [PetActivityController::class, 'post_pet_activity']);
     Route::post('/pet-activity-update/{id}/', [PetActivityController::class, 'update_pet_activity']);
     Route::delete('/pet-activity-delete/{id}/', [PetActivityController::class, 'delete_pet_activity']);
     // Route::get('/pet-activity/detail/{id}', [PetActivityController::class, 'detail_activity']);
@@ -94,7 +98,15 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::get('rentorder_getall', [RentOrderController::class, 'rentorder_getall']);
     Route::post('rentorder_cancel/{id}', [RentOrderController::class, 'rentorder_cancel']);
 
+    Route::post('post_follow/{id}', [UserFollowController::class, 'post_follow']);
+    Route::delete('post_unfollow/{id}', [UserFollowController::class, 'post_unfollow']);
+    Route::get('get_all_following', [UserFollowController::class, 'get_all_following']);
+    Route::get('get_all_follower', [UserFollowController::class, 'get_all_follower']);
+
     Route::get('transaction_index', [TransactionController::class, 'transaction_index']);
+
+    Route::post('shipping_post', [ShippingController::class, 'shipping_post']);
+    Route::get('get_shipping_option', [ShippingController::class, 'get_shipping_option']);
 });
 
 

@@ -18,6 +18,117 @@ class PetActivityController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function post_pet_activity(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'pet_activity_detail' => 'required',
+            'pet_activity_date' => 'required',
+            'pet_activity_image' => 'required',
+            'pet_activity_image.*' => 'mimes:jpeg,jpg,png',
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+        
+        // $file_pet_activity_image = $request->pet_activity_image;
+        // $fileName_pet_activity_image = time().'_'.$file_pet_activity_image->getClientOriginalName();
+        // $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
+
+
+        $data = [];
+        if($request->hasfile('pet_activity_image'))
+        {
+            foreach($request->file('pet_activity_image') as $file_pet_activity_image)
+            {
+                $host = $request->getSchemeAndHttpHost();
+            //    $name=$file->getClientOriginalName();
+                $fileName_pet_activity_image = $host.'/storage/gambar-activity/'.time().'_'.$file_pet_activity_image->getClientOriginalName();
+            //    $file->move(public_path().'/files/', $name);  
+                $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
+                $data[] = $fileName_pet_activity_image;  
+            }
+        }
+
+        $pet = PetProfile::find($id);
+
+        $petActivity = new PetActivity();
+        $petActivity->pet_group_id = $pet->pet_group_id;
+        $petActivity->user_id = Auth::user()->id;
+        $petActivity->pet_id = $id;
+        $petActivity->pet_activity_detail = $request->pet_activity_detail;
+        $petActivity->pet_activity_type = $request->pet_activity_type;
+        $petActivity->pet_activity_date = $request->pet_activity_date;
+        $petActivity->pet_activity_image = $data;
+        $petActivity->save();
+        // $petActivity = PetActivity::create([
+        //     'pet_group_id' => $pet->pet_group_id,
+        //     'user_id' => Auth::user()->id,
+        //     'pet_id' => $id,
+        //     'pet_activity_detail' => $request->pet_activity_detail,
+        //     'pet_activity_type' => $request->pet_activity_type,
+        //     'pet_activity_date' => $request->pet_activity_date,
+        //     'pet_activity_image' => $data
+        // ]);
+
+        $data = [
+            'message' => 'Success',
+            'data' => $petActivity
+        ];  
+        return response()->json($data, 200);
+    }
+
+    public function update_pet_activity(Request $request, $id)
+    {
+        $petActivity = PetActivity::find($id);
+        $dataInput = $request->all();
+
+        if ($petActivity == NULL) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Pet tidak ditemukan'
+            ];  
+            return response()->json($data, 200);
+        }
+
+        if ($request->pet_activity_image != NULL) {
+            $data1 = [];
+            if($request->hasfile('pet_activity_image'))
+            {
+                foreach($request->file('pet_activity_image') as $file_pet_activity_image)
+                {
+                    $host = $request->getSchemeAndHttpHost();
+                    $fileName_pet_activity_image = $host.'/storage/gambar-activity/'.time().'_'.$file_pet_activity_image->getClientOriginalName();
+                    $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
+                    $data1[] = $fileName_pet_activity_image;  
+                }
+            }
+            // $file_pet_activity_image = $request->pet_activity_image;
+            // $fileName_pet_activity_image = time().'_'.$file_pet_activity_image->getClientOriginalName();
+            // $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
+
+            
+            $petActivity->fill($dataInput)->save();
+            $petActivity->update([
+                'pet_activity_image' => $data1
+            ]);
+
+            $data = [
+                'message' => 'Success',
+                'data' => $petActivity
+            ];  
+            return response()->json($data, 200);
+        }
+        
+        $petActivity->fill($dataInput)->save();
+
+        $data = [
+            'message' => 'Success',
+            'data' => $petActivity
+        ];  
+        return response()->json($data, 200);
+    }
+
     public function pet_activity_by_user()
     {
         $petActivity = PetActivity::leftJoin('pet_grouping', function ($join) {
@@ -119,6 +230,18 @@ class PetActivityController extends Controller
         
         return response()->json($data, 200);
     }
+
+    public function delete_pet_activity(Request $request, $id)
+    {
+        $petActivity = PetActivity::find($id);
+        $petActivity->delete();
+
+        $data = [
+            'message' => 'Success',
+            'data' => 'Berhasil menghapus pet activity'
+        ];  
+        return response()->json($data, 200);
+    }
     // public function index()
     // {
     //     $petGroup = PetGroup::where('user_id', Auth::user()->id)->get();
@@ -158,92 +281,7 @@ class PetActivityController extends Controller
     //  * @param  \Illuminate\Http\Request  $request
     //  * @return \Illuminate\Http\Response
     //  */
-    public function post_pet_activity(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'pet_activity_detail' => 'required',
-            'pet_activity_date' => 'required',
-            'pet_activity_image' => 'required',
-        ]);
-
-        if ($validator->fails()) {    
-            return response()->json($validator->messages(), 400);
-        }
-        
-        $file_pet_activity_image = $request->pet_activity_image;
-        $fileName_pet_activity_image = time().'_'.$file_pet_activity_image->getClientOriginalName();
-        $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
-
-        $pet = PetProfile::find($id);
-
-        $petActivity = PetActivity::create([
-            'pet_group_id' => $pet->pet_group_id,
-            'user_id' => Auth::user()->id,
-            'pet_id' => $id,
-            'pet_activity_detail' => $request->pet_activity_detail,
-            'pet_activity_type' => $request->pet_activity_type,
-            'pet_activity_date' => $request->pet_activity_date,
-            'pet_activity_image' => $fileName_pet_activity_image
-        ]);
-
-        $data = [
-            'message' => 'Success',
-            'data' => $petActivity
-        ];  
-        return response()->json($data, 200);
-    }
-
-    public function update_pet_activity(Request $request, $id)
-    {
-        $petActivity = PetActivity::find($id);
-        $dataInput = $request->all();
-
-        if ($petActivity == NULL) {
-            $data = [
-                'message' => 'Success',
-                'data' => 'Pet tidak ditemukan'
-            ];  
-            return response()->json($data, 200);
-        }
-
-        if ($request->pet_activity_image != NULL) {
-            $file_pet_activity_image = $request->pet_activity_image;
-            $fileName_pet_activity_image = time().'_'.$file_pet_activity_image->getClientOriginalName();
-            $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
-
-            
-            $petActivity->fill($dataInput)->save();
-            $petActivity->update([
-                'pet_activity_image' => $fileName_pet_activity_image
-            ]);
-
-            $data = [
-                'message' => 'Success',
-                'data' => $petActivity
-            ];  
-            return response()->json($data, 200);
-        }
-        
-        $petActivity->fill($dataInput)->save();
-
-        $data = [
-            'message' => 'Success',
-            'data' => $petActivity
-        ];  
-        return response()->json($data, 200);
-    }
-
-    public function delete_pet_activity(Request $request, $id)
-    {
-        $petActivity = PetActivity::find($id);
-        $petActivity->delete();
-
-        $data = [
-            'message' => 'Success',
-            'data' => 'Berhasil menghapus pet activity'
-        ];  
-        return response()->json($data, 200);
-    }
+    
 
     // /**
     //  * Display the specified resource.

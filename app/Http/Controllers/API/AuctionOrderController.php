@@ -223,3 +223,36 @@ class AuctionOrderController extends Controller
         ]);
     }
 }
+
+
+
+
+// $rencanaliburanjoin = RencanaLiburan::leftjoin('ajakteman_rencana_liburan', 'ajakteman_rencana_liburan.rencana_liburan_id', 'rencana_liburan.id')
+//     ->leftjoin('users', 'users.id', 'ajakteman_rencana_liburan.id_penerima_ajakan')
+//     ->leftjoin('destinasi_rencana_liburan', 'destinasi_rencana_liburan.rencana_liburan_id', 'rencana_liburan.id')
+//     ->leftjoin('tempat_wisata', 'tempat_wisata.id', 'rencana_liburan.id')
+//     ->select('rencana_liburan.*', 'ajakteman_rencana_liburan.id_penerima_ajakan', 'ajakteman_rencana_liburan.status_ajakan',
+//     'users.username', 
+//     'destinasi_rencana_liburan.tempat_wisata_id', 'destinasi_rencana_liburan.tanggal_rencana_liburan', 'destinasi_rencana_liburan.rencana_durasi_liburan',
+//     'tempat_wisata.nama_wisata', 'tempat_wisata.alamat_wisata', 'tempat_wisata.foto') 
+//     ->get();
+
+
+
+// $ajaktemanrencanaliburanjoin = RencanaLiburan::leftjoin('ajakteman_rencana_liburan', 'ajakteman_rencana_liburan.rencana_liburan_id', 'rencana_liburan.id')
+//     ->select('rencana_liburan.*', 'ajakteman_rencana_liburan.id_penerima_ajakan', 'ajakteman_rencana_liburan.status_ajakan')
+//     ->get();
+
+
+// $usernamejoin = RencanaLiburan::leftjoin('users', 'users.id', 'ajakteman_rencana_liburan.id_penerima_ajakan')
+//     ->select('users.username')
+//     ->get();
+
+// $destinasirencanaliburanjoin = RencanaLiburan::leftjoin('destinasi_rencana_liburan', 'destinasi_rencana_liburan.rencana_liburan_id', 'rencana_liburan.id')
+//     ->select('destinasi_rencana_liburan.tempat_wisata_id', 'destinasi_rencana_liburan.tanggal_rencana_liburan', 'destinasi_rencana_liburan.rencana_durasi_liburan')
+//     ->get();
+
+
+// $namawisatajoin = RencanaLiburan::leftjoin('tempat_wisata', 'tempat_wisata.id', 'rencana_liburan.id')
+//     ->select('tempat_wisata.nama_wisata', 'tempat_wisata.alamat_wisata', 'tempat_wisata.foto')
+//     ->get();

@@ -27,7 +27,7 @@ class CreatePetProfileTable extends Migration
             $table->string('pet_birthdate');
             $table->string('pet_age');
             $table->string('pet_description');
-            $table->json('pet_picture');
+            $table->string('pet_picture');
             $table->string('pet_status');
             // $table->string('pet_activity_id');
             $table->timestamps();

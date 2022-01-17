@@ -48,19 +48,14 @@ class RentOrderController extends Controller
         $totalorder = $rentprice + 4500; //4500 adalah biaya admin
         ////$payms = PaymentsOption::find($id);
         ////$ships = Shipping::find($id);
-
-        // $stringtodate = 
-
         $begin = new DateTime($request->rent_order_start);
         $end = new DateTime($request->rent_order_return);
-        // $end = $end->modify( '+1 day' );
 
         $interval = new DateInterval('P1D');
         $daterange = new DatePeriod($begin, $interval ,$end);
         $countdate = 0;
         foreach($daterange as $data)
         {
-            // $countdate = +1;
             $date_duration[] = $data; 
         };
         // dd(count($array));
