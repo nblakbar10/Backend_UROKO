@@ -99,19 +99,8 @@ class PetProfileController extends Controller
         //         $data[] = $fileName_petPicture;  
         //     }
         // }
-        $data = [];
-        if($request->hasfile('pet_picture'))
-        {
-            foreach($request->file('pet_picture') as $petprofile)
-            {
-                $host = $request->getSchemeAndHttpHost();
-            //    $name=$file->getClientOriginalName();
-                $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$petprofile->getClientOriginalName();
-            //    $file->move(public_path().'/files/', $name);  
-                $petprofile->move(public_path('storage/gambar-pet'), $fileName_petPicture);
-                $data[] = $fileName_petPicture;  
-            }
-        }
+        
+
         $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
         $albumID = $searchAlbum->id;
         if ($searchAlbum == NULL) {    
