@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\MerchantController;
 use App\Http\Controllers\API\PetProfileController;
+use App\Http\Controllers\API\PetGalleryController;
 use App\Http\Controllers\API\PetActivityController;
 use App\Http\Controllers\API\PetGroupController;
+use App\Http\Controllers\API\TransactionController;
 
 use App\Http\Controllers\API\ManajemenUserController;
 
@@ -33,6 +35,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['auth:api','apiverified']], function(){
+    Route::get('/all-transaction-index', [TransactionController::class, 'get_all_transaction']) ;
     //User
     Route::post('/manajemen-profile-update', [ManajemenUserController::class, 'update_user_profile']);
     Route::delete('/manajemen-profile-delete', [ManajemenUserController::class, 'delete_user_profile']);
@@ -42,7 +45,12 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::resource('pet-profile-user', PetProfileController::class);
     Route::get('/pet-profile-user/detail/{id}', [PetProfileController::class, 'detail_pet'])->name('user.detail-pet');
 
+    Route::get('/pet-gallery-index/', [PetGalleryController::class, 'get_album']);
+    Route::get('/pet-gallery-index/{album_id}', [PetGalleryController::class, 'get_gallery_by_album_id']);
+    Route::post('/pet-gallery-post', [PetGalleryController::class, 'post_album']);
+    Route::post('/pet-gallery-edit/{pet_id}/{album_id}', [PetGalleryController::class, 'insert_pet_to_album']);
     
+
     // Route::resource('pet-activity-user', PetActivityController::class);
     Route::get('/pet-activity-index', [PetActivityController::class, 'pet_activity_by_user']);
     Route::get('/pet-activity-index/{group_id}', [PetActivityController::class, 'pet_activity_by_group']);
@@ -50,6 +58,13 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::post('/pet-activity-post/{pet_id}/', [PetActivityController::class, 'post_pet_activity']);
     Route::post('/pet-activity-update/{id}/', [PetActivityController::class, 'update_pet_activity']);
     Route::delete('/pet-activity-delete/{id}/', [PetActivityController::class, 'delete_pet_activity']);
+    //like_comment
+    Route::get('/like-comment-pet-activity-index/{activity_id}/', [PetActivityController::class, 'get_activities_likes_comments']);
+    Route::post('/like-pet-activity-post/{activity_id}/', [PetActivityController::class, 'post_activities_likes']);
+    Route::delete('/like-pet-activity-delete/{like_id}/', [PetActivityController::class, 'delete_activities_likes']);
+    Route::post('/comment-pet-activity-post/{activity_id}/', [PetActivityController::class, 'post_activities_comments']);
+    Route::post('/comment-pet-activity-edit/{comment_id}/', [PetActivityController::class, 'edit_activities_comments']);
+    Route::delete('/comment-pet-activity-delete/{comment_id}/', [PetActivityController::class, 'delete_activities_comments']);
     // Route::get('/pet-activity/detail/{id}', [PetActivityController::class, 'detail_activity']);
     // Route::get('/pet-activity/group/{id}', [PetActivityController::class, 'group_activity'])->name('user.group-activity');
 

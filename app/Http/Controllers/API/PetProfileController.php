@@ -8,6 +8,7 @@ use App\Models\PetProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use App\Models\PetGallery;
 
 class PetProfileController extends Controller
 {
@@ -93,6 +94,17 @@ class PetProfileController extends Controller
                 $data[] = $fileName_petPicture;  
             }
         }
+        $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
+        $albumID = $searchAlbum->id;
+        if ($searchAlbum == NULL) {    
+            $album = PetGallery::create([
+                'user_id' => Auth::user()->id,
+                'album_name' => $request->pet_name,
+                'album_name' => $data[0]
+            ]);
+
+            $albumID = $album->id;
+        }
 
         $petProfile = new PetProfile();
         $petProfile->pet_name = $request->pet_name;
@@ -109,6 +121,7 @@ class PetProfileController extends Controller
         $petProfile->pet_description = $request->pet_description;
         $petProfile->pet_picture = $data;
         $petProfile->pet_status = $request->pet_status;
+        $petProfile->album_id = $albumID;
         $petProfile->save();
         // // $fileName_petPicture->pet_picture=json_encode($data);
 
