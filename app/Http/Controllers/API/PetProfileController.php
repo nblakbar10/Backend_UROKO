@@ -100,7 +100,7 @@ class PetProfileController extends Controller
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,
                 'album_name' => $request->pet_name,
-                'album_name' => $data[0]
+                'album_picture' => $request->pet_picture
             ]);
 
             $albumID = $album->id;
