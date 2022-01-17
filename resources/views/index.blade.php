@@ -354,7 +354,7 @@
                                                         alt="image" class="rounded-circle" />
                                                     <span class="pl-2">{{ $item->username }}</span>
                                                 </td>
-                                                <td> {{ $item->grand_total_order }} </td>
+                                                <td> {{ $item->pet_name }} </td>
                                                 <td>
                                                     @if ($item->adoption_item_id)
                                                         Adoption Order

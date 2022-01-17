@@ -5,28 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PetProfile extends Model
+class PetActivityLikeComment extends Model
 {
     use HasFactory;
-    public $table = 'pet_profile';
-    protected $fillable = [
-        'pet_name',
+    public $table = 'likes_comments';
+    protected $fillable =[
+        'pet_activity_id',
         'user_id',
-        'pet_group_id',
-        'pet_species',
-        'pet_breed',
-        'pet_morph',
-        'pet_birthdate',
-        'pet_age',
-        'pet_description',
-        'pet_picture',
-        'pet_status',
-        'album_id',
+        'likes',
+        'comments',
     ];
-    protected $casts = [
-        'pet_picture' => 'array',
-    ];
-   
+
     public function getUpdatedAtAttribute($value)
     {
         return date('d-m-Y H:i:s', strtotime($value));
