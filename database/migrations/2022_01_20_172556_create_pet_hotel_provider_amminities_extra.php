@@ -15,6 +15,9 @@ class CreatePetHotelProviderAmminitiesExtra extends Migration
     {
         Schema::create('pet_hotel_provider_amminities_extra', function (Blueprint $table) {
             $table->id();
+            $table->integer('pet_hotel_provider_id');
+            $table->string('extra_amminities_name');
+            $table->string('extra_amminities_price_per_day');
             $table->timestamps();
         });
     }
