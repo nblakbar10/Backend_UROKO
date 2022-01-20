@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PetHotelProviderFee extends Model
 {
     use HasFactory;
-    use HasFactory;
     public $table = "pet_hotel_provider_fee"; 
     protected $fillable = [
         'pet_hotel_provider_id',
