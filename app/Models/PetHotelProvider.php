@@ -12,11 +12,12 @@ class PetHotelProvider extends Model
     protected $fillable = [
         'user_id',
         'merchant_id', //jika penyedianya dari user, maka ini dinullkan saja
+        'name',
         'address',
         'phone',
-        'desciption',
-        'pet_hotel_provider_photo',
-
+        'photo',
+        'description',
+        
     ];
    
     public function getUpdatedAtAttribute($value)

@@ -85,7 +85,7 @@ class RentOrderController extends Controller
             'rent_item_id' => $id,
             'rent_order_start' => $request->rent_order_start,
             'rent_order_return' => $request->rent_order_return,
-            'rent_order_duration' => count($date_duration),
+            'rent_order_duration' => count($date_duration). 'days',
             'rent_order_notes' => $request->rent_order_notes,
             'shipping_id' =>$request->shipping_id,
             ////'shipping_type' => $ships->shipping_type,
