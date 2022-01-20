@@ -146,6 +146,14 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::post('pet_hotel_provider_fee_update/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_update']);
     Route::delete('pet_hotel_provider_fee_delete/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_delete']);
 
+    Route::post('pet_hotel_provider_amminities_post/{pet_hotel_provider_id}', [PetHotelProviderController::class, 'pet_hotel_provider_amminities_post']);
+    Route::post('pet_hotel_provider_amminities_update/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_amminities_update']);
+    Route::delete('pet_hotel_provider_amminities_delete/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_amminities_delete']);
+
+    Route::post('pet_hotel_provider_amminities_extra_post/{pet_hotel_provider_id}', [PetHotelProviderController::class, 'pet_hotel_provider_amminities_extra_post']);
+    Route::post('pet_hotel_provider_amminities_extra_update/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_amminities_extra_update']);
+    Route::delete('pet_hotel_provider_amminities_extra_delete/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_amminities_extra_delete']);
+
     Route::get('adoptionitem_all', [ItemController::class, 'adoptionitem_all']);
     Route::get('auctionitem_all', [ItemController::class, 'auctionitem_all']);
     Route::get('rentitem_all', [ItemController::class, 'rentitem_all']);

@@ -13,7 +13,8 @@ use Response;
 use App\Models\PetHotelProvider;
 use App\Models\PetHotelProviderBookingSlots;
 use App\Models\PetHotelProviderFee;
-use App\Models\PetHotelExtraAmminities;
+use App\Models\PetHotelProviderAmminities;
+use App\Models\PetHotelProviderAmminitiesExtra;
 use Illuminate\Support\Facades\Validator;
 
 class PetHotelProviderController extends Controller
@@ -274,7 +275,7 @@ class PetHotelProviderController extends Controller
     public function pet_hotel_provider_fee_update(Request $request, $id)
     {
         
-        $pet_hotel_provider_fee = PetHotelProviderFee::findOrFail($id);
+        $pet_hotel_provider_fee = PetHotelProviderFee::find($id);
 
         if (!$pet_hotel_provider_fee) {
             $data = [
@@ -296,9 +297,9 @@ class PetHotelProviderController extends Controller
     }
 
 
-    public function pet_hotel_provider_fee_delete(Request $request)
+    public function pet_hotel_provider_fee_delete(Request $request, $id)
     {
-        $pet_hotel_provider_fee = PetHotelProviderFee::findOrFail($id);
+        $pet_hotel_provider_fee = PetHotelProviderFee::find($id);
 
         if (!$pet_hotel_provider_fee) {
             $data = [
@@ -312,6 +313,193 @@ class PetHotelProviderController extends Controller
         $data = [
             'message' => 'Success',
             'data' => 'Berhasil menghapus pet_hotel_provider_fee anda'
+        ];  
+        return response()->json($data, 200);
+    }
+
+
+
+
+    ////AMMINITIES
+
+    public function pet_hotel_provider_amminities_post(Request $request, $pet_hotel_provider_id)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'food' => 'required',
+            'basking' => 'required',
+            'cleaning' => 'required',
+            'bedding' => 'required',
+            'grooming' => 'required',
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+
+        $pet_hotel_provider_amminities = PetHotelProviderAmminities::create([
+            'user_id' => Auth::user()->id,
+            'pet_hotel_provider_id' => $pet_hotel_provider_id,
+            'food' => $request->food,
+            'basking' => $request->basking,
+            'cleaning' => $request->cleaning,
+            'bedding' => $request->bedding,
+            'grooming' => $request->grooming,
+        ]);
+
+        $data = [
+            'message' => 'Success',
+            'data' => $pet_hotel_provider_amminities
+        ];
+        return response()->json($data, 200);
+    }
+
+    // public function pet_hotel_provider_amminities_index()
+    // {
+    //     $pet_hotel_provider_amminities = PetHotelProviderAmminities::where('user_id', Auth::user()->id)->first();
+    //     if (!$pet_hotel_provider_amminities) {
+    //         $pet_hotel_provider_amminities = "Belum ada pet_hotel_provider_amminities!";
+    //     }
+        
+    //     $data = [
+    //         'message' => 'Success',
+    //         'data' => $pet_hotel_provider_amminities
+    //     ];
+
+    //     return response()->json($data, 200);
+    // }
+
+    public function pet_hotel_provider_amminities_update(Request $request, $id)
+    {
+        
+        $pet_hotel_provider_amminities = PetHotelProviderAmminities::find($id);
+
+        if (!$pet_hotel_provider_amminities) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Anda tidak memiliki pet hotel provider amminities'
+            ];  
+            return response()->json($data, 400);
+        }
+
+        $input = $request->all();
+
+        $pet_hotel_provider_amminities->fill($input)->save();
+
+        $data = [
+            'message' => 'Edit Success',
+            'data' => $pet_hotel_provider_amminities
+        ];  
+        return response()->json($data, 200);
+    }
+
+
+    public function pet_hotel_provider_amminities_delete(Request $request, $id)
+    {
+        $pet_hotel_provider_amminities = PetHotelProviderAmminities::find($id);
+
+        if (!$pet_hotel_provider_amminities) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Anda tidak memiliki pet_hotel_provider_amminities'
+            ];  
+            return response()->json($data, 400);
+        }
+        $pet_hotel_provider_amminities->delete();
+
+        $data = [
+            'message' => 'Success',
+            'data' => 'Berhasil menghapus pet_hotel_provider_amminities anda'
+        ];  
+        return response()->json($data, 200);
+    }
+
+
+
+    ///AMMINITIES EXTRA
+
+    public function pet_hotel_provider_amminities_extra_post(Request $request, $pet_hotel_provider_id)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'extra_amminities_name' => 'required',
+            'extra_amminities_price_per_day' => 'required'
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+
+        $pet_hotel_provider_amminities_extra = PetHotelProviderAmminitiesExtra::create([
+            'user_id' => Auth::user()->id,
+            'pet_hotel_provider_id' => $pet_hotel_provider_id,
+            'extra_amminities_name' => $request->extra_amminities_name,
+            'extra_amminities_price_per_day' => $request->extra_amminities_price_per_day,
+        ]);
+
+        $data = [
+            'message' => 'Success',
+            'data' => $pet_hotel_provider_amminities_extra
+        ];
+        return response()->json($data, 200);
+    }
+
+    // public function pet_hotel_provider_amminities_extra_index()
+    // {
+    //     $pet_hotel_provider_amminities = PetHotelProviderAmminitiesExtra::where('user_id', Auth::user()->id)->first();
+    //     if (!$pet_hotel_provider_amminities) {
+    //         $pet_hotel_provider_amminities = "Belum ada pet_hotel_provider_amminities!";
+    //     }
+        
+    //     $data = [
+    //         'message' => 'Success',
+    //         'data' => $pet_hotel_provider_amminities
+    //     ];
+
+    //     return response()->json($data, 200);
+    // }
+
+    public function pet_hotel_provider_amminities_extra_update(Request $request, $id)
+    {
+        
+        $pet_hotel_provider_amminities_extra = PetHotelProviderAmminitiesExtra::find($id);
+
+        if (!$pet_hotel_provider_amminities_extra) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Anda tidak memiliki pet hotel provider amminities extra'
+            ];  
+            return response()->json($data, 400);
+        }
+
+        $input = $request->all();
+
+        $pet_hotel_provider_amminities_extra->fill($input)->save();
+
+        $data = [
+            'message' => 'Edit Success',
+            'data' => $pet_hotel_provider_amminities_extra
+        ];  
+        return response()->json($data, 200);
+    }
+
+
+    public function pet_hotel_provider_amminities_extra_delete(Request $request, $id)
+    {
+        $pet_hotel_provider_amminities_extra = PetHotelProviderAmminitiesExtra::find($id);
+
+        if (!$pet_hotel_provider_amminities_extra) {
+            $data = [
+                'message' => 'Success',
+                'data' => 'Anda tidak memiliki pet_hotel_provider_amminities_extra'
+            ];  
+            return response()->json($data, 400);
+        }
+        $pet_hotel_provider_amminities_extra->delete();
+
+        $data = [
+            'message' => 'Success',
+            'data' => 'Berhasil menghapus pet_hotel_provider_amminities_extra anda'
         ];  
         return response()->json($data, 200);
     }

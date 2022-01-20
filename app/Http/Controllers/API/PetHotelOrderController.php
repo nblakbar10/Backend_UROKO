@@ -73,6 +73,22 @@ class PetHotelOrderController extends Controller
             'payments_option_id' => $request->payments_option_id,
         ]);
 
+        // $savetoproviderbookingslots = PetHotelProviderBookingSlots::create([
+        //     'pet_hotel_provider_id' => $id,
+        //     'user_id' => Auth::user()->id,
+        //     'sitting_slots_booked' => $petprofile->pet_type,
+        //     'pet_profile_id' => $request->pet_profile_id,
+        //     'cage' => $request->cage,
+        //     'pet_caring_note' => $request->pet_caring_note,
+        //     'check_in_date' => $request->check_in_date,
+        //     'check_out_date' => $request->check_out_date,
+        //     'total_days' => count($date_duration). 'days',
+        //     'pethotel_order_status' => "Waiting for Confirmation",
+        //     'pethotel_total_price' => $totalorder,
+        //     'shipping_id' =>$request->shipping_id,
+        //     'payments_option_id' => $request->payments_option_id,
+        // ]);
+
         $pethotelorderjoin = PetHotelOrder::leftjoin('users','users.id', 'pet_hotel_order.user_id')
         ->leftjoin('pet_profile','pet_profile.id', 'pet_hotel_order.pet_profile_id')
         // ->leftjoin('merchant','merchant.id', 'adoption_order.merchant_id')
