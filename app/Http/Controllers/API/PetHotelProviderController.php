@@ -9,6 +9,7 @@ use App\Models\PetGroup;
 use App\Models\PetProfile;
 use App\Models\User;
 use Auth;
+use Response;
 use App\Models\PetHotelProvider;
 use App\Models\PetHotelProviderBookingSlots;
 use App\Models\PetHotelProviderFee;
@@ -19,49 +20,53 @@ class PetHotelProviderController extends Controller
 {
     public function pet_hotel_provider_index()
     {
-        $pet_hotel_provider = PetHotelProvider::where('user_id', Auth::user()->id)->first();
-        if (!$pet_hotel_provider) {
+        $pet_hotel_provider = PetHotelProvider::where('user_id', Auth::user()->id)->get();
+        if ($pet_hotel_provider) {
+            $feejoin = PetHotelProvider::leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.pet_hotel_provider_id', 'pet_hotel_provider.id')
+            ->where('user_id', auth()->user()->id)
+            ->select('pet_hotel_provider.*', 'pet_hotel_provider_fee.id', 'pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
+            'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day')
+            ->get();
+
+            foreach($pet_hotel_provider as $item){
+                $data_pet_hotel_provider_fee = null;
+                foreach($feejoin as $data){
+                    if($item->id == $data->pet_hotel_provider_id){
+                        $data_pet_hotel_provider_fee[] = [
+                            "id" => $data->id,
+                            "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
+                            "pet_type" => $data->pet_type,
+                            "pet_size" => $data->pet_size,
+                            "slot_available" => $data->slot_available,
+                            "price_per_day" => $data->price_per_day
+                        ];
+                    }
+                }
+            
+                $joinbaru[] = [
+                    'id' => $item->id,
+                    'user_id' => $item->user_id,
+                    'merchant_id' => $item->merchant_id,
+                    'name' => $item->name,
+                    'address' => $item->address,
+                    'phone' => $item->phone,
+                    'photo' => $item->photo,
+                    'description' => $item->description,
+                    'created_at' => $item->created_at,
+                    'updated_at' => $item->updated_at,
+                    'data_pet_hotel_provider_fee' => $data_pet_hotel_provider_fee
+                ];
+            }
+        }
+        else{
             $pet_hotel_provider = "Anda belum memiliki pet hotel provider!";
         }
 
-
-        $feejoin = PetHotelProvider::leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.pet_hotel_provider_id', 'pet_hotel_provider.id')
-        ->select('pet_hotel_provider.*','pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
-        'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day')
-        ->get();
-
-        foreach($pet_hotel_provider as $item){
-            $data_pet_hotel_provider_fee = null;
-            foreach($feejoin as $data){
-                if($item->id == $data->pet_hotel_provider_id){
-                    $data_pet_hotel_provider_fee[] = [
-                        "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
-                        "pet_type" => $data->pet_type,
-                        "pet_size" => $data->pet_size,
-                        "slot_available" => $data->slot_available,
-                        "price_per_day" => $data->price_per_day
-                    ];
-                }
-            }
-           
-            $joinbaru[] = [
-                'id' => $item->id,
-                'user_id' => $item->user_id,
-                'merchant_id' => $item->merchant_id,
-                'name' => $item->name,
-                'address' => $item->address,
-                'phone' => $item->phone,
-                'photo' => $item->photo,
-                'description' => $item->description,
-                'created_at' => $item->created_at,
-                'updated_at' => $item->updated_at,
-                'data_pet_hotel_provider_fee' => $data_pet_hotel_provider_fee
-            ];
-        }
+        
 
         $data = [
             'message' => 'Success',
-            'data' => $feejoin
+            'data' => $joinbaru
         ];
 
         return response()->json($data, 200);

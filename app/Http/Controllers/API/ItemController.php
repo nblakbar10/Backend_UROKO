@@ -92,7 +92,7 @@ class ItemController extends Controller
         $pet_hotel_provider = PetHotelProvider::get();
         
         $feejoin = PetHotelProvider::leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.pet_hotel_provider_id', 'pet_hotel_provider.id')
-        ->select('pet_hotel_provider.*','pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
+        ->select('pet_hotel_provider.*', 'pet_hotel_provider_fee.id', 'pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
         'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day')
         ->get();
 
@@ -101,6 +101,7 @@ class ItemController extends Controller
             foreach($feejoin as $data){
                 if($item->id == $data->pet_hotel_provider_id){
                     $data_pet_hotel_provider_fee[] = [
+                        "id" => $data->id,
                         "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
                         "pet_type" => $data->pet_type,
                         "pet_size" => $data->pet_size,
@@ -127,7 +128,7 @@ class ItemController extends Controller
 
         $data = [
             'message' => 'Success',
-            'data' => $feejoin
+            'data' => $joinbaru
         ];
 
         return response()->json($data, 200);
