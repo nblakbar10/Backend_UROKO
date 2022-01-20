@@ -10,6 +10,7 @@ use App\Models\PetGroup;
 use App\Models\PetProfile;
 use App\Models\PetActivityLikeComment;
 use Auth;
+use Image;
 use Illuminate\Support\Facades\Validator;
 
 class PetGalleryController extends Controller
@@ -100,5 +101,29 @@ class PetGalleryController extends Controller
             'message' => 'Success',
             'data' => $pet
         ], 200);
+    }
+
+    public function download_image_from_gallery(Request $request,$image_name)
+    {
+        // dd('Halo');
+        $img = Image::make(public_path('storage/gambar-activity/'.$image_name));
+
+        $str = public_path('storage/gambar-activity-wm/watermark-'.$image_name);
+        $lines = wordwrap($str, 35, "\r\n", TRUE); // break line after 120 characters
+
+        $img->text($lines, 0, 0, function($font) {
+            $font->file(public_path('fonts/Montserrat-Medium.ttf'));
+            $font->size(30);
+            $font->color('#f4d442');
+            // $font->color([255, 255, 255, 0.7]);
+            $font->align('left');
+            $font->valign('top');
+            $font->angle(0);
+        });
+
+        $img->save(public_path('storage/gambar-activity-wm/watermark-'.$image_name));
+        $filepath = public_path('storage/gambar-activity-wm/watermark-'.$image_name);
+
+        return response()->download($filepath);
     }
 }

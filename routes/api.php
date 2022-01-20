@@ -44,6 +44,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::get('/all-transaction-index', [TransactionController::class, 'get_all_transaction']) ;
+    Route::get('/all-merchant-order/{merchant_id}', [TransactionController::class, 'get_merchant_order']) ;
+    Route::put('/confirm-order/{order_id}/{order_type}', [TransactionController::class, 'confirm_order']) ;
+    Route::put('/reject-order/{order_id}/{order_type}', [TransactionController::class, 'reject_order']) ;
     //User
     Route::post('/manajemen-profile-update', [ManajemenUserController::class, 'update_user_profile']);
     Route::delete('/manajemen-profile-delete', [ManajemenUserController::class, 'delete_user_profile']);
@@ -57,6 +60,7 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::get('/pet-gallery-index/{album_id}', [PetGalleryController::class, 'get_gallery_by_album_id']);
     Route::post('/pet-gallery-post', [PetGalleryController::class, 'post_album']);
     Route::post('/pet-gallery-edit/{pet_id}/{album_id}', [PetGalleryController::class, 'insert_pet_to_album']);
+    Route::get('/pet-gallery-download-image/{image_name}', [PetGalleryController::class, 'download_image_from_gallery']);
     
 
     // Route::resource('pet-activity-user', PetActivityController::class);
