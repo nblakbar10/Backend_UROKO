@@ -42,7 +42,7 @@ class AdoptionItemController extends Controller
         ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($adoptionitemjoin);
@@ -130,7 +130,7 @@ class AdoptionItemController extends Controller
         ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_item.id',$adoptionitem->id)
         ->get();
         // dd($adoptionitemjoin);
@@ -184,7 +184,7 @@ class AdoptionItemController extends Controller
         ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_item.id',$adoptionitem->id)
         ->get();
         // dd($adoptionitemjoin);
@@ -231,7 +231,7 @@ class AdoptionItemController extends Controller
         ->select('adoption_item.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
         // dd($adoptionitemjoin);

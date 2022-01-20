@@ -12,7 +12,8 @@ class PetGallery extends Model
     protected $fillable =[
         'user_id',
         'album_name',
-        'album_picture'
+        'album_picture',
+        'album_picture2'
     ];
 
     public function getUpdatedAtAttribute($value)

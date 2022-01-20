@@ -26,6 +26,8 @@ use App\Http\Controllers\API\ShippingController;
 use App\Http\Controllers\API\PetHotelOrderController;
 use App\Http\Controllers\API\PetHotelProviderController;
 
+use App\Http\Controllers\API\ItemController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +145,11 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::post('pet_hotel_provider_fee_post/{pet_hotel_provider_id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_post']);
     Route::post('pet_hotel_provider_fee_update/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_update']);
     Route::delete('pet_hotel_provider_fee_delete/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_delete']);
+
+    Route::get('adoptionitem_all', [ItemController::class, 'adoptionitem_all']);
+    Route::get('auctionitem_all', [ItemController::class, 'auctionitem_all']);
+    Route::get('rentitem_all', [ItemController::class, 'rentitem_all']);
+    Route::get('pet_hotel_provider_all', [ItemController::class, 'pet_hotel_provider_all']);
 });
 
 

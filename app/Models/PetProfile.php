@@ -20,6 +20,7 @@ class PetProfile extends Model
         'pet_age',
         'pet_description',
         'pet_picture',
+        'pet_picture2',
         'pet_status',
         'album_id',
     ];

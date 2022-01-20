@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'bid_history_id',
         'address',
         'profile_img',
+        'profile_img2',
         'role'
     ];
 

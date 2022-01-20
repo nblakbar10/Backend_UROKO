@@ -16,7 +16,8 @@ class PetActivity extends Model
         'pet_activity_type',
         'pet_activity_detail',
         'pet_activity_date',
-        'pet_activity_image'
+        'pet_activity_image',
+        'pet_activity_image2'
     ];
     protected $casts = [
         'pet_activity_image' => 'array',

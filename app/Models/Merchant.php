@@ -13,6 +13,7 @@ class Merchant extends Model
         'user_id',
         'merchant_name',
         'merchant_image',
+        'merchant_image2',
     ];
    
     public function getUpdatedAtAttribute($value)

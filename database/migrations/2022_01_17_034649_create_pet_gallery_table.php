@@ -18,6 +18,7 @@ class CreatePetGalleryTable extends Migration
             $table->string('user_id');
             $table->string('album_name');
             $table->string('album_picture');
+            $table->string('album_picture2');
             $table->timestamps();
         });
     }

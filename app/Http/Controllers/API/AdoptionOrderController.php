@@ -71,7 +71,7 @@ class AdoptionOrderController extends Controller
         ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_order.id',$adoptionorder->id)
         ->get();
         // dd($adoptionorderjoin);
@@ -100,7 +100,7 @@ class AdoptionOrderController extends Controller
         ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_order.id', $id)
         // ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
@@ -125,7 +125,7 @@ class AdoptionOrderController extends Controller
         ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
 
@@ -151,7 +151,7 @@ class AdoptionOrderController extends Controller
         ->select('adoption_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_order.id', $id)
         // ->where('adoption_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();

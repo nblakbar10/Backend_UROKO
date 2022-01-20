@@ -28,6 +28,7 @@ class CreatePetProfileTable extends Migration
             $table->string('pet_age');
             $table->string('pet_description');
             $table->string('pet_picture');
+            $table->string('pet_picture2');
             $table->string('pet_status');
             $table->string('album_id');
             // $table->string('pet_activity_id');

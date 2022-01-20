@@ -21,6 +21,7 @@ class CreatePetActivityTable extends Migration
             $table->string("pet_activity_type");
             $table->string("pet_activity_detail");
             $table->json("pet_activity_image");
+            $table->json("pet_activity_image2");
             $table->date("pet_activity_date");
             $table->timestamps();
         });

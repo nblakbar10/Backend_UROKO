@@ -82,7 +82,7 @@ class AuctionOrderController extends Controller
         ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('auction_order.id',$auctionorder->id)
         ->get();
         // dd($auctionorderjoin);
@@ -158,7 +158,7 @@ class AuctionOrderController extends Controller
         ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('auction_order.id', $id)
         // ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
@@ -186,7 +186,7 @@ class AuctionOrderController extends Controller
         ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
 
@@ -211,7 +211,7 @@ class AuctionOrderController extends Controller
         ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 
         'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
         'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name')
+        'merchant.merchant_name', 'merchant.merchant_image')
         ->where('auction_order.id', $id)
         // ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();

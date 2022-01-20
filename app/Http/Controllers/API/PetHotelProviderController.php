@@ -24,9 +24,44 @@ class PetHotelProviderController extends Controller
             $pet_hotel_provider = "Anda belum memiliki pet hotel provider!";
         }
 
+
+        $feejoin = PetHotelProvider::leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.pet_hotel_provider_id', 'pet_hotel_provider.id')
+        ->select('pet_hotel_provider.*','pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
+        'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day')
+        ->get();
+
+        foreach($pet_hotel_provider as $item){
+            $data_pet_hotel_provider_fee = null;
+            foreach($feejoin as $data){
+                if($item->id == $data->pet_hotel_provider_id){
+                    $data_pet_hotel_provider_fee[] = [
+                        "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
+                        "pet_type" => $data->pet_type,
+                        "pet_size" => $data->pet_size,
+                        "slot_available" => $data->slot_available,
+                        "price_per_day" => $data->price_per_day
+                    ];
+                }
+            }
+           
+            $joinbaru[] = [
+                'id' => $item->id,
+                'user_id' => $item->user_id,
+                'merchant_id' => $item->merchant_id,
+                'name' => $item->name,
+                'address' => $item->address,
+                'phone' => $item->phone,
+                'photo' => $item->photo,
+                'description' => $item->description,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+                'data_pet_hotel_provider_fee' => $data_pet_hotel_provider_fee
+            ];
+        }
+
         $data = [
             'message' => 'Success',
-            'data' => $pet_hotel_provider
+            'data' => $feejoin
         ];
 
         return response()->json($data, 200);
@@ -212,13 +247,15 @@ class PetHotelProviderController extends Controller
         return response()->json($data, 200);
     }
 
+
+
     public function pet_hotel_provider_fee_index()
     {
         $pet_hotel_provider_fee = PetHotelProviderFee::where('user_id', Auth::user()->id)->first();
         if (!$pet_hotel_provider_fee) {
             $pet_hotel_provider_fee = "Belum ada pet_hotel_provider_fee!";
         }
-
+        
         $data = [
             'message' => 'Success',
             'data' => $pet_hotel_provider_fee
@@ -226,6 +263,8 @@ class PetHotelProviderController extends Controller
 
         return response()->json($data, 200);
     }
+
+
 
     public function pet_hotel_provider_fee_update(Request $request, $id)
     {
@@ -252,7 +291,7 @@ class PetHotelProviderController extends Controller
     }
 
 
-    public function pet_hotel_provider_fee_delete(Request $request, $id)
+    public function pet_hotel_provider_fee_delete(Request $request)
     {
         $pet_hotel_provider_fee = PetHotelProviderFee::findOrFail($id);
 
