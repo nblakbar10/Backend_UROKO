@@ -15,12 +15,13 @@ class CreatePetHotelProviderTable extends Migration
     {
         Schema::create('pet_hotel_provider', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('merchant_id');
+            $table->integer('user_id'); //nullable
+            $table->integer('merchant_id'); //nullable
+            $table->string('name');
             $table->string('address');
             $table->string('phone');
-            $table->string('desciption');
-            $table->string('pet_hotel_provider_photo');
+            $table->string('photo');
+            $table->string('description');
             $table->timestamps();
         });
     }

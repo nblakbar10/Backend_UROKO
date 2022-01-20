@@ -16,6 +16,7 @@ class CreatePetHotelOrderTable extends Migration
         Schema::create('pet_hotel_order', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->integer('pet_hotel_provider_id');
             $table->integer('pet_profile_id');
             $table->string('cage');
             $table->string('pet_caring_note');
@@ -24,6 +25,10 @@ class CreatePetHotelOrderTable extends Migration
             $table->string('total_days');
             // $table->integer('pethotel_amminities_selected_id');
             $table->integer('pethotel_order_status');
+
+            $table->integer('shipping_id');
+            $table->string('payments_option_id');
+            
             $table->integer('pethotel_total_price');
             $table->timestamps();
         });

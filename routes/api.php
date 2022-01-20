@@ -23,6 +23,10 @@ use App\Http\Controllers\API\UserFollowController;
 
 use App\Http\Controllers\API\ShippingController;
 
+use App\Http\Controllers\API\PetHotelOrderController;
+use App\Http\Controllers\API\PetHotelProviderController;
+
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -122,6 +126,19 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
 
     Route::post('shipping_post', [ShippingController::class, 'shipping_post']);
     Route::get('get_shipping_option', [ShippingController::class, 'get_shipping_option']);
+
+    Route::post('pethotel_order_post/{id}', [PetHotelOrderController::class, 'pethotel_order_post']);
+    Route::get('pethotel_order_getall', [PetHotelOrderController::class, 'pethotel_order_getall']);
+    Route::post('pethotel_order_cancel/{id}', [PetHotelOrderController::class, 'pethotel_order_cancel']);
+
+    Route::get('pet_hotel_provider_index', [PetHotelProviderController::class, 'pet_hotel_provider_index']);
+    Route::post('pet_hotel_provider_post', [PetHotelProviderController::class, 'pet_hotel_provider_post']);
+    Route::post('pet_hotel_provider_update', [PetHotelProviderController::class, 'pet_hotel_provider_update']);
+    Route::delete('pet_hotel_provider_delete', [PetHotelProviderController::class, 'pet_hotel_provider_delete']);
+
+    Route::post('pet_hotel_provider_fee_post/{pet_hotel_provider_id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_post']);
+    Route::post('pet_hotel_provider_fee_update/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_update']);
+    Route::delete('pet_hotel_provider_fee_delete/{id}', [PetHotelProviderController::class, 'pet_hotel_provider_fee_delete']);
 });
 
 
