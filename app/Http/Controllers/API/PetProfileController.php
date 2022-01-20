@@ -8,6 +8,7 @@ use App\Models\PetProfile;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\PetGallery;
 
 class PetProfileController extends Controller
@@ -83,8 +84,17 @@ class PetProfileController extends Controller
         }
 
         $host = $request->getSchemeAndHttpHost();
-        $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$petprofile->getClientOriginalName();
+        $petprofile = $request->pet_picture;
+        $fileName_petPicture = time().'_'.$petprofile->getClientOriginalName();
+        $fileName_petPicture2 = $host.'/storage/gambar-pet/'.$fileName_petPicture;
         $petprofile->move(public_path('storage/gambar-pet'), $fileName_petPicture);
+
+        dd(parse_url($fileName_petPicture, PHP_URL_PATH));
+
+
+        // $file = $fileName_petPicture;
+        // $destination = public_path('storage/gambar-album');
+        // Storage::get('public/'.$fileName_petPicture);
 
         // $data = [];
         // if($request->hasfile('pet_picture'))
@@ -100,15 +110,18 @@ class PetProfileController extends Controller
         //     }
         // }
         $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
-        $albumID = $searchAlbum->id;
+        
         if ($searchAlbum == NULL) {    
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,
                 'album_name' => $request->pet_name,
-                'album_picture' => $request->pet_picture
+                'album_picture' => $fileName_petPicture
             ]);
 
             $albumID = $album->id;
+        }
+        else{
+            $albumID = $searchAlbum->id;
         }
 
         $petProfile = new PetProfile();
