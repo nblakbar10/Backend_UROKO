@@ -89,9 +89,10 @@ class PetProfileController extends Controller
         $fileName_petPicture2 = $host.'/storage/gambar-pet/'.$fileName_petPicture;
         $petprofile->move(public_path('storage/gambar-pet'), $fileName_petPicture);
 
-        dd(parse_url($fileName_petPicture, PHP_URL_PATH));
+        // dd(parse_url($fileName_petPicture, PHP_URL_PATH));
 
 
+        
         // $file = $fileName_petPicture;
         // $destination = public_path('storage/gambar-album');
         // Storage::get('public/'.$fileName_petPicture);
@@ -112,10 +113,15 @@ class PetProfileController extends Controller
         $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
         
         if ($searchAlbum == NULL) {    
+            $file = public_path('storage/gambar-pet', $fileName_petPicture);
+            $destination = public_path('storage/gambar-album', $fileName_petPicture);
+            Storage::copy($file,$destination);
+            
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,
                 'album_name' => $request->pet_name,
-                'album_picture' => $fileName_petPicture
+                'album_picture' => $fileName_petPicture,
+                'album_picture2' => $fileName_petPicture2
             ]);
 
             $albumID = $album->id;
@@ -138,6 +144,7 @@ class PetProfileController extends Controller
         $petProfile->pet_age = $request->pet_age;
         $petProfile->pet_description = $request->pet_description;
         $petProfile->pet_picture = $fileName_petPicture; //$data;
+        $petProfile->pet_picture2 = $fileName_petPicture2; //$data;
         $petProfile->pet_status = $request->pet_status;
         $petProfile->album_id = $albumID;
         $petProfile->save();
@@ -215,7 +222,8 @@ class PetProfileController extends Controller
 
             $host = $request->getSchemeAndHttpHost();
             $file_pet_picture = $request->pet_picture;
-            $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$file_pet_picture->getClientOriginalName();
+            $fileName_petPicture = time().'_'.$file_pet_picture->getClientOriginalName();
+            $fileName_petPicture2 = $host.'/storage/gambar-pet/'.$fileName_petPicture;
             $file_pet_picture->move(public_path('storage/gambar-pet'), $fileName_petPicture);
 
             $pet->update([
@@ -229,6 +237,7 @@ class PetProfileController extends Controller
                 'pet_age' => $request->pet_age,
                 'pet_description' => $request->pet_description,
                 'pet_picture' => $fileName_petPicture,
+                'pet_picture2' => $fileName_petPicture2,
                 'pet_status' => $request->pet_status,
             ]);
 

@@ -25,11 +25,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone_number',
         'merchant_status',
         'picture',
+        'picture2',
         'birthdate',
         'bid_history_id',
         'address',
-        'profile_img',
-        'profile_img2',
         'role'
     ];
 
