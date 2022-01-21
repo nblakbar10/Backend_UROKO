@@ -17,7 +17,7 @@ class CreatePetHotelProviderBookingSlotsTable extends Migration
             $table->id();
             $table->integer('pet_hotel_provider_id');
             $table->integer('user_id'); //id si user yg ngebooking'
-            $table->string('sitting_slots_booked'); //(jenis pet yg dititipin, misal: Turtle Small. Diambil dari jenis pet profile)
+            $table->string('pet_type'); //(jenis pet yg dititipin, misal: Turtle Small. Diambil dari jenis pet profile)
             $table->string('check_in_date');
             $table->string('check_out_date');
             $table->string('total_days');

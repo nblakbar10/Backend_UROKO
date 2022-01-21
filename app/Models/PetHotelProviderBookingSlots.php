@@ -12,7 +12,7 @@ class PetHotelProviderBookingSlots extends Model
     protected $fillable = [
         'pet_hotel_provider_id',
         'user_id', //id si user yg ngebooking
-        'sitting_slots_booked',
+        'pet_type', // tipe pet yg dititipin
         'check_in_date',
         'check_out_date',
         'total_days',
