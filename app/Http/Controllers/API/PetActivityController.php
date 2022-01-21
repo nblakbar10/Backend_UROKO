@@ -44,10 +44,12 @@ class PetActivityController extends Controller
             {
                 $host = $request->getSchemeAndHttpHost();
             //    $name=$file->getClientOriginalName();
-                $fileName_pet_activity_image = $host.'/storage/gambar-activity/'.time().'_'.$file_pet_activity_image->getClientOriginalName();
+                $fileName_pet_activity_image = time().'_'.$file_pet_activity_image->getClientOriginalName();
+                $fileName_pet_activity_image2 = $host.'/storage/gambar-activity/'.$fileName_pet_activity_image;
             //    $file->move(public_path().'/files/', $name);  
                 $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
-                $data[] = $fileName_pet_activity_image;  
+                $data[] = $fileName_pet_activity_image;
+                $data2[] = $fileName_pet_activity_image2;  
             }
         }
 
@@ -61,6 +63,7 @@ class PetActivityController extends Controller
         $petActivity->pet_activity_type = $request->pet_activity_type;
         $petActivity->pet_activity_date = $request->pet_activity_date;
         $petActivity->pet_activity_image = $data;
+        $petActivity->pet_activity_image2 = $data2;
         $petActivity->save();
         // $petActivity = PetActivity::create([
         //     'pet_group_id' => $pet->pet_group_id,
@@ -99,9 +102,11 @@ class PetActivityController extends Controller
                 foreach($request->file('pet_activity_image') as $file_pet_activity_image)
                 {
                     $host = $request->getSchemeAndHttpHost();
-                    $fileName_pet_activity_image = $host.'/storage/gambar-activity/'.time().'_'.$file_pet_activity_image->getClientOriginalName();
+                    $fileName_pet_activity_image = time().'_'.$file_pet_activity_image->getClientOriginalName();
+                    $fileName_pet_activity_image2 = $host.'/storage/gambar-activity/'.$fileName_pet_activity_image;
                     $file_pet_activity_image->move(public_path('storage/gambar-activity'), $fileName_pet_activity_image);
-                    $data1[] = $fileName_pet_activity_image;  
+                    $data1[] = $fileName_pet_activity_image; 
+                    $data2[] = $fileName_pet_activity_image2;  
                 }
             }
             // $file_pet_activity_image = $request->pet_activity_image;
@@ -111,7 +116,8 @@ class PetActivityController extends Controller
             
             $petActivity->fill($dataInput)->save();
             $petActivity->update([
-                'pet_activity_image' => $data1
+                'pet_activity_image' => $data1,
+                'pet_activity_image2' => $data2
             ]);
 
             $data = [
@@ -151,6 +157,7 @@ class PetActivityController extends Controller
                  'pet_profile.pet_age', 
                  'pet_profile.pet_description', 
                  'pet_profile.pet_picture', 
+                 'pet_profile.pet_picture2', 
                  'pet_profile.pet_status')
         ->where('pet_activity.user_id', Auth::user()->id)
         ->get();
@@ -184,6 +191,7 @@ class PetActivityController extends Controller
                  'pet_profile.pet_age', 
                  'pet_profile.pet_description', 
                  'pet_profile.pet_picture', 
+                 'pet_profile.pet_picture2', 
                  'pet_profile.pet_status')
         ->where('pet_activity.user_id', Auth::user()->id)
         ->where('pet_activity.pet_group_id', $id)
@@ -218,6 +226,7 @@ class PetActivityController extends Controller
                  'pet_profile.pet_age', 
                  'pet_profile.pet_description', 
                  'pet_profile.pet_picture', 
+                 'pet_profile.pet_picture2', 
                  'pet_profile.pet_status')
         ->where('pet_activity.user_id', Auth::user()->id)
         ->where('pet_activity.pet_group_id', $group_id)

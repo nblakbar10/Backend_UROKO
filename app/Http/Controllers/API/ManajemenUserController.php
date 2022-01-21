@@ -24,13 +24,15 @@ class ManajemenUserController extends Controller
             $host = $request->getSchemeAndHttpHost();
 
             $file_picture = $request->picture;
-            $fileName_picture = $host.'/storage/gambar-user/'.time().'_'.$file_picture->getClientOriginalName();
+            $fileName_picture = time().'_'.$file_picture->getClientOriginalName();
+            $fileName_picture2 = $host.'/storage/gambar-user/'.$fileName_picture;
             $file_picture->move(public_path('storage/gambar-user'), $fileName_picture);
 
             
             $user->fill($input)->save();
             $user->update([
-                'picture' => $fileName_picture
+                'picture' => $fileName_picture,
+                'picture2' => $fileName_picture2
             ]);
 
             $data = [
