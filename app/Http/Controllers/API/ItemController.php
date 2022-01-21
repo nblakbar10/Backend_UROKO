@@ -96,12 +96,18 @@ class ItemController extends Controller
         $pet_hotel_provider = PetHotelProvider::get();
         
         $feejoin = PetHotelProvider::leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.pet_hotel_provider_id', 'pet_hotel_provider.id')
+        ->leftjoin('pet_hotel_provider_amminities','pet_hotel_provider_amminities.pet_hotel_provider_id', 'pet_hotel_provider.id')
+        ->leftjoin('pet_hotel_provider_amminities_extra','pet_hotel_provider_amminities_extra.pet_hotel_provider_id', 'pet_hotel_provider.id')
         ->select('pet_hotel_provider.*', 'pet_hotel_provider_fee.id', 'pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
-        'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day')
+        'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day',
+        'pet_hotel_provider_amminities.id', 'pet_hotel_provider_amminities.pet_hotel_provider_id', 'pet_hotel_provider_amminities.food', 'pet_hotel_provider_amminities.basking', 'pet_hotel_provider_amminities.cleaning', 'pet_hotel_provider_amminities.bedding', 'pet_hotel_provider_amminities.grooming',
+        'pet_hotel_provider_amminities_extra.id', 'pet_hotel_provider_amminities_extra.pet_hotel_provider_id', 'pet_hotel_provider_amminities_extra.extra_amminities_name', 'pet_hotel_provider_amminities_extra.extra_amminities_price_per_day')
         ->get();
 
         foreach($pet_hotel_provider as $item){
             $data_pet_hotel_provider_fee = null;
+            $data_pet_hotel_provider_amminities = null;
+            $data_pet_hotel_provider_amminities_extra = null;
             foreach($feejoin as $data){
                 if($item->id == $data->pet_hotel_provider_id){
                     $data_pet_hotel_provider_fee[] = [
@@ -111,6 +117,21 @@ class ItemController extends Controller
                         "pet_size" => $data->pet_size,
                         "slot_available" => $data->slot_available,
                         "price_per_day" => $data->price_per_day
+                    ];
+                    $data_pet_hotel_provider_amminities[] = [
+                        "id" => $data->id,
+                        "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
+                        "food" => $data->food,
+                        "basking" => $data->basking,
+                        "cleaning" => $data->cleaning,
+                        "bedding" => $data->bedding,
+                        "grooming" => $data->grooming
+                    ];
+                    $data_pet_hotel_provider_amminities_extra[] = [
+                        "id" => $data->id,
+                        "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
+                        "extra_amminities_name" => $data->extra_amminities_name,
+                        "extra_amminities_price_per_day" => $data->extra_amminities_price_per_day
                     ];
                 }
             }
@@ -126,7 +147,9 @@ class ItemController extends Controller
                 'description' => $item->description,
                 'created_at' => $item->created_at,
                 'updated_at' => $item->updated_at,
-                'data_pet_hotel_provider_fee' => $data_pet_hotel_provider_fee
+                'data_pet_hotel_provider_fee' => $data_pet_hotel_provider_fee,
+                'data_pet_hotel_provider_amminities' => $data_pet_hotel_provider_amminities,
+                'data_pet_hotel_provider_amminities_extra' => $data_pet_hotel_provider_amminities_extra
             ];
         }
 

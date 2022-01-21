@@ -24,26 +24,39 @@ class PetHotelProviderController extends Controller
         $pet_hotel_provider = PetHotelProvider::where('user_id', Auth::user()->id)->get();
         if ($pet_hotel_provider) {
             $feejoin = PetHotelProvider::leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.pet_hotel_provider_id', 'pet_hotel_provider.id')
-            ->where('user_id', auth()->user()->id)
-            ->select('pet_hotel_provider.*', 'pet_hotel_provider_fee.id', 'pet_hotel_provider_fee.pet_hotel_provider_id','pet_hotel_provider_fee.pet_type', 'pet_hotel_provider_fee.pet_size', 
-            'pet_hotel_provider_fee.slot_available', 'pet_hotel_provider_fee.price_per_day')
+            ->leftjoin('pet_hotel_provider_amminities','pet_hotel_provider_amminities.pet_hotel_provider_id', 'pet_hotel_provider.id')
+            ->leftjoin('pet_hotel_provider_amminities_extra','pet_hotel_provider_amminities_extra.pet_hotel_provider_id', 'pet_hotel_provider.id')
+            // ->where('user_id', auth()->user()->id)
+            ->select('pet_hotel_provider.*', 
+            // 'pet_hotel_provider_fee.id', 
+            'pet_hotel_provider_fee.pet_hotel_provider_id',
+            'pet_hotel_provider_fee.pet_type', 
+            'pet_hotel_provider_fee.pet_size', 
+            'pet_hotel_provider_fee.slot_available', 
+            'pet_hotel_provider_fee.price_per_day',
+
+            // 'pet_hotel_provider_amminities.id', 
+            'pet_hotel_provider_amminities.pet_hotel_provider_id', 
+            'pet_hotel_provider_amminities.food', 
+            'pet_hotel_provider_amminities.basking', 
+            'pet_hotel_provider_amminities.cleaning', 
+            'pet_hotel_provider_amminities.bedding', 
+            'pet_hotel_provider_amminities.grooming',
+
+            // 'pet_hotel_provider_amminities_extra.id', 
+            'pet_hotel_provider_amminities_extra.pet_hotel_provider_id', 
+            'pet_hotel_provider_amminities_extra.extra_amminities_name', 
+            'pet_hotel_provider_amminities_extra.extra_amminities_price_per_day')
             ->get();
 
             foreach($pet_hotel_provider as $item){
-                $data_pet_hotel_provider_fee = null;
-                foreach($feejoin as $data){
-                    if($item->id == $data->pet_hotel_provider_id){
-                        $data_pet_hotel_provider_fee[] = [
-                            "id" => $data->id,
-                            "pet_hotel_provider_id" => $data->pet_hotel_provider_id,
-                            "pet_type" => $data->pet_type,
-                            "pet_size" => $data->pet_size,
-                            "slot_available" => $data->slot_available,
-                            "price_per_day" => $data->price_per_day
-                        ];
-                    }
-                }
-            
+                $providerfee = PetHotelProviderFee::where('pet_hotel_provider_id', $item->id)->get();
+                $arrayproviderfee[] = $providerfee;
+                $provideramminities = PetHotelProviderAmminities::where('pet_hotel_provider_id', $item->id)->get();
+                $arrayprovideramminities[] = $provideramminities;
+                $provideramminitiesextra = PetHotelProviderAmminitiesExtra::where('pet_hotel_provider_id', $item->id)->get();
+                $arrayprovideramminitiesextra[] = $provideramminitiesextra;
+
                 $joinbaru[] = [
                     'id' => $item->id,
                     'user_id' => $item->user_id,
@@ -55,15 +68,15 @@ class PetHotelProviderController extends Controller
                     'description' => $item->description,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
-                    'data_pet_hotel_provider_fee' => $data_pet_hotel_provider_fee
+                    'data_pet_hotel_provider_fee' => $arrayproviderfee,
+                    'data_pet_hotel_provider_amminities' => $arrayprovideramminities,
+                    'data_pet_hotel_provider_amminities_extra' => $arrayprovideramminitiesextra
                 ];
             }
         }
         else{
             $pet_hotel_provider = "Anda belum memiliki pet hotel provider!";
         }
-
-        
 
         $data = [
             'message' => 'Success',
