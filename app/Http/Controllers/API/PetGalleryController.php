@@ -32,18 +32,23 @@ class PetGalleryController extends Controller
         ->where('pet_gallery.id', $album_id)
         ->select('pet_activity.*',
                  'pet_profile.album_id',
-                 'pet_gallery.album_name')
+                 'pet_gallery.album_name',
+                 'pet_gallery.album_picture',
+                 'pet_gallery.album_picture2')
         ->get();
 
         foreach ($petActivity as $key => $value) {
             $arr['pet_activity_id'] = $value->id;
             $arr['pet_activity_detail'] = $value->pet_activity_detail;
             $arr['pet_activity_image'] = $value->pet_activity_image;
+            $arr['pet_activity_image2'] = $value->pet_activity_image2;
         }
 
         $data = [
             'album_id' => $album_id,
             'album_name' => $petActivity->album_name,
+            'album_picture' => $petActivity->album_picture,
+            'album_picture2' => $petActivity->album_picture2,
             'detail_data' => $arr
         ];
         return response()->json([
@@ -69,13 +74,15 @@ class PetGalleryController extends Controller
 
             $host = $request->getSchemeAndHttpHost();
             //    $name=$file->getClientOriginalName();
-            $fileName_petPicture = $host.'/storage/gambar-activity/'.time().'_'.$request->album_picture->getClientOriginalName();
+            $fileName_petPicture = time().'_'.$request->album_picture->getClientOriginalName();
+            $fileName_petPicture2 = $host.'/storage/gambar-album/'.$fileName_petPicture;
             //    $file->move(public_path().'/files/', $name);  
-            $request->album_picture->move(public_path('storage/gambar-activity/'), $fileName_petPicture);
+            $request->album_picture->move(public_path('storage/gambar-album/'), $fileName_petPicture);
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,
                 'album_name' => $request->album_name,
                 'album_picture' => $fileName_petPicture,
+                'album_picture2' => $fileName_petPicture2,
             ]);
 
             return response()->json([

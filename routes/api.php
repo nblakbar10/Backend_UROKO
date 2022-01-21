@@ -47,8 +47,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::get('/all-transaction-index', [TransactionController::class, 'get_all_transaction']) ;
     Route::get('/all-merchant-order/{merchant_id}', [TransactionController::class, 'get_merchant_order']) ;
-    Route::put('/confirm-order/{order_id}/{order_type}', [TransactionController::class, 'confirm_order']) ;
-    Route::put('/reject-order/{order_id}/{order_type}', [TransactionController::class, 'reject_order']) ;
+    Route::post('/confirm-order/{order_id}/{order_type}', [TransactionController::class, 'confirm_order']) ;
+    Route::post('/reject-order/{order_id}/{order_type}', [TransactionController::class, 'reject_order']) ;
+    Route::post('/confirm-hotel-order/{order_id}', [TransactionController::class, 'confirm_hotel_order']) ;
+    Route::post('/reject-hotel-order/{order_id}', [TransactionController::class, 'reject_hotel_order']) ;
     //User
     Route::post('/manajemen-profile-update', [ManajemenUserController::class, 'update_user_profile']);
     Route::delete('/manajemen-profile-delete', [ManajemenUserController::class, 'delete_user_profile']);

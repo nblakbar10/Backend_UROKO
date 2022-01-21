@@ -12,6 +12,7 @@ use App\Models\AdoptionOrder;
 use App\Models\AuctionOrder;
 use App\Models\RentOrder;
 use App\Models\PetActivity;
+use App\Models\PetHotelOrder;
 use App\Models\Transaction;
 
 class TransactionController extends Controller
@@ -36,6 +37,9 @@ class TransactionController extends Controller
         ->leftJoin('shipping', function ($join) {
             $join->on('shipping.id', '=', 'adoption_order.shipping_id');
         })
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'adoption_order.payments_option_id');
+        })
         ->where('users.id', Auth::user()->id)
         ->select('pet_profile.pet_name',
         'pet_profile.pet_species',
@@ -45,9 +49,11 @@ class TransactionController extends Controller
         'pet_profile.pet_age',
         'pet_profile.pet_description',
         'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
         'pet_profile.pet_status',
         'users.username',
         'users.picture',
+        'users.picture2',
         'pet_grouping.pet_group_name', 
         'adoption_order.*', 
         'merchant.merchant_name',
@@ -55,8 +61,10 @@ class TransactionController extends Controller
         'adoption_item.qty',
         'adoption_item.description',
         'shipping.shipping_type',
-        'shipping.shipping_fee'
+        'shipping.shipping_fee',
+        'payments_option.payments_type'
         )->get();
+
         $dataAuctionOrder = AuctionOrder::leftJoin('users', function ($join) {
             $join->on('users.id', '=', 'auction_order.user_id');
         })
@@ -75,6 +83,9 @@ class TransactionController extends Controller
         ->leftJoin('shipping', function ($join) {
             $join->on('shipping.id', '=', 'auction_order.shipping_id');
         })
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'auction.payments_option_id');
+        })
         ->where('users.id', Auth::user()->id)
         ->select('pet_profile.pet_name',
         'pet_profile.pet_species',
@@ -84,9 +95,11 @@ class TransactionController extends Controller
         'pet_profile.pet_age',
         'pet_profile.pet_description',
         'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
         'pet_profile.pet_status',
         'users.username',
         'users.picture',
+        'users.picture2',
         'pet_grouping.pet_group_name', 
         'auction_order.*', 
         'merchant.merchant_name',
@@ -94,7 +107,8 @@ class TransactionController extends Controller
         'auction_item.qty',
         'auction_item.description',
         'shipping.shipping_type',
-        'shipping.shipping_fee'
+        'shipping.shipping_fee',
+        'payments_option.payments_type'
         )->get();
         
         $dataRentOrder = RentOrder::leftJoin('users', function ($join) {
@@ -115,6 +129,9 @@ class TransactionController extends Controller
         ->leftJoin('shipping', function ($join) {
             $join->on('shipping.id', '=', 'rent_order.shipping_id');
         })
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'rent_order.payments_option_id');
+        })
         ->where('users.id', Auth::user()->id)
         ->select('pet_profile.pet_name',
         'pet_profile.pet_species',
@@ -124,9 +141,11 @@ class TransactionController extends Controller
         'pet_profile.pet_age',
         'pet_profile.pet_description',
         'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
         'pet_profile.pet_status',
         'users.username',
         'users.picture',
+        'users.picture2',
         'pet_grouping.pet_group_name', 
         'rent_order.*', 
         'merchant.merchant_name',
@@ -134,14 +153,56 @@ class TransactionController extends Controller
         'rent_item.qty',
         'rent_item.description',
         'shipping.shipping_type',
-        'shipping.shipping_fee'
+        'shipping.shipping_fee',
+        'payments_option.payments_type'
+        )->get();
+
+        $petHotelOrder = PetHotelOrder::leftJoin('users', function ($join) {
+            $join->on('users.id', '=', 'pet_hotel_order.user_id');
+        })
+        ->leftJoin('pet_profile', function ($join) {
+            $join->on('pet_profile.id', '=', 'pet_hotel_order.pet_id');
+        })
+        ->leftJoin('pet_grouping', function ($join) {
+            $join->on('pet_grouping.id', '=', 'pet_profile.pet_group_id');
+        })
+        ->leftJoin('pet_hotel_provider', function ($join) {
+            $join->on('pet_hotel_provider.id', '=', 'pet_hotel_order.pet_hotel_provider_id');
+        })
+        ->leftJoin('shipping', function ($join) {
+            $join->on('shipping.id', '=', 'pet_hotel_order.shipping_id');
+        })
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'pet_hotel_order.payments_option_id');
+        })
+        ->where('users.id', Auth::user()->id)
+        ->select('pet_profile.pet_name',
+        'pet_profile.pet_species',
+        'pet_profile.pet_breed',
+        'pet_profile.pet_morph',
+        'pet_profile.pet_birthdate',
+        'pet_profile.pet_age',
+        'pet_profile.pet_description',
+        'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
+        'pet_profile.pet_status',
+        'users.username',
+        'users.picture',
+        'users.picture2',
+        'pet_grouping.pet_group_name', 
+        'pet_hotel_order.*', 
+        'pet_hotel_provider.name',
+        'shipping.shipping_type',
+        'shipping.shipping_fee',
+        'payments_option.payments_type'
         )->get();
 
         $adoption = [];
         $auction = [];
         $rent = [];
+        $hotel = [];
         
-        $allTransaction = $dataAdoptionOrder->concat($dataAuctionOrder)->concat($dataRentOrder);
+        $allTransaction = $dataAdoptionOrder->concat($dataAuctionOrder)->concat($dataRentOrder)->concat($petHotelOrder);
         foreach ($allTransaction as $key => $value) {
             if ($value->adoption_item_id) {
                 $value['order_type'] = 'Adoption Order';
@@ -152,6 +213,9 @@ class TransactionController extends Controller
             } elseif ($value->rent_item_id) {
                 $value['order_type'] = 'Rent Order';
                 $rent[] = $value;
+            } elseif ($value->pet_hotel_provider_id) {
+                $value['order_type'] = 'Pet Hotel Order';
+                $hotel[] = $value;
             }
         }
 
@@ -159,6 +223,7 @@ class TransactionController extends Controller
             'Adoption_Order' => $adoption,
             'Auction_Order' =>  $auction,
             'Rent_order' => $rent,
+            'Pet_Hotel_order' => $hotel,
         ];
 
         return response()->json([
@@ -167,6 +232,66 @@ class TransactionController extends Controller
         ], 200);
     }
 
+    public function get_pet_hotel_order($hotel_id)
+    {
+        $petHotelOrder = PetHotelOrder::leftJoin('users', function ($join) {
+            $join->on('users.id', '=', 'pet_hotel_order.user_id');
+        })
+        ->leftJoin('pet_profile', function ($join) {
+            $join->on('pet_profile.id', '=', 'pet_hotel_order.pet_id');
+        })
+        ->leftJoin('pet_grouping', function ($join) {
+            $join->on('pet_grouping.id', '=', 'pet_profile.pet_group_id');
+        })
+        ->leftJoin('pet_hotel_provider', function ($join) {
+            $join->on('pet_hotel_provider.id', '=', 'pet_hotel_order.pet_hotel_provider_id');
+        })
+        ->leftJoin('shipping', function ($join) {
+            $join->on('shipping.id', '=', 'pet_hotel_order.shipping_id');
+        })
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'pet_hotel_order.payments_option_id');
+        })
+        ->where('pet_hotel_provider.id', $hotel_id)
+        ->select('pet_profile.pet_name',
+        'pet_profile.pet_species',
+        'pet_profile.pet_breed',
+        'pet_profile.pet_morph',
+        'pet_profile.pet_birthdate',
+        'pet_profile.pet_age',
+        'pet_profile.pet_description',
+        'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
+        'pet_profile.pet_status',
+        'users.username',
+        'users.picture',
+        'users.picture2',
+        'pet_grouping.pet_group_name', 
+        'pet_hotel_order.*', 
+        'pet_hotel_provider.name',
+        'shipping.shipping_type',
+        'shipping.shipping_fee',
+        'payments_option.payments_type'
+        )->get();
+
+        $hotel = [];
+        
+        foreach ($petHotelOrder as $key => $value) {
+            if ($value->pet_hotel_provider_id) {
+                $value['order_type'] = 'Pet Hotel Order';
+                $hotel[] = $value;
+            }
+        }
+
+        $data = [
+            'Pet_Hotel_order' => $hotel,
+        ];
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => $data
+        ], 200);
+    }
     public function get_merchant_order($merchant_id)
     {
         $dataAdoptionOrder = AdoptionOrder::leftJoin('users', function ($join) {
@@ -196,9 +321,11 @@ class TransactionController extends Controller
         'pet_profile.pet_age',
         'pet_profile.pet_description',
         'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
         'pet_profile.pet_status',
         'users.username',
         'users.picture',
+        'users.picture2',
         'pet_grouping.pet_group_name', 
         'adoption_order.*', 
         'merchant.merchant_name',
@@ -235,9 +362,11 @@ class TransactionController extends Controller
         'pet_profile.pet_age',
         'pet_profile.pet_description',
         'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
         'pet_profile.pet_status',
         'users.username',
         'users.picture',
+        'users.picture2',
         'pet_grouping.pet_group_name', 
         'auction_order.*', 
         'merchant.merchant_name',
@@ -275,9 +404,11 @@ class TransactionController extends Controller
         'pet_profile.pet_age',
         'pet_profile.pet_description',
         'pet_profile.pet_picture',
+        'pet_profile.pet_picture2',
         'pet_profile.pet_status',
         'users.username',
         'users.picture',
+        'users.picture2',
         'pet_grouping.pet_group_name', 
         'rent_order.*', 
         'merchant.merchant_name',
@@ -343,6 +474,17 @@ class TransactionController extends Controller
         return response()->json($data, 200);
     }
 
+    public function confirm_hotel_order($order_id)
+    {
+        $hotel = PetHotelOrder::find($order_id);
+        $hotel->update([
+            'pethotel_order_status' => 'Approved'
+        ]);
+        $data = $hotel;
+
+        return response()->json($data, 200);
+    }
+
     public function reject_order($order_id,$order_type)
     {
         if ($order_type == 'Adoption Order') {
@@ -367,6 +509,17 @@ class TransactionController extends Controller
             
             $data = $adoption;
         } 
+
+        return response()->json($data, 200);
+    }
+
+    public function reject_hotel_order($order_id)
+    {
+        $hotel = PetHotelOrder::find($order_id);
+        $hotel->update([
+            'pethotel_order_status' => 'Rejected'
+        ]);
+        $data = $hotel;
 
         return response()->json($data, 200);
     }

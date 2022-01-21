@@ -21,6 +21,7 @@ class PetActivity extends Model
     ];
     protected $casts = [
         'pet_activity_image' => 'array',
+        'pet_activity_image2' => 'array',
     ];
 
     public function getUpdatedAtAttribute($value)
