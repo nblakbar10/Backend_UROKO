@@ -474,6 +474,17 @@ class TransactionController extends Controller
         return response()->json($data, 200);
     }
 
+    public function confirm_hotel_order($order_id)
+    {
+        $hotel = PetHotelOrder::find($order_id);
+        $hotel->update([
+            'pethotel_order_status' => 'Approved'
+        ]);
+        $data = $hotel;
+
+        return response()->json($data, 200);
+    }
+
     public function reject_order($order_id,$order_type)
     {
         if ($order_type == 'Adoption Order') {
@@ -498,6 +509,17 @@ class TransactionController extends Controller
             
             $data = $adoption;
         } 
+
+        return response()->json($data, 200);
+    }
+
+    public function reject_hotel_order($order_id)
+    {
+        $hotel = PetHotelOrder::find($order_id);
+        $hotel->update([
+            'pethotel_order_status' => 'Rejected'
+        ]);
+        $data = $hotel;
 
         return response()->json($data, 200);
     }
