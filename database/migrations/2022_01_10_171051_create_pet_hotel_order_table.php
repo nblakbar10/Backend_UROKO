@@ -23,9 +23,11 @@ class CreatePetHotelOrderTable extends Migration
             $table->string('check_in_date');
             $table->string('check_out_date');
             $table->string('total_days');
-            // $table->integer('pethotel_amminities_selected_id');
+            $table->integer('pet_hotel_provider_fee_id');
+            $table->integer('pet_hotel_provider_booking_slots_id');
+            $table->integer('pet_hotel_provider_amminities_id');
+            $table->integer('pet_hotel_provider_amminities_extra_id');
             $table->integer('pethotel_order_status');
-
             $table->integer('shipping_id');
             $table->string('payments_option_id');
             
