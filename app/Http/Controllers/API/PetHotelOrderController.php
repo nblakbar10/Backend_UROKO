@@ -60,8 +60,11 @@ class PetHotelOrderController extends Controller
 
         $pethotelorder = PetHotelOrder::create([
             'user_id' => Auth::user()->id,
+            //username, phone number, address
             'pet_hotel_provider_id' => $id,
+            //name, photo
             'pet_profile_id' => $request->pet_profile_id,
+            //pet_name, pet_picture, pet_gender, pet_age, pet_species, pet_weight, pet_size
             'cage' => $request->cage,
             'pet_caring_note' => $request->pet_caring_note,
             'check_in_date' => $request->check_in_date,

@@ -45,7 +45,6 @@ class AdoptionItemController extends Controller
         'merchant.merchant_name', 'merchant.merchant_image')
         ->where('adoption_item.user_id', Auth::user()->id) //ini buat get semua itemnya
         ->get();
-        // dd($adoptionitemjoin);
 
         $data = [
             'message' => 'Success',
