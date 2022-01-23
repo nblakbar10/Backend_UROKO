@@ -40,23 +40,33 @@ class MerchantController extends Controller
     public function store(Request $request)
     {
         $merchant = Merchant::where('user_id', $request->username)->first();
-
+        $user = User::where('id', $request->username)->first();
         if ($merchant == NULL) {
+            // dd($request->username);
             if ($request->merchant_image == NULL) {
                 $merchant = Merchant::create([
-                    'user_id' => $request->username,
+                    'user_id' => $user->id,
+                    'user_username' => $user->username,
                     'merchant_name' => $request->merchant_name
                 ]);
     
                 return redirect()->back()->with('success', 'Berhasil menambah merchant');
             } else {
+    
+                $host = $request->getSchemeAndHttpHost();
                 $file_merchant_image = $request->merchant_image;
                 $fileName_merchantImage = time().'_'.$file_merchant_image->getClientOriginalName();
+                $fileName_merchantImage2 = $host.'/storage/gambar-merchant/'.$fileName_merchantImage;
                 $file_merchant_image->move(public_path('storage/gambar-merchant'), $fileName_merchantImage);
-    
-                $user = User::where('id', $request->username)->first();
-                $input = $request->all();
-                $merchant = Merchant::create($input);
+                
+
+                $merchant = Merchant::create([
+                    'user_id' => $user->id,
+                    'user_username' => $user->username,
+                    'merchant_name' => $request->merchant_name,
+                    'merchant_image' => $fileName_merchantImage,
+                    'merchant_image2' => $fileName_merchantImage2
+                ]);
     
                 return redirect()->back()->with('success', 'Berhasil menambah merchant');
             }
