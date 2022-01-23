@@ -85,6 +85,22 @@
           </ul>
         </div>
       </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="{{route('pet-hotel-provider.index')}}">
+          <span class="menu-icon">
+            <i class="mdi mdi-home-variant"></i>
+          </span>
+          <span class="menu-title">Pet Hotel Provider</span>
+        </a>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" href="">
+          <span class="menu-icon">
+            <i class="mdi mdi-home-variant"></i>
+          </span>
+          <span class="menu-title">Pet Hotel Order</span>
+        </a>
+      </li>
       {{-- <li class="nav-item menu-items">
         <a class="nav-link" href="">
           <span class="menu-icon">

@@ -2,7 +2,7 @@
     <div class="">
         <a
         data-link="{{route('merchant.update', $model->id)}}" 
-        data-username="{{$model->name}}"
+        data-username="{{$model->username}}"
         data-name="{{$model->merchant_name}}"
         data-toggle="modal" 
         data-target="#modal-edit-merchant"
