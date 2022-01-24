@@ -13,7 +13,8 @@ class PetGallery extends Model
         'user_id',
         'album_name',
         'album_picture',
-        'album_picture2'
+        'album_picture2',
+        'album_type'
     ];
 
     public function getUpdatedAtAttribute($value)
