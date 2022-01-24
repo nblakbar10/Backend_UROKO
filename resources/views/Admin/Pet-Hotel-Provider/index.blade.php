@@ -266,6 +266,7 @@
                 searchable: false
             }, {
                 data: 'name',
+                searchable: false
             }, {
                 data: 'address',
                 searchable: false

@@ -100,6 +100,12 @@ class PetHotelOrderController extends Controller
 
         $pethotelorderjoin = PetHotelOrder::leftjoin('users','users.id', 'pet_hotel_order.user_id')
         ->leftjoin('pet_profile','pet_profile.id', 'pet_hotel_order.pet_profile_id')
+        ->leftJoin('shipping', function ($join) {
+            $join->on('shipping.id', '=', 'pet_hotel_order.shipping_id');
+        })     
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'pet_hotel_order.payments_option_id');
+        })
         ->leftjoin('pet_hotel_provider','pet_hotel_provider.id', 'pet_hotel_order.pet_hotel_provider_id')
         ->leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.id', 'pet_hotel_order.pet_hotel_provider_fee_id')
         ->leftjoin('pet_hotel_provider_booking_slots','pet_hotel_provider_booking_slots.id', 'pet_hotel_order.pet_hotel_provider_booking_slots_id')
@@ -114,6 +120,9 @@ class PetHotelOrderController extends Controller
         'pet_profile.pet_picture', 
         'pet_profile.pet_name',
         'pet_profile.pet_age', 
+        'shipping.shipping_type',
+        'shipping.shipping_fee',
+        'payments_option.payments_type',
         'pet_profile.pet_species', 
         'pet_profile.pet_breed', 
         'pet_profile.pet_gender', 
@@ -129,7 +138,7 @@ class PetHotelOrderController extends Controller
         'pet_hotel_provider_fee.pet_size',
         'pet_hotel_provider_fee.slot_available',
         'pet_hotel_provider_fee.price_per_day',
-        'pethotel_provider_booking_slots.status',
+        'pet_hotel_provider_booking_slots .status',
         'pet_hotel_provider_amminities.food',
         'pet_hotel_provider_amminities.basking',
         'pet_hotel_provider_amminities.cleaning',
@@ -151,17 +160,24 @@ class PetHotelOrderController extends Controller
     public function pethotel_order_getall(Request $request) //ambil semua transaksi pethotel order yg dilakukan oleh user
     {
 
-        $adoptionorder = AdoptionOrder::where('user_id', Auth::user()->id)->get();
-        if (!$adoptionorder) {
+        $pethotelorder = PetHotelOrder::where('user_id', Auth::user()->id)->get();
+        if (!$pethotelorder) {
             $data = [
                 'message' => 'adoption order not found'
             ];
             return response()->json($data, 404);
         }
 
-        $adoptionorderjoin = AdoptionOrder::leftjoin('users','users.id', 'adoption_order.user_id')
+        $pethotelorderjoin = PetHotelOrder::leftjoin('users','users.id', 'adoption_order.user_id')
         ->leftjoin('pet_profile','pet_profile.id', 'pet_hotel_order.pet_profile_id')
         ->leftjoin('pet_hotel_provider','pet_hotel_provider.id', 'pet_hotel_order.pet_hotel_provider_id')
+        ->leftJoin('shipping', function ($join) {
+            $join->on('shipping.id', '=', 'pet_hotel_order.shipping_id');
+        })
+        
+        ->leftJoin('payments_option', function ($join) {
+            $join->on('payments_option.id', '=', 'pet_hotel_order.payments_option_id');
+        })
         ->leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.id', 'pet_hotel_order.pet_hotel_provider_fee_id')
         ->leftjoin('pet_hotel_provider_booking_slots','pet_hotel_provider_booking_slots.id', 'pet_hotel_order.pet_hotel_provider_booking_slots_id')
         ->leftjoin('pet_hotel_provider_amminities','pet_hotel_provider_amminities.id', 'pet_hotel_order.pet_hotel_provider_amminities_id')
@@ -171,6 +187,7 @@ class PetHotelOrderController extends Controller
         'users.username', 
         'users.phone_number', 
         'users.address', 
+        'payments_option.payments_type',
         'pet_profile.pet_picture', 
         'pet_profile.pet_name',
         'pet_profile.pet_age', 
@@ -189,7 +206,9 @@ class PetHotelOrderController extends Controller
         'pet_hotel_provider_fee.pet_size',
         'pet_hotel_provider_fee.slot_available',
         'pet_hotel_provider_fee.price_per_day',
-        'pethotel_provider_booking_slots.status',
+        'pet_hotel_provider_booking_slots .status',
+        'shipping.shipping_type',
+        'shipping.shipping_fee',
         'pet_hotel_provider_amminities.food',
         'pet_hotel_provider_amminities.basking',
         'pet_hotel_provider_amminities.cleaning',
@@ -199,7 +218,7 @@ class PetHotelOrderController extends Controller
         'pet_hotel_provider_amminities_extra.extra_amminities_price_per_day',)
         ->get();
 
-        return response()->json($adoptionorderjoin, 200);
+        return response()->json($pethotelorderjoin, 200);
         
     }
 
@@ -217,6 +236,9 @@ class PetHotelOrderController extends Controller
 
         $pethotelorder = PetHotelOrder::leftjoin('users','users.id', 'pet_hotel_order.user_id')
         ->leftjoin('pet_profile','pet_profile.id', 'pet_hotel_order.pet_profile_id')
+        ->leftJoin('shipping', function ($join) {
+            $join->on('shipping.id', '=', 'pet_hotel_order.shipping_id');
+        })
         ->leftjoin('pet_hotel_provider','pet_hotel_provider.id', 'pet_hotel_order.pet_hotel_provider_id')
         ->leftjoin('pet_hotel_provider_fee','pet_hotel_provider_fee.id', 'pet_hotel_order.pet_hotel_provider_fee_id')
         ->leftjoin('pet_hotel_provider_booking_slots','pet_hotel_provider_booking_slots.id', 'pet_hotel_order.pet_hotel_provider_booking_slots_id')
@@ -245,8 +267,10 @@ class PetHotelOrderController extends Controller
         'pet_hotel_provider_fee.pet_size',
         'pet_hotel_provider_fee.slot_available',
         'pet_hotel_provider_fee.price_per_day',
-        'pethotel_provider_booking_slots.status',
+        'pet_hotel_provider_booking_slots .status',
         'pet_hotel_provider_amminities.food',
+        'shipping.shipping_type',
+        'shipping.shipping_fee',    
         'pet_hotel_provider_amminities.basking',
         'pet_hotel_provider_amminities.cleaning',
         'pet_hotel_provider_amminities.bedding',

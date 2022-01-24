@@ -15,6 +15,7 @@ use App\Http\Controllers\AuctionOrderController;
 use App\Http\Controllers\RentItemController;
 use App\Http\Controllers\RentOrderController;
 use App\Http\Controllers\PetHotelProviderController;
+use App\Http\Controllers\PetHotelOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +80,9 @@ Route::group(['middleware' => ['auth','verified']], function(){
     Route::resource('pet-hotel-provider', PetHotelProviderController::class);
     Route::get('/get-pet-hotel-provider', [PetHotelProviderController::class, 'get_pet_hotel_provider'])->name('pet-hotel-provider.get-pet-hotel-provider');
     Route::get('/get-merchant-for-hotel-provider', [PetHotelProviderController::class, 'get_merchant_for_hotel_provider'])->name('pet-hotel-provider.get-merchant-for-hotel-provider');
+    
+    Route::resource('pet-hotel-order', PetHotelOrderController::class);
+    Route::get('/get-pet-hotel-order', [PetHotelOrderController::class, 'get_pet_hotel_order'])->name('pet-hotel-order.get-pet-hotel-order');
 });
 
 require __DIR__.'/auth.php';

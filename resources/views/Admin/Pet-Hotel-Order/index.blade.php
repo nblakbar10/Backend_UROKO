@@ -48,12 +48,14 @@
                     </div>
                 </div>
                 <div class="form-group col">
-                    <label for="exampleInputUsername1">Pet Group</label>
+                    <label for="exampleInputUsername1">Pet Hotel Provider</label>
                     <div class="form-group">
-                        <select class="js-example-basic-single" onchange="filter_group()" id="filter-group" name="pet_group" required
+                        <select class="js-example-basic-single" onchange="filter_pet_hotel_provider()" id="filter-pet-hotel-provider" name="pet_group" required
                             style="width:100%">
                             <option value="">--Pilih--</option>
-
+                            @foreach ($petHotelProvider as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -89,17 +91,23 @@
                                     <thead>
                                         <tr>
                                             <th> # </th>
-                                            <th> Owner </th>
-                                            <th> Pet Name </th>
-                                            <th> Pet Group </th>
-                                            <th> Pet Species </th>
-                                            <th> Pet Breed </th>
-                                            <th> Pet Morph </th>
-                                            <th> Pet Birthdate </th>
-                                            <th> Pet Age </th>
+                                            <th> Buyer </th>
+                                            <th> Pet Hotel Provider Description </th>
                                             <th> Pet Description </th>
-                                            <th> Pet Picture </th>
-                                            <th> Pet Status </th>
+                                            <th> Cage </th>
+                                            <th> Pet Caring Note </th>
+                                            <th> Check In Date </th>
+                                            <th> Check Out Date </th>
+                                            <th> Total Days </th>
+                                            <th> Fee Description </th>
+                                            <th> Shipping Type </th>
+                                            <th> Shipping Fee </th>
+                                            <th> Booking Slots Status </th>
+                                            <th> Amminities Description</th>
+                                            <th> Amminities Extra Description</th>
+                                            <th> Payment Option </th>
+                                            <th> Total Price</th>
+                                            <th> Order Status </th>
                                             <th> Created At </th>
                                             <th> Updated At </th>
                                         </tr>
@@ -136,7 +144,7 @@
     </div>
     <script>
         let username = $('#filter-username').val();
-        let group = $('#filter-group').val();
+        let petHotelProvider = $('#filter-pet-hotel-provider').val();
         let habitats = $('#filter-habitats').val();
 
         let table = $('#tableMerchant').DataTable({
@@ -148,11 +156,11 @@
             serverSide: true,
             width: "100%",
             ajax: {
-                url: "{{ route('pet-profile.get-pet') }}",
+                url: "{{ route('pet-hotel-order.get-pet-hotel-order') }}",
                 data: function(d) {
                     d.username = username;
-                    d.group = group;
-                    d.habitats = habitats;
+                    d.petHotelProvider = petHotelProvider;
+                    // d.habitats = habitats;
                 }
             },
             columns: [{
@@ -164,33 +172,51 @@
                 data: 'username',
                 searchable: false
             }, {
-                data: 'pet_name',
+                data: 'hotel_provider_desc',
             }, {
-                data: 'pet_group_name',
+                data: 'cage',
                 searchable: false
             }, {
-                data: 'pet_species',
+                data: 'pet_caring_note',
                 searchable: false
             }, {
-                data: 'pet_breed',
+                data: 'check_in_date',
                 searchable: false
             }, {
-                data: 'pet_morph',
+                data: 'check_out_date',
                 searchable: false
             }, {
                 data: 'pet_birthdate',
                 searchable: false
             }, {
-                data: 'pet_age',
+                data: 'total_days',
                 searchable: false
             }, {
-                data: 'pet_description',
+                data: 'fee_desc',
                 searchable: false
             }, {
-                data: 'picture',
+                data: 'shipping_type',
                 searchable: false
             }, {
-                data: 'pet_status',
+                data: 'shipping_fee',
+                searchable: false
+            }, {
+                data: 'status',
+                searchable: false
+            }, {
+                data: 'aminities_desc',
+                searchable: false
+            }, {
+                data: 'aminities_extra_desc',
+                searchable: false
+            }, {
+                data: 'payments_type',
+                searchable: false
+            }, {
+                data: 'pethotel_total_price',
+                searchable: false
+            }, {
+                data: 'pethotel_order_status',
                 searchable: false
             }, {
                 data: 'created_at',
@@ -204,32 +230,32 @@
         function filter_username(params) {
             $("#filter-group").find('option').not(':first').remove();
             username = $('#filter-username').val();
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ route('pet-profile.get-group') }}",
-                data: {
-                    username: username
-                },
-                success: function(response) {
-                    if (response) {
-                        response.data.forEach(function(item, index) {
-                            $('#filter-group').append($('<option>', {
+            // $.ajax({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     },
+            //     url: "{{ route('pet-profile.get-group') }}",
+            //     data: {
+            //         username: username
+            //     },
+            //     success: function(response) {
+            //         if (response) {
+            //             response.data.forEach(function(item, index) {
+            //                 $('#filter-group').append($('<option>', {
 
-                                value: item['id'],
-                                text: item['pet_group_name']
-                            }));
-                            console.log(item['pet_group_name']);
-                        });
-                    }
-                },
-            });
+            //                     value: item['id'],
+            //                     text: item['pet_group_name']
+            //                 }));
+            //                 console.log(item['pet_group_name']);
+            //             });
+            //         }
+            //     },
+            // });
             table.ajax.reload(null, false);
         }
 
-        function filter_group(params) {
-            group = $('#filter-group').val();
+        function filter_pet_hotel_provider(params) {
+            group = $('#filter-pet-hotel-provider').val();
             table.ajax.reload(null, false);
         }
 

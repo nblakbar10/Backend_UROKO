@@ -163,12 +163,12 @@ class PetHotelProviderController extends Controller
 
         $datatables = Datatables::of($pethotelprovider);
 
-        // if ($request->get('search')['value']) {
-        //     $datatables->filter(function ($query) {
-        //             $keyword = request()->get('search')['value'];
-        //             $query->where('name', 'like', "%" . $keyword . "%");
+        if ($request->get('search')['value']) {
+            $datatables->filter(function ($query) {
+                    $keyword = request()->get('search')['value'];
+                    $query->where('name', 'like', "%" . $keyword . "%");
 
-        // });}
+        });}
 
         $datatables->orderColumn('updated_at', function ($query, $order) {
             $query->orderBy('pet_hotel_provider.updated_at', $order);
