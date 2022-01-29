@@ -122,9 +122,7 @@ class PetHotelProviderController extends Controller
                     $pet_hotel_provider_image->move(public_path('storage/gambar-hotel'), $fileName_petHotelProviderImage);
                     
 
-                    $data = PetHotelProvider::create([
-                        'user_id' => $user->id,
-                        'merchant_id' => $merchant->id, //jika penyedianya dari user, maka ini dinullkan saja
+                    $data = $pethotelprovider->update([
                         'name' => $request->pet_hotel_provider_name,
                         'address' => $request->pet_hotel_provider_address,
                         'phone' => $request->pet_hotel_provider_phone,

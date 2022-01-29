@@ -50,8 +50,8 @@
                 <div class="form-group col">
                     <label for="exampleInputUsername1">Pet Hotel Provider</label>
                     <div class="form-group">
-                        <select class="js-example-basic-single" onchange="filter_pet_hotel_provider()" id="filter-pet-hotel-provider" name="pet_group" required
-                            style="width:100%">
+                        <select class="js-example-basic-single" onchange="filter_pet_hotel_provider()"
+                            id="filter-pet-hotel-provider" name="pet_group" required style="width:100%">
                             <option value="">--Pilih--</option>
                             @foreach ($petHotelProvider as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -142,9 +142,290 @@
             </div>
         </div>
     </div>
+    <div id="modal-detail-pet" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Detail Pet</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <form class="forms-sample">
+                        <div class="text-center">
+                            <img id="detail-pet-picture" alt="" class="img-thumbnail">
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Name</label>
+                            <div class="col-sm-9">
+                                <p id="pet-name">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Species</label>
+                            <div class="col-sm-9">
+                                <p id="pet-species">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Group</label>
+                            <div class="col-sm-9">
+                                <p id="pet-group">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Breed</label>
+                            <div class="col-sm-9">
+                                <p id="pet-breed">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Morph</label>
+                            <div class="col-sm-9">
+                                <p id="pet-morph">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Birthdate</label>
+                            <div class="col-sm-9">
+                                <p id="pet-birthdate">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Gender</label>
+                            <div class="col-sm-9">
+                                <p id="pet-gender">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Age</label>
+                            <div class="col-sm-9">
+                                <p id="pet-age">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Description</label>
+                            <div class="col-sm-9">
+                                <p id="pet-description">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Status</label>
+                            <div class="col-sm-9">
+                                <p id="pet-status">Kucing</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-detail-fee" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Detail Fee</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <form class="forms-sample">
+
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet Type</label>
+                            <div class="col-sm-9">
+                                <p id="fee-pettype">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Pet
+                                Size</label>
+                            <div class="col-sm-9">
+                                <p id="fee-petsize">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Slot
+                                Available</label>
+                            <div class="col-sm-9">
+                                <p id="fee-slotavailable">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Price Per
+                                Day</label>
+                            <div class="col-sm-9">
+                                <p id="fee-priceperday">Kucing</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal-detail-amminities" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Detail Amminities</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <form class="forms-sample">
+
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Food</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-food">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Basking</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-basking">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Cleaning</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-cleaning">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Bedding</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-bedding">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Grooming</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-grooming">Kucing</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-detail-amminities-extra" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Detail Amminities Extra</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <form class="forms-sample">
+
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Name</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-extra-extraamminitiesname">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Amminities
+                                Price Per Day</label>
+                            <div class="col-sm-9">
+                                <p id="amminities-extra-extraamminitiespriceperday">Kucing</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-detail-hotel" class="modal fade bd-example-modal-lg" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- konten modal-->
+            <div class="modal-content">
+                <!-- heading modal -->
+                <div class="modal-header">
+                    <h4 class="card-title" style="">Detail Hotel</h4>
+                    <button type="button" class="btn" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                </div>
+                <!-- body modal -->
+
+                <div class="model-body p-4">
+                    <form class="forms-sample">
+                        <div class="text-center">
+                            <img id="detail-hotel-picture" alt="" class="img-thumbnail">
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Hotel
+                                Name</label>
+                            <div class="col-sm-9">
+                                <p id="hotel-name">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Hotel
+                                Address</label>
+                            <div class="col-sm-9">
+                                <p id="hotel-address">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Hotel
+                                Phone</label>
+                            <div class="col-sm-9">
+                                <p id="hotel-phone">Kucing</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputUsername2" class="col-sm-3 col-form-label fw-bold">Hotel
+                                Description</label>
+                            <div class="col-sm-9">
+                                <p id="hotel-description">Kucing</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         let username = $('#filter-username').val();
-        let petHotelProvider = $('#filter-pet-hotel-provider').val();
+        let AmminitiesHotelProvider = $('#filter-pet-hotel-provider').val();
         let habitats = $('#filter-habitats').val();
 
         let table = $('#tableMerchant').DataTable({
@@ -230,27 +511,6 @@
         function filter_username(params) {
             $("#filter-group").find('option').not(':first').remove();
             username = $('#filter-username').val();
-            // $.ajax({
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     },
-            //     url: "{{ route('pet-profile.get-group') }}",
-            //     data: {
-            //         username: username
-            //     },
-            //     success: function(response) {
-            //         if (response) {
-            //             response.data.forEach(function(item, index) {
-            //                 $('#filter-group').append($('<option>', {
-
-            //                     value: item['id'],
-            //                     text: item['pet_group_name']
-            //                 }));
-            //                 console.log(item['pet_group_name']);
-            //             });
-            //         }
-            //     },
-            // });
             table.ajax.reload(null, false);
         }
 
@@ -259,34 +519,80 @@
             table.ajax.reload(null, false);
         }
 
-        $(document).on('click', '.btn-edit-user', function(event) {
-            // return confirm($(this).data('tanggalSP2D'));
-            var fullname = $(this).data('fullname');
-            var username = $(this).data('username');
-            var email = $(this).data('email');
-            var phonenumber = $(this).data('phonenumber');
-            var birthdate = $(this).data('birthdate');
-            var address = $(this).data('address');
-            var link = $(this).data('link');
 
-            $('#fullname-edit').val(fullname);
-            $('#username-edit').val(username);
-            $('#email-edit').val(email);
-            $('#phonenumber-edit').val(phonenumber);
-            $('#birthdate-edit').val(birthdate);
-            $('#address-edit').val(address);
-            $('#form-edit-user').attr('action', link);
-            console.log(username, name, $('#form-edit-user'))
+        $(document).on('click', '.btn-detail-pet', function(event) {
+            var petpicture = $(this).data('petpicture');
+            var petname = $(this).data('petname');
+            var petgender = $(this).data('petgender');
+            var petbreed = $(this).data('petbreed');
+            var petmorph = $(this).data('petmorph');
+            var petbirthdate = $(this).data('petbirthdate');
+            var petdescription = $(this).data('petdescription');
+            var petage = $(this).data('petage');
+            var petstatus = $(this).data('petstatus');
+            var petspecies = $(this).data('petspecies');
+
+            $('#pet-name').html(petname);
+            $('#pet-species').html(petspecies);
+            $('#pet-breed').html(petbreed);
+            $('#pet-morph').html(petmorph);
+            $('#pet-gender').html(petgender);
+            $('#pet-birthdate').html(petbirthdate);
+            $('#pet-description').html(petdescription);
+            $('#pet-age').html(petage);
+            $('#pet-status').html(petstatus);
+            $('#detail-pet-picture').attr('src', petpicture);
         });
 
-        $(document).on('click', '.btn-show-picture', function(event) {
+        $(document).on('click', '.btn-detail-hotel', function(event) {
+            var hotelphoto = $(this).data('hotelphoto');
+            var name = $(this).data('name');
+            var address = $(this).data('address');
+            var phone = $(this).data('phone');
+            var description = $(this).data('description');
 
-            var username = $(this).data('username');
-            var link = $(this).data('link');
+            $('#hotel-name').html(name);
+            $('#hotel-address').html(address);
+            $('#hotel-phone').html(phone);
+            $('#hotel-description').html(description);
+            $('#detail-hotel-picture').attr('src', hotelphoto);
+        });
 
-            $('#username-picture').html(username);
-            $('#img-modal').attr('src', link);
-            console.log(username, $('#img-modal'))
+        $(document).on('click', '.btn-detail-fee', function(event) {
+
+            var pettype = $(this).data('pettype');
+            var petsize = $(this).data('petsize');
+            var slotavailable = $(this).data('slotavailable');
+            var priceperday = $(this).data('priceperday');
+
+            $('#fee-pettype').html(pettype);
+            $('#fee-petsize').html(petsize);
+            $('#fee-slotavailable').html(slotavailable);
+            $('#fee-priceperday').html(priceperday);
+        });
+
+        $(document).on('click', '.btn-detail-amminities', function(event) {
+
+            var food = $(this).data('food');
+            var basking = $(this).data('basking');
+            var cleaning = $(this).data('cleaning');
+            var bedding = $(this).data('bedding');
+            var grooming = $(this).data('grooming');
+
+            $('#amminities-food').html(food);
+            $('#amminities-basking').html(basking);
+            $('#amminities-cleaning').html(cleaning);
+            $('#amminities-bedding').html(bedding);
+            $('#amminities-grooming').html(grooming);
+        });
+
+        $(document).on('click', '.btn-detail-amminities-extra', function(event) {
+
+            var extraamminitiesname = $(this).data('extraamminitiesname');
+            var extraamminitiespriceperday = $(this).data('extraamminitiespriceperday');
+
+            $('#amminities-extra-extraamminitiesname').html(extraamminitiesname);
+            $('#amminities-extra-extraamminitiespriceperday').html(extraamminitiespriceperday);
         });
     </script>
 </x-app-layout>

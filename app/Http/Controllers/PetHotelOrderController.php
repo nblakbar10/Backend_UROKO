@@ -120,6 +120,9 @@ class PetHotelOrderController extends Controller
         'pet_profile.pet_species', 
         'pet_profile.pet_breed', 
         'pet_profile.pet_gender', 
+        'pet_profile.pet_description', 
+        'pet_profile.pet_birthdate', 
+        'pet_profile.pet_status', 
         'shipping.shipping_type',
         'shipping.shipping_fee',
         'payments_option.payments_type',
@@ -162,11 +165,11 @@ class PetHotelOrderController extends Controller
         });
         return $datatables->addIndexColumn()
         ->escapeColumns([])
-        ->addColumn('hotel_provider_desc','Admin.Pet-Hotel-Provider.action')
-        ->addColumn('pet_desc','Admin.Pet-Hotel-Provider.action')
-        ->addColumn('fee_desc','Admin.Pet-Hotel-Provider.action')
-        ->addColumn('aminities_desc','Admin.Pet-Hotel-Provider.action')
-        ->addColumn('aminities_extra_desc','Admin.Pet-Hotel-Provider.picture')
+        ->addColumn('hotel_provider_desc','Admin.Pet-Hotel-Order.hotel-desc')
+        ->addColumn('pet_desc','Admin.Pet-Hotel-Order.pet-desc')
+        ->addColumn('fee_desc','Admin.Pet-Hotel-Order.fee-desc')
+        ->addColumn('aminities_desc','Admin.Pet-Hotel-Order.aminities-desc')
+        ->addColumn('aminities_extra_desc','Admin.Pet-Hotel-Order.aminities-extra-desc')
         ->toJson();
     }
 }
