@@ -113,9 +113,12 @@ class PetProfileController extends Controller
         $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
         
         if ($searchAlbum == NULL) {    
-            $file = public_path('storage/gambar-pet', $fileName_petPicture);
-            $destination = public_path('storage/gambar-album', $fileName_petPicture);
-            Storage::copy($file,$destination);
+            $petprofilealbum = $request->pet_picture;
+            $petprofilealbum->move(public_path('storage/gambar-album'), $fileName_petPicture);
+           
+            // $file = public_path('storage/gambar-pet', $fileName_petPicture);
+            // $destination = public_path('storage/gambar-album', $fileName_petPicture);
+            // Storage::copy($file,$destination);
             
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,
