@@ -36,7 +36,7 @@
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="{{route('pet-profile.index')}}">Pet Profile</a></li>
             <li class="nav-item"> <a class="nav-link" href="{{route('pet-activity.index')}}">Pet Activies</a></li>
-            <li class="nav-item"> <a class="nav-link" href="{{route('pet-activity.index')}}">Pet Gallery</a></li>
+            <li class="nav-item"> <a class="nav-link" href="{{route('pet-gallery.index')}}">Pet Gallery</a></li>
           </ul>
         </div>
       </li>
