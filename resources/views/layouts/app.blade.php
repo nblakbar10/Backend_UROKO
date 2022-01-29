@@ -44,6 +44,9 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('logo') }}/favicon.png" />
 
+    <link rel='stylesheet' href='{{ asset('lightbox/css/lc_lightbox.min.css') }}' />
+    <link rel='stylesheet' href='{{ asset('lightbox/skins/minimal.css') }}' />
+
 </head>
 
 <body>
@@ -83,6 +86,18 @@
     <script>
         $(document).ready(function() {
             $('.js-example-basic-single').select2();
+        });
+    </script>
+    <script src='{{ asset('lightbox/js/lc_lightbox.lite.min.js') }}' type='text/javascript'></script>
+    <script src='{{ asset('lightbox/lib/AlloyFinger/alloy_finger.min.js') }}' type='text/javascript'></script>
+
+    <script>
+        lc_lightbox('.mybox', {
+            wrap_class: 'lcl_fade_oc',
+            gallery: true,
+            thumb_attr: 'data-lcl-thumb',
+            skin: 'dark',
+            // more options here
         });
     </script>
 </body>
