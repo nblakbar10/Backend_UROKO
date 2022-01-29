@@ -122,9 +122,7 @@ class PetHotelProviderController extends Controller
                     $pet_hotel_provider_image->move(public_path('storage/gambar-hotel'), $fileName_petHotelProviderImage);
                     
 
-                    $data = PetHotelProvider::create([
-                        'user_id' => $user->id,
-                        'merchant_id' => $merchant->id, //jika penyedianya dari user, maka ini dinullkan saja
+                    $data = $pethotelprovider->update([
                         'name' => $request->pet_hotel_provider_name,
                         'address' => $request->pet_hotel_provider_address,
                         'phone' => $request->pet_hotel_provider_phone,
@@ -163,12 +161,12 @@ class PetHotelProviderController extends Controller
 
         $datatables = Datatables::of($pethotelprovider);
 
-        // if ($request->get('search')['value']) {
-        //     $datatables->filter(function ($query) {
-        //             $keyword = request()->get('search')['value'];
-        //             $query->where('name', 'like', "%" . $keyword . "%");
+        if ($request->get('search')['value']) {
+            $datatables->filter(function ($query) {
+                    $keyword = request()->get('search')['value'];
+                    $query->where('name', 'like', "%" . $keyword . "%");
 
-        // });}
+        });}
 
         $datatables->orderColumn('updated_at', function ($query, $order) {
             $query->orderBy('pet_hotel_provider.updated_at', $order);

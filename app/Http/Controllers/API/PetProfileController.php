@@ -113,25 +113,13 @@ class PetProfileController extends Controller
         // }
         $searchAlbum = PetGallery::where('album_name', $request->pet_name)->where('user_id', Auth::user()->id)->first();
         
-        if ($searchAlbum == NULL) {   
-            
-            // File::copy(asset('storage/gambar-pet/'.$fileName_petPicture),asset('storage/gambar-album/'.$fileName_petPicture));
-            // dd($fileName_petPicture);
-
-            // $petprofilealbum = $request->pet_picture;
-            // $petprofilealbum->move(public_path('storage/gambar-album'), $fileName_petPicture);
-            // $petprofilealbum->move(public_path('storage/gambar-album'), $fileName_petPicture);
-            // ?$host = $request->getSchemeAndHttpHost();
-            
-            // $petprofilealbum = $request->pet_picture;
-            // $fileName_petPicture = time().'_'.$petprofilealbum->getClientOriginalName();
-            // $petprofilealbum->move(public_path('storage/gambar-album'), $fileName_petPicture);
-
-            
-
-            // $fileName_petPicture3 = time().'_'.$petprofile->getClientOriginalName();
-            // // $petprofilealbum->storeAs('storage/gambar-album', $fileName_petPicture3);
-            // $petprofilealbum = $fileName_petPicture->store('storage/gambar-album');
+        if ($searchAlbum == NULL) {    
+            $petprofilealbum = $request->pet_picture;
+            $petprofilealbum->move(public_path('storage/gambar-album'), $fileName_petPicture);
+           
+            // $file = public_path('storage/gambar-pet', $fileName_petPicture);
+            // $destination = public_path('storage/gambar-album', $fileName_petPicture);
+            // Storage::copy($file,$destination);
             
             $album = PetGallery::create([
                 'user_id' => Auth::user()->id,

@@ -57,7 +57,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col form-group">
+                {{-- <div class="col form-group">
                     <label for="exampleInputUsername1">Pet Habitats</label>
                     <div class="form-group">
                         <select class="js-example-basic-single" id="filter-habitats" name="pet_habitats" required
@@ -66,7 +66,7 @@
 
                         </select>
                     </div>
-                </div>
+                </div> --}}
             </div>
             <div class="page-header">
                 <h3 class="page-title"> List Pet </h3>

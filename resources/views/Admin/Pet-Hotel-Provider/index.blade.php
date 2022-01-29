@@ -131,8 +131,7 @@
                                 required>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Pet Hotel Provider Photo<sup
-                                    class="text-danger">*</sup></label>
+                            <label for="exampleInputPassword1">Pet Hotel Provider Photo</label>
                             <div class="custom-file">
                                 <input accept="image/*" class="form-control-file"
                                     name="pet_hotel_provider_image" type="file">
@@ -266,6 +265,7 @@
                 searchable: false
             }, {
                 data: 'name',
+                searchable: false
             }, {
                 data: 'address',
                 searchable: false
