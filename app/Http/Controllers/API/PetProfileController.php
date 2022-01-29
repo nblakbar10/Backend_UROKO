@@ -83,6 +83,7 @@ class PetProfileController extends Controller
             return response()->json($validator->messages(), 400);
         }
 
+        
         $host = $request->getSchemeAndHttpHost();
         $petprofile = $request->pet_picture;
         $fileName_petPicture = time().'_'.$petprofile->getClientOriginalName();
@@ -90,7 +91,7 @@ class PetProfileController extends Controller
         $petprofile->move(public_path('storage/gambar-pet'), $fileName_petPicture);
 
         // dd(parse_url($fileName_petPicture, PHP_URL_PATH));
-
+        // $v = $this->save_album($fileName_petPicture, $request->pet_picture); 
 
         
         // $file = $fileName_petPicture;
@@ -124,7 +125,8 @@ class PetProfileController extends Controller
                 'user_id' => Auth::user()->id,
                 'album_name' => $request->pet_name,
                 'album_picture' => $fileName_petPicture,
-                'album_picture2' => $fileName_petPicture2
+                'album_picture2' => $fileName_petPicture2,
+                'album_type' => "BY-PROFILE"
             ]);
 
             $albumID = $album->id;
@@ -152,7 +154,8 @@ class PetProfileController extends Controller
         $petProfile->album_id = $albumID;
         $petProfile->save();
         // // $fileName_petPicture->pet_picture=json_encode($data);
-
+        
+        $leftjoininfoalbum = PetGallery::find($albumID);
         // // $host = $request->getSchemeAndHttpHost();
         // // $file_pet_picture = $request->pet_picture;
         // // $fileName_petPicture = $host.'/storage/gambar-pet/'.time().'_'.$file_pet_picture->getClientOriginalName();
@@ -172,10 +175,14 @@ class PetProfileController extends Controller
         //     'pet_status' => $request->pet_status,
         
         // ]);
+        $data = [
+            'data_pet' => $petProfile,
+            'data_album' => $leftjoininfoalbum
+        ];
 
         $dataresponse = [
             'message' => 'Success',
-            'data' => $petProfile
+            'data' => $data
         ];     
 
         return response()->json($dataresponse, 200);
@@ -286,5 +293,17 @@ class PetProfileController extends Controller
         ];     
 
         return response()->json($data, 200);
+    }
+
+    public function save_album($fileName_petPicture, $file){
+        // $files = Storage::disk('public/gambar-pet')->get($fileName_petPicture);
+        // // $files = storage_path('public/gambar-pet/'. $fileName_petPicture);
+        // $destination = public_path('storage/gambar-album', $fileName_petPicture);
+        // Storage::copy($files,$destination);
+        // // $file->move(public_path('storage/gambar-album'), $fileName_petPicture);
+        // // dd($fileName_petPicture);
+        // return $fileName_petPicture;
+
+        $file->move(public_path('storage/gambar-album'), 'fileName_petPicture');
     }
 }

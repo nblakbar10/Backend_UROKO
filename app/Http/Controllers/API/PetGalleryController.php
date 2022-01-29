@@ -83,6 +83,7 @@ class PetGalleryController extends Controller
                 'album_name' => $request->album_name,
                 'album_picture' => $fileName_petPicture,
                 'album_picture2' => $fileName_petPicture2,
+                'album_type' => "BY-ALBUM",
             ]);
 
             return response()->json([
