@@ -96,7 +96,7 @@ class PetHotelOrderController extends Controller
                     'payments_option_id' => $input['payments_option_id'][$key],
                 ]);
 
-                $pethotelorderID[] =+ $pethotelorder->id;
+                $pethotelorderID[] = $pethotelorder->id;
 
                 $pethotelprovider_fee->update([
                     'slot_available' => $slotRemain
@@ -154,7 +154,7 @@ class PetHotelOrderController extends Controller
                 'payments_option_id' => $request->payments_option_id,
             ]);
 
-            $pethotelorderID[] =+ $pethotelorder->id;
+            $pethotelorderID[] = $pethotelorder->id;
 
             $pethotelprovider_fee->update([
                 'slot_available' => $slotRemain
