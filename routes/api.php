@@ -53,12 +53,15 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::post('/reject-hotel-order/{order_id}', [TransactionController::class, 'reject_hotel_order']) ;
     //User
     Route::post('/manajemen-profile-update', [ManajemenUserController::class, 'update_user_profile']);
+    Route::get('/user-profile-detail/{user_id}', [ManajemenUserController::class, 'get_detail_user']);
     Route::delete('/manajemen-profile-delete', [ManajemenUserController::class, 'delete_user_profile']);
 
     Route::resource('merchant-user', MerchantController::class);
 
     Route::resource('pet-profile-user', PetProfileController::class);
     Route::get('/pet-profile-user/detail/{id}', [PetProfileController::class, 'detail_pet'])->name('user.detail-pet');
+    Route::post('/pet-profile-status/{pet_id}', [PetProfileController::class, 'pet_status_change']);
+    Route::get('/pet-profile-another-user/{owner_id}', [PetProfileController::class, 'pet_profile_for_another_user']);
 
     Route::get('/pet-gallery-index/', [PetGalleryController::class, 'get_album']);
     Route::get('/pet-gallery-index/{album_id}', [PetGalleryController::class, 'get_gallery_by_album_id']);
