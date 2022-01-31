@@ -14,6 +14,29 @@ use Illuminate\Support\Facades\Validator;
 
 class ManajemenUserController extends Controller
 {
+    public function get_detail_user($user_id)
+    {
+        $user = User::find($user_id);
+        if ($user_id == Auth::user()->id) {
+            $pet = PetProfile::where('user_id', $user_id)->get()->count();
+            $user['total_pet'] = $pet;
+            $data = [
+                'message' => 'Success',
+                'data' => $user
+            ];  
+            return response()->json($data, 200);
+        } else {
+            $pet = PetProfile::where('user_id', $user_id)->where('pet_status', 'PUBLIK')->get()->count();
+            $user['total_pet'] = $pet;
+            $data = [
+                'message' => 'Success',
+                'data' => $user
+            ];  
+            return response()->json($data, 200);
+        }
+        
+    }
+
     public function update_user_profile(Request $request)
     {
         $user = User::find(Auth::user()->id);

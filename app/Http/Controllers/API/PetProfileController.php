@@ -42,6 +42,30 @@ class PetProfileController extends Controller
         return response()->json($data, 200);
     }
 
+    public function pet_profile_for_another_user(Request $request, $owner_id)
+    {
+        $pet = PetProfile::where('user_id', $owner_id)->where('pet_status', 'PUBLIC')->get();
+
+        if (count($pet)==0) {
+            $data = [
+                'message' => 'User ini tidak memiliki pet'
+            ];
+
+            return response()->json($data, 200);
+        }
+
+        $array = [];
+        foreach ($pet as $key => $value) {
+            array_push($array, $value);
+        }
+        $data = [
+            'message' => 'Success',
+            'data' => $array
+        ];     
+
+        return response()->json($data, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -305,5 +329,39 @@ class PetProfileController extends Controller
         // return $fileName_petPicture;
 
         $file->move(public_path('storage/gambar-album'), 'fileName_petPicture');
+    }
+
+    public function pet_status_change(Request $request, $pet_id)
+    {
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {    
+            return response()->json($validator->messages(), 400);
+        }
+        $pet = PetProfile::where('user_id', Auth::user()->id)->where('id', $pet_id)->first();
+
+        if ($pet) {
+            $pet->update([
+                'pet_status' => $request->status
+            ]);
+
+            
+            $data = [
+                'message' => 'Failed',
+                'data' => $pet
+            ];     
+    
+            return response()->json($data, 200);
+        } else {
+            $data = [
+                'message' => 'Failed',
+                'data' => 'Anda tidak memiliki pet ini'
+            ];     
+    
+            return response()->json($data, 404);
+        }
+        
     }
 }
