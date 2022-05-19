@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Merchant;
+use App\Models\PetProfile;
+use App\Models\PetGallery;
+use App\Models\UserFollow;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -20,6 +23,13 @@ class ManajemenUserController extends Controller
         if ($user_id == Auth::user()->id) {
             $pet = PetProfile::where('user_id', $user_id)->get()->count();
             $user['total_pet'] = $pet;
+
+            $album = PetGallery::where('user_id', $user_id)->get()->count();
+            $user['total_album'] = $album;
+            $following = UserFollow::where('user_yg_difollow_id', Auth::user()->id)->get()->count(); 
+            $follower = UserFollow::where('user_id', Auth::user()->id)->get()->count();//untuk nyari total follower, harus pake 'user_yg_difollow_id' 
+            $user['total_follower'] = $follower;
+            $user['total_following'] = $following;
             $data = [
                 'message' => 'Success',
                 'data' => $user
@@ -45,7 +55,6 @@ class ManajemenUserController extends Controller
 
         if ($request->picture != NULL) {
             $host = $request->getSchemeAndHttpHost();
-
             $file_picture = $request->picture;
             $fileName_picture = time().'_'.$file_picture->getClientOriginalName();
             $fileName_picture2 = $host.'/storage/gambar-user/'.$fileName_picture;

@@ -48,7 +48,7 @@ class AuctionOrderController extends Controller
         ////$namamerchant = Merchant::find($id);
         $auctprice = AuctionItem::find($id)->auction_item_price;
 
-        $totalorder = $auctprice + 4500;
+        $totalorder = $auctprice; //+ 4500;
         ////$payms = PaymentsOption::find($id);
         ////$ships = Shipping::find($id);
 

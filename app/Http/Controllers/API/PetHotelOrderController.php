@@ -71,7 +71,7 @@ class PetHotelOrderController extends Controller
                 };
                 
                 $pethotelprovider_fee = PetHotelProviderFee::find($input['pet_hotel_provider_fee_id'][$key]);
-                $totalorder = $pethotelprovider_fee->adoption_item_price + 4500;           //4500 ini biaya admin
+                $totalorder = $pethotelprovider_fee->adoption_item_price ; //+ 4500;           //4500 ini biaya admin
                 $slotRemain = $pethotelprovider_fee->slot_available - 1;
 
                 $pethotelorder = PetHotelOrder::create([

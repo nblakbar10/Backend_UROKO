@@ -66,6 +66,8 @@ Route::group(['middleware' => ['auth:api','apiverified']], function(){
     Route::get('/pet-gallery-index/', [PetGalleryController::class, 'get_album']);
     Route::get('/pet-gallery-index/{album_id}', [PetGalleryController::class, 'get_gallery_by_album_id']);
     Route::post('/pet-gallery-post', [PetGalleryController::class, 'post_album']);
+    Route::post('/pet-gallery-edit/{album_id}', [PetGalleryController::class, 'edit_album']);
+    Route::delete('/pet-gallery-delete/{album_id}', [PetGalleryController::class, 'delete_album']);
     Route::post('/pet-gallery-edit/{pet_id}/{album_id}', [PetGalleryController::class, 'insert_pet_to_album']);
     Route::get('/pet-gallery-download-image/{image_name}', [PetGalleryController::class, 'download_image_from_gallery']);
     

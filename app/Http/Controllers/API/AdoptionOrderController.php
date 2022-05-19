@@ -38,7 +38,7 @@ class AdoptionOrderController extends Controller
         }
         ////$namamerchant = Merchant::find($id);
         $adoptprice = AdoptionItem::find($id)->adoption_item_price;
-        $totalorder = $adoptprice + 4500;
+        $totalorder = $adoptprice; //+ 4500;
         ////$payms = PaymentsOption::find($id);
         ////$ships = Shipping::find($id);
 

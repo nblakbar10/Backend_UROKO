@@ -351,7 +351,7 @@ class PetActivityController extends Controller
 
         $data=[
             'message' => 'Success',
-            'data' => 'Berhasil melakukan comment',
+            'data' => 'Berhasil mengedit comment',
         ];
 
         return response()->json($data, 200);

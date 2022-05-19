@@ -47,9 +47,41 @@ class AuctionItemController extends Controller
         ->get();
         // dd($auctionitemjoin);
 
+        foreach($auctionitem as $item){
+            $data_penerima_ajakan = null;
+            $data_destinasi = null;
+            foreach($auctionitemjoin as $data){
+                if($item->id == $data->id){
+                    $data_penerima_ajakan[] = [
+                        "id_penerima_ajakan" => $data->id_penerima_ajakan,
+                        "status_ajakan" => $data->status_ajakan,
+                        "username" => $data->username
+                    ];
+                    $data_destinasi = [] = [
+                        "tempat_wisata_id" => $data->tempat_wisata_id,
+                        "tanggal_rencana_liburan" => $data->tanggal_rencana_liburan,
+                        "rencana_durasi_liburan" => $data->rencana_durasi_liburan,
+                        "nama_wisata" => $data->nama_wisata,
+                        "alamat_wisata" => $data->alamat_wisata,
+                        "foto" => $data->foto
+                    ];
+                }
+            }
+            $joinbaru[] = [
+                'id' => $item->id,
+                'nama_rencana' => $item->nama_rencana,
+                'user_id' => $item->user_id,
+                'deskripsi_rencana' => $item->user_id,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+                'data_penerima_ajakan' => $data_penerima_ajakan, //$auctionitem , $data_penerima_ajakan,
+                'data_destinasi' => $data_destinasi
+            ];
+        }
+
         $data = [
             'message' => 'Success',
-            'data' => $auctionitemjoin
+            'data' => $joinbaru //$auctionitemjoin
         ];     
 
         return response()->json($data, 200);

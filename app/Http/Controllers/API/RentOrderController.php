@@ -45,7 +45,7 @@ class RentOrderController extends Controller
         ////$namamerchant = Merchant::find($id);
         $rentprice = RentItem::find($id)->rent_item_price;
 
-        $totalorder = $rentprice + 4500; //4500 adalah biaya admin
+        $totalorder = $rentprice ; //+ 4500; //4500 adalah biaya admin
         ////$payms = PaymentsOption::find($id);
         ////$ships = Shipping::find($id);
         $begin = new DateTime($request->rent_order_start);
