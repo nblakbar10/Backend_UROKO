@@ -21,6 +21,8 @@ class PetProfileController extends Controller
     public function index()
     {
         $pet = PetProfile::where('user_id', Auth::user()->id)->get();
+        
+        // $leftjoininfoalbum = PetProfile::find('album_id');
 
         if (count($pet)==0) {
             $data = [
@@ -36,7 +38,8 @@ class PetProfileController extends Controller
         }
         $data = [
             'message' => 'Success',
-            'data' => $array
+            'data' => $array,
+            // 'data_album' => $leftjoininfoalbum //untuk show data album
         ];     
 
         return response()->json($data, 200);
@@ -44,7 +47,9 @@ class PetProfileController extends Controller
 
     public function pet_profile_for_another_user(Request $request, $owner_id)
     {
-        $pet = PetProfile::where('user_id', $owner_id)->where('pet_status', 'PUBLIC')->get();
+        $pet = PetProfile::where('user_id', $owner_id)
+        ->orwhere('pet_status', 'PUBLIC')
+        ->get();
 
         if (count($pet)==0) {
             $data = [
@@ -99,7 +104,7 @@ class PetProfileController extends Controller
             'pet_picture' => 'required|mimes:jpeg,jpg,png',
             // 'pet_picture' => 'required',
             // 'pet_picture.*' => 'mimes:jpeg,jpg,png',//'mimes:jpeg,jpg,png|required|max:10000',
-            'pet_status' => 'required',
+            'pet_status' => 'required', //PUBLIC or PRIVATE
             // 'pet_activity_id'  => 'required',
         ]);
 
