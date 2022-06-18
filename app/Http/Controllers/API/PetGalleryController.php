@@ -199,12 +199,13 @@ class PetGalleryController extends Controller
         $str = public_path('storage/gambar-activity-wm/watermark-'.$image_name);
         $lines = wordwrap($str, 35, "\r\n", TRUE); // break line after 120 characters
 
-        $img->text($lines, 0, 0, function($font) {
+        $img->text($lines, 120, 100, function($font) {
             $font->file(public_path('fonts/Montserrat-Medium.ttf'));
-            $font->size(30);
+            $font->size(20);
             $font->color('#f4d442');
             // $font->color([255, 255, 255, 0.7]);
             $font->align('left');
+            // $font->align('center');
             $font->valign('bottom');
             $font->angle(0);
         });
