@@ -22,7 +22,8 @@ class AdoptionItem extends Model
         'merchant_id',
         // 'merchant_name',
         // 'merchant_location',
-        'adoption_item_price'
+        'adoption_item_price',
+        'adoption_item_status'
     ];
    
     public function getUpdatedAtAttribute($value)

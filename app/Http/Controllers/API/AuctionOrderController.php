@@ -152,19 +152,118 @@ class AuctionOrderController extends Controller
             return response()->json($data, 404);
         }
 
+        // untuk nampilin data count petalbum, petactivity, followers&following
+        // $petcount = PetProfile::where('user_id', $user_id)->get()->count();
+        $albumcount = PetGallery::where('user_id', $user_id)->get()->count();
+        $followercount = UserFollow::where('user_yg_difollow_id', $user_id)->get()->count(); 
+        $followingcount = UserFollow::where('user_id', $user_id)->get()->count();
+
+        $detailallpetalbumjoin = 
+        UserFollow::leftjoin('users', 'users.id', 'user_id')
+        ->select('user_follow.*','users.username', 'users.picture')
+        ->where('user_follow.user_id', $user_id)
+        ->get();
+
+        $detailallpetactivityjoin = 
+        UserFollow::leftjoin('users', 'users.id', 'user_id')
+        ->select('user_follow.*','users.username', 'users.picture')
+        ->where('user_follow.user_id', $user_id)
+        ->get();
+
+        $detailallfollowingjoin = 
+        UserFollow::leftjoin('users', 'users.id', 'user_id')
+        ->select('user_follow.*','users.username', 'users.picture')
+        ->where('user_follow.user_id', $user_id)
+        ->get();
+
+        $detailallfollowerjoin = 
+        UserFollow::leftjoin('users', 'users.id', 'user_id')
+        ->select('user_follow.*','users.username', 'users.picture')
+        ->where('user_follow.user_yg_difollow_id', $user_id)
+        ->get();
+
+        // $auctionorderget = AuctionOrder::where('id', $id)->get();
+
         $auctionorderjoin = AuctionOrder::leftjoin('users','users.id', 'auction_order.user_id')
         ->leftjoin('pet_profile','pet_profile.id', 'auction_order.pet_id')
         ->leftjoin('merchant','merchant.id', 'auction_order.merchant_id')
-        ->select('auction_order.*','users.username', 'users.phone_number', 'users.address', 
-        'pet_profile.pet_picture', 'pet_profile.pet_name', 'pet_profile.pet_age', 'pet_profile.pet_species', 
-        'pet_profile.pet_breed', 'pet_profile.pet_gender', 'pet_profile.pet_size', 'pet_profile.pet_weight',
-        'merchant.merchant_name', 'merchant.merchant_image')
+        // ->leftjoin('pet_gallery', 'pet_gallery.id', 'pet_profile.album_id') //untuk masukin data petactivity
+        ->select('auction_order.*',
+        'users.username', 
+        'users.phone_number', 
+        'users.address', 
+
+        'pet_profile.pet_picture', 
+        'pet_profile.pet_name', 
+        'pet_profile.pet_age', 
+        'pet_profile.pet_species', 
+        'pet_profile.pet_breed', 
+        'pet_profile.pet_gender', 
+        'pet_profile.pet_size', 
+        'pet_profile.pet_weight',
+
+        'merchant.merchant_name', 
+        'merchant.merchant_image',)
         ->where('auction_order.id', $id)
         // ->where('auction_order.user_id', Auth::user()->id) //ini buat get semua ordernya
         ->get();
 
-        return response()->json($auctionorderjoin, 200);
+        foreach ($auctionorderjoin as $key => $value){
+            $arr['pet_activity_id'] = $value->id;
+            $arr['pet_activity_detail'] = $value->pet_activity_detail;
+            $arr['pet_activity_image'] = $value->pet_activity_image;
+            $arr['pet_activity_image2'] = $value->pet_activity_image2;
+
+            $arr_result[] = $arr;
+        }
+
+
+        // return response()->json($auctionorderjoin, 200);
+        return response()->json([
+            'message' => 'Success',
+            'data' => $auctionorderjoin
+        ], 200);
     }
+
+//     foreach($userget as $item){
+//         $data_pet = PetProfile::where('user_id', $item->id)->get();
+//         $array_data_pet[] = $data_pet;
+//         $data_pet_album = PetGallery::where('user_id', $item->id)->get();
+//         $array_data_pet_album[] = $data_pet_album;
+
+        
+//         $joinbaru[] = [
+//             'id' => $item->id,
+//             'fullname' => $item->fullname,
+//             'username' => $item->username,
+//             'email' => $item->email,
+//             'phone_number' => $item->phone_number,
+//             'merchant_status' => $item->merchant_status,
+//             'picture' => $item->picture,
+//             'birthdate' => $item->birthdate,
+//             'address' => $item->address,
+//             'role' => $item->role,
+//             'total_pet' => $petcount,
+//             'data_pet' => $array_data_pet,
+//             'total_pet_album' => $albumcount,
+//             'data_pet_album' => $array_data_pet_album,
+//             'total_follower' => $followercount,
+//             'data_follower' => $detailallfollowerjoin,
+//             'total_following' => $followingcount,
+//             'data_following' => $detailallfollowingjoin
+//         ];
+//     }
+
+//     return response()->json([
+//         'status' => '200 OK',
+//         "message" => "Success",
+//         "data" => $joinbaru
+//     ]);
+
+// }
+
+
+
 
     
     public function auctionorder_getall(Request $request)

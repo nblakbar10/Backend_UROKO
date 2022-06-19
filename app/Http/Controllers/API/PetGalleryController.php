@@ -15,6 +15,33 @@ use Illuminate\Support\Facades\Validator;
 
 class PetGalleryController extends Controller
 {
+    // public function get_album()
+    // {
+    //     $album = PetGallery::where('user_id', Auth::user()->id)->get(); //authuser
+    //     $albumcount = PetGallery::where('user_id', Auth::user()->id)->get()->count();
+
+    //     if (count($album)==0) {
+    //         $album  = "Tidak Ada Album!";
+    //     }
+    //     foreach($album as $item){
+    //         $joinbaru[] = [
+    //             'id' => $item->id,
+    //             'user_id' => $item->user_id,
+    //             'album_name' => $item->album_name,
+    //             'album_picture' => $item->album_picture,
+    //             'album_picture2' => $item->album_picture2,
+    //             'album_type' => $item->album_type,
+    //             'total_album' => $albumcount,
+    //             'created_at' => $item->created_at,
+    //             'updated_at' => $item->updated_at,
+    //         ];
+    //     }
+
+    //     return response()->json([
+    //         'message' => 'Success',
+    //         'data' => $album
+    //     ], 200);
+    // } 
     public function get_album()
     {
         $album = PetGallery::where('user_id', Auth::user()->id)->get(); //authuser
@@ -38,17 +65,6 @@ class PetGalleryController extends Controller
             return response()->json($data, 404);
         }
 
-        // $petgalleryjoin = PetGallery::leftjoin('pet_activity', 'pet_activity.id', 'pet_profile.album_id')
-        // ->leftjoin('pet_profile', 'pet_profile.id', 'pet_activity.pet_id')
-        // ->where('pet_profile.album_id', $album_id)
-        // ->select('pet_gallery.*',
-        
-        //          'pet_profile.album_id',
-        //          'pet_gallery.album_name',
-        //          'pet_gallery.album_picture',
-        //          'pet_gallery.album_picture2')
-        // ->get();
-
         $petActivity = PetActivity::leftjoin('pet_profile', 'pet_profile.id', 'pet_activity.pet_id')
         ->leftjoin('pet_gallery', 'pet_gallery.id', 'pet_profile.album_id')
         ->where('pet_profile.album_id', $album_id)
@@ -61,13 +77,18 @@ class PetGalleryController extends Controller
         // dd($petActivity['user_id']);
 
         foreach ($petActivity as $key => $value) {
-            // dd($value->album_name);
             $arr['pet_activity_id'] = $value->id;
             $arr['pet_activity_detail'] = $value->pet_activity_detail;
             $arr['pet_activity_image'] = $value->pet_activity_image;
             $arr['pet_activity_image2'] = $value->pet_activity_image2;
 
             $arr_result[] = $arr;
+        }
+
+        if (empty($arr_result)) {
+            return response()->json([
+                'message' => 'Tidak Ada Pet Activity',
+            ], 400);
         }
 
         $petgallery = PetGallery::find($album_id);
@@ -83,6 +104,8 @@ class PetGalleryController extends Controller
             'data' => $data
         ], 200);
     }
+
+
 
     public function post_album(Request $request)
     {

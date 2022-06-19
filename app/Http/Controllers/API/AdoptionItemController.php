@@ -120,6 +120,7 @@ class AdoptionItemController extends Controller
             // 'merchant_id' => $merchant->id,
             'merchant_id' => $request->merchant_id,
             'adoption_item_price' => $request->adoption_item_price,
+            'adoption_item_status' => 'Available',
 
         ]);
 

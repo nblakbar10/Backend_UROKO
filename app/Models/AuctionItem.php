@@ -22,7 +22,8 @@ class AuctionItem extends Model
         'merchant_id',
         // 'merchant_name',
         // 'merchant_location',
-        'auction_bid_start'
+        'auction_bid_start',
+        'auction_item_status'
     ];
    
     public function getUpdatedAtAttribute($value)

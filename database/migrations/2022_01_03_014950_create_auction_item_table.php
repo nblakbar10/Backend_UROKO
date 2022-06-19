@@ -30,6 +30,7 @@ class CreateAuctionItemTable extends Migration
             $table->string('description');
             $table->integer('merchant_id');
             $table->integer('auction_bid_start');
+            $table->string('auction_item_status'); //Available or Archived
             $table->timestamps();
         });
     }

@@ -28,6 +28,7 @@ class CreateAdoptionItemTable extends Migration
             $table->string('description');
             $table->integer('merchant_id');
             $table->integer('adoption_item_price');
+            $table->string('adoption_item_status'); //Available or Archived
             $table->timestamps();
         });
     }

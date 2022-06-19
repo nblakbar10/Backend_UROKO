@@ -22,7 +22,8 @@ class RentItem extends Model
         'merchant_id',
         // 'merchant_name',
         // 'merchant_location',
-        'rent_item_price'
+        'rent_item_price',
+        'rent_item_status'
     ];
    
     public function getUpdatedAtAttribute($value)

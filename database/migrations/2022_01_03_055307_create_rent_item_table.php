@@ -30,6 +30,7 @@ class CreateRentItemTable extends Migration
             $table->string('description');
             $table->integer('merchant_id');
             $table->integer('rent_item_price');
+            $table->string('rent_item_status'); //Available or Archived
             $table->timestamps();
         });
     }
