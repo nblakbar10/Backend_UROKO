@@ -154,33 +154,34 @@ class AuctionOrderController extends Controller
 
         // untuk nampilin data count petalbum, petactivity, followers&following
         // $petcount = PetProfile::where('user_id', $user_id)->get()->count();
-        $albumcount = PetGallery::where('user_id', $user_id)->get()->count();
-        $followercount = UserFollow::where('user_yg_difollow_id', $user_id)->get()->count(); 
-        $followingcount = UserFollow::where('user_id', $user_id)->get()->count();
+        
+        // $albumcount = PetGallery::where('user_id', $user_id)->get()->count();
+        // $followercount = UserFollow::where('user_yg_difollow_id', $user_id)->get()->count(); 
+        // $followingcount = UserFollow::where('user_id', $user_id)->get()->count();
 
-        $detailallpetalbumjoin = 
-        UserFollow::leftjoin('users', 'users.id', 'user_id')
-        ->select('user_follow.*','users.username', 'users.picture')
-        ->where('user_follow.user_id', $user_id)
-        ->get();
+        // $detailallpetalbumjoin = 
+        // UserFollow::leftjoin('users', 'users.id', 'user_id')
+        // ->select('user_follow.*','users.username', 'users.picture')
+        // ->where('user_follow.user_id', $user_id)
+        // ->get();
 
-        $detailallpetactivityjoin = 
-        UserFollow::leftjoin('users', 'users.id', 'user_id')
-        ->select('user_follow.*','users.username', 'users.picture')
-        ->where('user_follow.user_id', $user_id)
-        ->get();
+        // $detailallpetactivityjoin = 
+        // UserFollow::leftjoin('users', 'users.id', 'user_id')
+        // ->select('user_follow.*','users.username', 'users.picture')
+        // ->where('user_follow.user_id', $user_id)
+        // ->get();
 
-        $detailallfollowingjoin = 
-        UserFollow::leftjoin('users', 'users.id', 'user_id')
-        ->select('user_follow.*','users.username', 'users.picture')
-        ->where('user_follow.user_id', $user_id)
-        ->get();
+        // $detailallfollowingjoin = 
+        // UserFollow::leftjoin('users', 'users.id', 'user_id')
+        // ->select('user_follow.*','users.username', 'users.picture')
+        // ->where('user_follow.user_id', $user_id)
+        // ->get();
 
-        $detailallfollowerjoin = 
-        UserFollow::leftjoin('users', 'users.id', 'user_id')
-        ->select('user_follow.*','users.username', 'users.picture')
-        ->where('user_follow.user_yg_difollow_id', $user_id)
-        ->get();
+        // $detailallfollowerjoin = 
+        // UserFollow::leftjoin('users', 'users.id', 'user_id')
+        // ->select('user_follow.*','users.username', 'users.picture')
+        // ->where('user_follow.user_yg_difollow_id', $user_id)
+        // ->get();
 
         // $auctionorderget = AuctionOrder::where('id', $id)->get();
 
